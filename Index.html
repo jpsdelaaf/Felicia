@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felicia de Laaf</title>
+    <meta name="description" content="Felicia. Er is hier altijd plek voor jou, wanneer je er ook maar aan toe bent.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Lato', sans-serif;
+            background-color: #F9F6F0; 
+            color: #4A4A4A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .shape-1 {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(235, 213, 203, 0.4) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .shape-2 {
+            position: absolute;
+            bottom: -15%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(215, 226, 219, 0.5) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            padding: 50px 40px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 2.2em;
+            color: #333;
+            margin: 0 0 25px 0;
+            letter-spacing: 0.5px;
+        }
+
+        p.message {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .divider {
+            height: 1px;
+            width: 60px;
+            background-color: #E0E0E0;
+            margin: 0 auto 35px auto;
+        }
+
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 35px;
+            background-color: #CBAA99; 
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 400;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(203, 170, 153, 0.3);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid transparent;
+        }
+
+        .play-button:hover {
+            background-color: #bfa08f;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(203, 170, 153, 0.4);
+        }
+
+        .play-button svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .footer-note {
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #999;
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 20px;
+                margin: 0 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            p.message {
+                font-size: 1.05em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-shapes">
+        <div class="shape-1"></div>
+        <div class="shape-2"></div>
+    </div>
+
+    <div class="container">
+        <h1>Felicia</h1>
+        
+        <p class="message">
+            Er is hier altijd plek voor jou.<br>
+            Geen verwachtingen, geen druk.<br>
+            Wanneer je daar ook maar aan toe bent.
+        </p>
+        
+        <div class="divider"></div>
+        
+        <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="play-button">
+            <svg viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            Luister "You'll Be In My Heart"
+        </a>
+
+        <div class="footer-note">
+            Ons huis is jouw thuis.
+        </div>
+    </div>
+
+</body>
+</html>
