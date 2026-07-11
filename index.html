@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Felicia de Laaf</title>
     
-    <!-- Het bruine hartje als favicon in het tabblad -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤎</text></svg>">
     
     <meta name="description" content="Felicia. Er is hier altijd plek voor jou, wanneer je er ook maar aan toe bent.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Dancing Script toegevoegd voor de handtekening -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
 
     <style>
@@ -25,10 +23,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #F9F6F0; /* Fallback kleur voor als de foto laadt */
+            background-color: #F9F6F0;
         }
 
-        /* De nieuwe, paginavullende achtergrondfoto */
         .background-image {
             position: fixed;
             top: 0;
@@ -36,13 +33,11 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            /* Hieronder staat de link naar de Unsplash foto. Deze kun je later eventueel vervangen */
             background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
         }
 
-        /* Een subtiele donkere waas over de foto zodat de tekst goed leesbaar blijft */
         .overlay {
             position: fixed;
             top: 0;
@@ -58,7 +53,7 @@
             z-index: 1;
             max-width: 650px;
             padding: 55px 45px;
-            background: rgba(255, 255, 255, 0.90); /* Iets meer wit voor de leesbaarheid */
+            background: rgba(255, 255, 255, 0.90);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
@@ -104,7 +99,7 @@
             justify-content: center;
             gap: 12px;
             padding: 16px 35px;
-            background-color: #8C9987; /* Subtiel vergrijsd groen voor rust */
+            background-color: #8C9987;
             color: white;
             text-decoration: none;
             font-size: 1.1em;
@@ -119,7 +114,7 @@
         }
 
         .action-button:nth-child(2) {
-            background-color: #CBAA99; /* De warme aardetint voor de mail knop */
+            background-color: #CBAA99;
             box-shadow: 0 8px 25px rgba(203, 170, 153, 0.3);
         }
 
@@ -168,7 +163,6 @@
 </head>
 <body>
 
-    <!-- Achtergrond en donkere waas -->
     <div class="background-image"></div>
     <div class="overlay"></div>
 
@@ -191,7 +185,6 @@
                 Luister "You'll Be In My Heart"
             </a>
 
-            <!-- Mail knop met script bescherming -->
             <a href="javascript:void(0)" onclick="stuurMail()" class="action-button">
                 <svg viewBox="0 0 24 24">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -200,7 +193,6 @@
             </a>
         </div>
 
-        <!-- Decoratief botanisch icoontje -->
         <div class="decoration-icon">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22v-9" />
