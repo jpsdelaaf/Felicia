@@ -8,7 +8,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Dancing Script toegevoegd voor de handtekening -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
 
     <style>
         body, html {
@@ -16,61 +17,55 @@
             padding: 0;
             height: 100%;
             font-family: 'Lato', sans-serif;
-            background-color: #F9F6F0; 
             color: #4A4A4A;
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #F9F6F0; /* Fallback kleur voor als de foto laadt */
         }
 
-        .background-shapes {
+        /* De nieuwe, paginavullende achtergrondfoto */
+        .background-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
+            /* Hieronder staat de link naar de Unsplash foto. Deze kun je later eventueel vervangen */
+            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
         }
 
-        .shape-1 {
-            position: absolute;
-            top: -10%;
-            right: -5%;
-            width: 40vw;
-            height: 40vw;
-            background: radial-gradient(circle, rgba(235, 213, 203, 0.4) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-        }
-
-        .shape-2 {
-            position: absolute;
-            bottom: -15%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: radial-gradient(circle, rgba(215, 226, 219, 0.5) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
+        /* Een subtiele donkere waas over de foto zodat de tekst goed leesbaar blijft */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: rgba(0, 0, 0, 0.15); 
         }
 
         .container {
             position: relative;
             z-index: 1;
             max-width: 650px;
-            padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            padding: 55px 45px;
+            background: rgba(255, 255, 255, 0.90); /* Iets meer wit voor de leesbaarheid */
+            backdrop-filter: blur(12px);
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
-            font-size: 2.2em;
+            font-size: 2.6em;
             color: #333;
             margin: 0 0 25px 0;
             letter-spacing: 0.5px;
@@ -79,7 +74,7 @@
         p.message {
             font-size: 1.15em;
             line-height: 1.8;
-            color: #555;
+            color: #444;
             margin-bottom: 35px;
             font-weight: 300;
         }
@@ -87,54 +82,79 @@
         .divider {
             height: 1px;
             width: 60px;
-            background-color: #E0E0E0;
+            background-color: #D1D1D1;
             margin: 0 auto 35px auto;
         }
 
-        .play-button {
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .action-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
             padding: 16px 35px;
-            background-color: #CBAA99; 
+            background-color: #8C9987; /* Subtiel vergrijsd groen voor rust */
             color: white;
             text-decoration: none;
             font-size: 1.1em;
             font-weight: 400;
             border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(203, 170, 153, 0.3);
+            box-shadow: 0 8px 25px rgba(140, 153, 135, 0.3);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border: 1px solid transparent;
+            width: 100%;
+            max-width: 320px;
+            box-sizing: border-box;
         }
 
-        .play-button:hover {
-            background-color: #bfa08f;
+        .action-button:nth-child(2) {
+            background-color: #CBAA99; /* De warme aardetint voor de mail knop */
+            box-shadow: 0 8px 25px rgba(203, 170, 153, 0.3);
+        }
+
+        .action-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(203, 170, 153, 0.4);
+            filter: brightness(1.05);
         }
 
-        .play-button svg {
+        .action-button svg {
             width: 20px;
             height: 20px;
             fill: currentColor;
         }
 
+        .decoration-icon {
+            margin: 0 auto 20px auto;
+            color: #8C9987;
+        }
+
         .footer-note {
-            margin-top: 40px;
-            font-size: 0.9em;
-            color: #999;
-            font-style: italic;
+            font-size: 1.2em;
+            color: #333;
             font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+            color: #555;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 40px 20px;
+                padding: 45px 25px;
                 margin: 0 20px;
             }
             h1 {
-                font-size: 1.8em;
+                font-size: 2.2em;
             }
             p.message {
                 font-size: 1.05em;
@@ -144,10 +164,9 @@
 </head>
 <body>
 
-    <div class="background-shapes">
-        <div class="shape-1"></div>
-        <div class="shape-2"></div>
-    </div>
+    <!-- Achtergrond en donkere waas -->
+    <div class="background-image"></div>
+    <div class="overlay"></div>
 
     <div class="container">
         <h1>Felicia</h1>
@@ -160,17 +179,47 @@
         
         <div class="divider"></div>
         
-        <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="play-button">
-            <svg viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z"/>
+        <div class="button-group">
+            <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="action-button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                Luister "You'll Be In My Heart"
+            </a>
+
+            <!-- Mail knop met script bescherming -->
+            <a href="javascript:void(0)" onclick="stuurMail()" class="action-button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Mail mij
+            </a>
+        </div>
+
+        <!-- Decoratief botanisch icoontje -->
+        <div class="decoration-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22v-9" />
+                <path d="M12 13c-2.5-1.5-4-4-4-6.5S9.5 3 12 3s4 1.5 4 3.5-1.5 5-4 6.5z" />
+                <path d="M12 13c-2 2-5.5 3-8 3 0-2.5 1-6 3-8 2.5-2 5-1.5 5 5z" />
+                <path d="M12 13c2 2 5.5 3 8 3 0-2.5-1-6-3-8-2.5-2-5-1.5-5 5z" />
             </svg>
-            Luister "You'll Be In My Heart"
-        </a>
+        </div>
 
         <div class="footer-note">
             Ons huis is jouw thuis.
         </div>
+        <div class="signature">
+            Liefs, de Laaf's
+        </div>
     </div>
 
+    <script>
+        function stuurMail() {
+            var deel1 = "jpsdelaaf";
+            var deel2 = "gmail.com";
+            window.location.href = "mailto:" + deel1 + "@" + deel2;
+        }
+    </script>
 </body>
 </html>
