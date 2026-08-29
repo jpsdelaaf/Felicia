@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felicia de Laaf</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤎</text></svg>">
+    
+    <meta name="description" content="Felicia. Er is hier altijd plek voor jou, wanneer je er ook maar aan toe bent.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: 'Lato', sans-serif;
+            color: #4A4A4A;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #F9F6F0;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background-color: rgba(0, 0, 0, 0.15); 
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 650px;
+            padding: 55px 45px;
+            margin: 40px 20px;
+            background: rgba(255, 255, 255, 0.90);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 2.6em;
+            color: #333;
+            margin: 0 0 25px 0;
+            letter-spacing: 0.5px;
+        }
+
+        p.message {
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 35px;
+            font-weight: 300;
+        }
+
+        .divider {
+            height: 1px;
+            width: 60px;
+            background-color: #D1D1D1;
+            margin: 0 auto 35px auto;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px 35px;
+            background-color: #8C9987;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-weight: 400;
+            border-radius: 50px;
+            box-shadow: 0 8px 25px rgba(140, 153, 135, 0.3);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid transparent;
+            width: 100%;
+            max-width: 320px;
+            box-sizing: border-box;
+        }
+
+        .action-button:nth-child(2) {
+            background-color: #CBAA99;
+            box-shadow: 0 8px 25px rgba(203, 170, 153, 0.3);
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
+        }
+
+        .action-button svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Logboek Sectie Stijlen */
+        .logboek-container {
+            margin: 0 auto 35px auto;
+            padding: 30px 20px 25px 20px;
+            background: rgba(140, 153, 135, 0.08);
+            border-radius: 15px;
+            border: 1px solid rgba(140, 153, 135, 0.2);
+            text-align: left;
+        }
+
+        .log-intro {
+            font-size: 1.05em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .log-entries {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border-left: 2px solid rgba(140, 153, 135, 0.3);
+            padding-left: 18px;
+            margin-left: 10px;
+        }
+
+        .log-entry {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Subtiele stip op de tijdlijn */
+        .log-entry::before {
+            content: '';
+            position: absolute;
+            left: -23px;
+            top: 6px;
+            width: 8px;
+            height: 8px;
+            background-color: #8C9987;
+            border-radius: 50%;
+        }
+
+        .log-date {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9em;
+            color: #8C9987;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .log-text {
+            font-size: 1.05em;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .decoration-icon {
+            margin: 0 auto 20px auto;
+            color: #8C9987;
+        }
+
+        .footer-note {
+            font-size: 1.2em;
+            color: #333;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+
+        .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6em;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 45px 25px;
+            }
+            h1 {
+                font-size: 2.2em;
+            }
+            p.message {
+                font-size: 1.05em;
+            }
+            .logboek-container {
+                padding: 25px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <h1>Felicia</h1>
+        
+        <p class="message">
+            Er is hier altijd plek voor jou.<br>
+            Geen verwachtingen, geen druk.<br>
+            Wanneer je daar ook maar aan toe bent.
+        </p>
+        
+        <div class="divider"></div>
+        
+        <div class="button-group">
+            <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="action-button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                Luister "You'll Be In My Heart"
+            </a>
+
+            <a href="javascript:void(0)" onclick="stuurMail()" class="action-button">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                Mail mij
+            </a>
+        </div>
+
+        <div class="logboek-container">
+            <div class="log-intro">
+                Ergens voel ik dat we elkaar weer zullen spreken rond de tijd dat je twintig bent. Tot dat moment vallen de stilte en het wachten me soms onnoemelijk zwaar, maar voor jou heb ik al het geduld van de wereld.
+            </div>
+            
+            <div class="log-entries">
+                <div class="log-entry">
+                    <span class="log-date">Augustus 2026</span>
+                    <span class="log-text">De deur staat nog steeds op een kier.</span>
+                </div>
+                <!-- Je kunt hier op 7 september een nieuw <div class="log-entry"> blok toevoegen -->
+            </div>
+        </div>
+
+        <div class="decoration-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22v-9" />
+                <path d="M12 13c-2.5-1.5-4-4-4-6.5S9.5 3 12 3s4 1.5 4 3.5-1.5 5-4 6.5z" />
+                <path d="M12 13c-2 2-5.5 3-8 3 0-2.5 1-6 3-8 2.5-2 5-1.5 5 5z" />
+                <path d="M12 13c2 2 5.5 3 8 3 0-2.5-1-6-3-8-2.5-2-5-1.5-5 5z" />
+            </svg>
+        </div>
+
+        <div class="footer-note">
+            Ons huis is jouw thuis.
+        </div>
+        <div class="signature">
+            Liefs, de Laaf's
+        </div>
+    </div>
+
+    <script>
+        function stuurMail() {
+            var deel1 = "jpsdelaaf";
+            var deel2 = "gmail.com";
+            window.location.href = "mailto:" + deel1 + "@" + deel2;
+        }
+    </script>
+</body>
+</html>
