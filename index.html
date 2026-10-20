@@ -3,27 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Felicia de Laaf</title>
+    <title>Voor Felicia</title>
     
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤎</text></svg>">
+    <!-- Geel/goud hartje als symbool voor warmte en licht -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💛</text></svg>">
     
-    <meta name="description" content="Felicia. Er is hier altijd plek voor jou, wanneer je er ook maar aan toe bent.">
+    <meta name="description" content="Lieve Felicia. Er is hier altijd plek voor jou, zonder verwachtingen, wanneer je er ook maar aan toe bent.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --sage: #7D8C78;
+            --sage-light: rgba(125, 140, 120, 0.08);
+            --sage-border: rgba(125, 140, 120, 0.22);
+            --warm-yellow: #D9A036;
+            --warm-yellow-soft: rgba(217, 160, 54, 0.14);
+            --terracotta: #C49D8B;
+            --text-main: #42403E;
+            --text-muted: #666360;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
             min-height: 100%;
             font-family: 'Lato', sans-serif;
-            color: #4A4A4A;
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #F9F6F0;
+            background-color: #FAF7F2;
+            -webkit-font-smoothing: antialiased;
         }
 
         .background-image {
@@ -36,6 +49,7 @@
             background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
+            transform: scale(1.02);
         }
 
         .overlay {
@@ -45,53 +59,109 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background-color: rgba(0, 0, 0, 0.15); 
+            /* Subtiele warme goudgele/crème gloed over de achtergrond */
+            background: linear-gradient(135deg, rgba(40, 35, 25, 0.18) 0%, rgba(217, 160, 54, 0.10) 100%);
+        }
+
+        @keyframes rustigeAdem {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .container {
             position: relative;
             z-index: 1;
             max-width: 650px;
-            padding: 55px 45px;
-            margin: 40px 20px;
-            background: rgba(255, 255, 255, 0.90);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            padding: 55px 48px;
+            margin: 45px 20px;
+            background: rgba(255, 253, 250, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: rustigeAdem 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            box-sizing: border-box;
+        }
+
+        .time-greeting {
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--warm-yellow);
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        /* Speciale banner die alleen op 23 januari zichtbaar wordt */
+        .birthday-banner {
+            display: none;
+            background: var(--warm-yellow-soft);
+            border: 1px solid rgba(217, 160, 54, 0.35);
+            color: #7A5916;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 22px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.05em;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
-            font-size: 2.6em;
-            color: #333;
-            margin: 0 0 25px 0;
+            font-size: 2.8em;
+            color: #2E2C2A;
+            margin: 0 0 22px 0;
             letter-spacing: 0.5px;
         }
 
         p.message {
-            font-size: 1.15em;
-            line-height: 1.8;
-            color: #444;
-            margin-bottom: 35px;
+            font-size: 1.18em;
+            line-height: 1.85;
+            color: var(--text-main);
+            margin-bottom: 32px;
             font-weight: 300;
         }
 
         .divider {
-            height: 1px;
-            width: 60px;
-            background-color: #D1D1D1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             margin: 0 auto 35px auto;
+            width: 140px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            background-color: #DCD6CE;
+        }
+
+        .divider-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--warm-yellow);
+            opacity: 0.75;
         }
 
         .button-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 14px;
             align-items: center;
-            margin-bottom: 35px;
+            margin-bottom: 38px;
         }
 
         .action-button {
@@ -99,28 +169,29 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            padding: 16px 35px;
-            background-color: #8C9987;
+            padding: 16px 32px;
+            background-color: var(--sage);
             color: white;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1.06em;
             font-weight: 400;
             border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(140, 153, 135, 0.3);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            border: 1px solid transparent;
+            box-shadow: 0 8px 25px rgba(125, 140, 120, 0.28);
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: none;
             width: 100%;
-            max-width: 320px;
+            max-width: 335px;
             box-sizing: border-box;
+            cursor: pointer;
         }
 
-        .action-button:nth-child(2) {
-            background-color: #CBAA99;
-            box-shadow: 0 8px 25px rgba(203, 170, 153, 0.3);
+        .action-button.secondary {
+            background-color: var(--terracotta);
+            box-shadow: 0 8px 25px rgba(196, 157, 139, 0.28);
         }
 
         .action-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             filter: brightness(1.05);
         }
 
@@ -128,34 +199,51 @@
             width: 20px;
             height: 20px;
             fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .copy-helper {
+            font-size: 0.88em;
+            color: var(--text-muted);
+            margin-top: -4px;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: rgba(102, 99, 96, 0.3);
+            text-underline-offset: 4px;
+            transition: color 0.2s;
+        }
+
+        .copy-helper:hover {
+            color: var(--warm-yellow);
         }
 
         /* Logboek Sectie Stijlen */
         .logboek-container {
-            margin: 0 auto 35px auto;
-            padding: 30px 20px 25px 20px;
-            background: rgba(140, 153, 135, 0.08);
-            border-radius: 15px;
-            border: 1px solid rgba(140, 153, 135, 0.2);
+            margin: 0 auto 28px auto;
+            padding: 32px 26px 28px 26px;
+            background: var(--sage-light);
+            border-radius: 18px;
+            border: 1px solid var(--sage-border);
             text-align: left;
         }
 
         .log-intro {
-            font-size: 1.05em;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 25px;
+            font-size: 1.04em;
+            color: #524F4C;
+            line-height: 1.68;
+            margin-bottom: 28px;
             font-style: italic;
             text-align: center;
+            padding: 0 10px;
         }
 
         .log-entries {
             display: flex;
             flex-direction: column;
-            gap: 18px;
-            border-left: 2px solid rgba(140, 153, 135, 0.3);
-            padding-left: 18px;
-            margin-left: 10px;
+            gap: 22px;
+            border-left: 2px solid rgba(217, 160, 54, 0.35);
+            padding-left: 22px;
+            margin-left: 8px;
         }
 
         .log-entry {
@@ -164,63 +252,115 @@
             position: relative;
         }
 
-        /* Subtiele stip op de tijdlijn */
+        /* Goudgele stip op de tijdlijn */
         .log-entry::before {
             content: '';
             position: absolute;
-            left: -23px;
+            left: -27px;
             top: 6px;
             width: 8px;
             height: 8px;
-            background-color: #8C9987;
+            background-color: var(--warm-yellow);
             border-radius: 50%;
+            box-shadow: 0 0 0 3px #F4F5F0;
         }
 
         .log-date {
             font-family: 'Playfair Display', serif;
-            font-size: 0.9em;
-            color: #8C9987;
+            font-size: 0.92em;
+            color: var(--sage);
             font-weight: 600;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+            letter-spacing: 0.4px;
         }
 
         .log-text {
-            font-size: 1.05em;
-            color: #444;
-            line-height: 1.5;
+            font-size: 1.02em;
+            color: var(--text-main);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Uitklapbaar blokje voor een vrijblijvend kijkje thuis */
+        details.glimp-container {
+            margin: 0 auto 35px auto;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(217, 160, 54, 0.25);
+            border-radius: 15px;
+            padding: 15px 22px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        details.glimp-container summary {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.98em;
+            color: var(--text-muted);
+            cursor: pointer;
+            text-align: center;
+            list-style: none;
+            outline: none;
+            transition: color 0.2s;
+        }
+
+        details.glimp-container summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.glimp-container summary:hover {
+            color: var(--text-main);
+        }
+
+        .glimp-content {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(0, 0, 0, 0.08);
+            font-size: 0.98em;
+            line-height: 1.65;
+            color: var(--text-main);
+            font-weight: 300;
         }
 
         .decoration-icon {
-            margin: 0 auto 20px auto;
-            color: #8C9987;
+            margin: 0 auto 18px auto;
+            color: var(--warm-yellow);
+            opacity: 0.85;
         }
 
         .footer-note {
-            font-size: 1.2em;
-            color: #333;
+            font-size: 1.25em;
+            color: #2E2C2A;
             font-family: 'Playfair Display', serif;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .signature {
             font-family: 'Dancing Script', cursive;
-            font-size: 1.6em;
-            color: #555;
+            font-size: 1.75em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .sub-signature {
+            font-size: 0.85em;
+            color: #8C8884;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 45px 25px;
+                padding: 42px 24px;
+                margin: 25px 15px;
             }
             h1 {
-                font-size: 2.2em;
+                font-size: 2.35em;
             }
             p.message {
-                font-size: 1.05em;
+                font-size: 1.06em;
             }
             .logboek-container {
-                padding: 25px 15px;
+                padding: 24px 18px;
             }
         }
     </style>
@@ -231,30 +371,42 @@
     <div class="overlay"></div>
 
     <div class="container">
+        <div id="timeGreeting" class="time-greeting">Een rustige plek voor jou</div>
+        
+        <div id="birthdayBanner" class="birthday-banner">
+            Lieve Felicia, van harte gefeliciteerd met je verjaardag vandaag. Er wordt hier met zoveel liefde aan je gedacht. 💛
+        </div>
+
         <h1>Felicia</h1>
         
         <p class="message">
             Er is hier altijd plek voor jou.<br>
-            Geen verwachtingen, geen druk.<br>
-            Wanneer je daar ook maar aan toe bent.
+            Geen vragen, geen verwachtingen, geen druk.<br>
+            Precies op jouw tempo, wanneer je daar ook maar aan toe bent.
         </p>
         
-        <div class="divider"></div>
+        <div class="divider">
+            <span class="divider-dot"></span>
+        </div>
         
         <div class="button-group">
-            <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="action-button">
+            <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" rel="noopener noreferrer" class="action-button">
                 <svg viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
                 Luister "You'll Be In My Heart"
             </a>
-
-            <a href="javascript:void(0)" onclick="stuurMail()" class="action-button">
+            
+            <button onclick="stuurMail()" class="action-button secondary">
                 <svg viewBox="0 0 24 24">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
-                Mail mij
-            </a>
+                Stuur een berichtje
+            </button>
+            
+            <span id="copyText" class="copy-helper" onclick="kopieerMail()">
+                Of klik hier om mijn e-mailadres te kopiëren
+            </span>
         </div>
 
         <div class="logboek-container">
@@ -264,19 +416,42 @@
             
             <div class="log-entries">
                 <div class="log-entry">
+                    <span class="log-date">Oktober 2026</span>
+                    <span class="log-text">De zonnebloemen in de tuin hebben plaatsgemaakt voor de herfst. Binnen is het warm, ligt poes Ezzy te spinnen op de bank en kletst je kleine zusje Fianne ons de oren van het hoofd. In mijn gedachten ben je er elke dag gewoon bij.</span>
+                </div>
+
+                <div class="log-entry">
+                    <span class="log-date">7 september 2026</span>
+                    <span class="log-text">Vandaag ben ik veertig geworden. Een bijzondere mijlpaal, maar mijn allergrootste wens voor de toekomst verandert niet: dat ik je ooit weer in mijn armen mag sluiten.</span>
+                </div>
+
+                <div class="log-entry">
                     <span class="log-date">Augustus 2026</span>
                     <span class="log-text">De deur staat nog steeds op een kier.</span>
                 </div>
-                <!-- Je kunt hier op 7 september een nieuw <div class="log-entry"> blok toevoegen -->
+                <!-- Voeg hier in de toekomst eenvoudig een nieuw <div class="log-entry"> blokje bovenaan toe -->
             </div>
         </div>
 
+        <details class="glimp-container">
+            <summary>✦ Een klein glimpje van ons leven nu (alleen als je nieuwsgierig bent)</summary>
+            <div class="glimp-content">
+                We wonen nog altijd fijn in Dordrecht. Ik rijd nog steeds met veel plezier op de motor naar mijn werk in Utrecht, waar ik mensen een luisterend oor bied die vastlopen. Thuis is het gezellig druk met Jolien, je kleine zusje Fianne (die inmiddels alweer heel wijs wordt) en onze kat Ezzy. En ja: ik ben nog steeds gek op de kleur geel. Mocht je ooit gewoon eens willen komen kijken, een kop thee drinken of alleen maar even hoi zeggen: je hoeft nooit iets uit te leggen.
+            </div>
+        </details>
+
+        <!-- Subtiele bloem/zonnebloem illustratie -->
         <div class="decoration-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22v-9" />
-                <path d="M12 13c-2.5-1.5-4-4-4-6.5S9.5 3 12 3s4 1.5 4 3.5-1.5 5-4 6.5z" />
-                <path d="M12 13c-2 2-5.5 3-8 3 0-2.5 1-6 3-8 2.5-2 5-1.5 5 5z" />
-                <path d="M12 13c2 2 5.5 3 8 3 0-2.5-1-6-3-8-2.5-2-5-1.5-5 5z" />
+            <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v3"/>
+                <path d="M12 19v3"/>
+                <path d="m4.93 4.93 2.12 2.12"/>
+                <path d="m16.95 16.95 2.12 2.12"/>
+                <path d="M2 12h3"/>
+                <path d="M19 12h3"/>
+                <path d="m4.93 19.07 2.12-2.12"/>
+                <path d="m16.95 7.05 2.12-2.12"/>
             </svg>
         </div>
 
@@ -284,16 +459,59 @@
             Ons huis is jouw thuis.
         </div>
         <div class="signature">
-            Liefs, de Laaf's
+            Liefs, papa
+        </div>
+        <div class="sub-signature">
+            &amp; Jolien en Fianne
         </div>
     </div>
 
     <script>
-        function stuurMail() {
+        // 1. E-mail beveiligd tegen spam-bots opbouwen
+        function getMailAdres() {
             var deel1 = "jpsdelaaf";
             var deel2 = "gmail.com";
-            window.location.href = "mailto:" + deel1 + "@" + deel2;
+            return deel1 + "@" + deel2;
         }
+
+        function stuurMail() {
+            window.location.href = "mailto:" + getMailAdres() + "?subject=Hoi%20papa";
+        }
+
+        function kopieerMail() {
+            var adres = getMailAdres();
+            navigator.clipboard.writeText(adres).then(function() {
+                var el = document.getElementById("copyText");
+                el.innerText = "✓ E-mailadres (" + adres + ") is gekopieerd";
+                el.style.color = "#7D8C78";
+                setTimeout(function() {
+                    el.innerText = "Of klik hier om mijn e-mailadres te kopiëren";
+                    el.style.color = "";
+                }, 4000);
+            });
+        }
+
+        // 2. Zachte begroeting op basis van het tijdstip & haar verjaardag (23 januari)
+        (function() {
+            var nu = new Date();
+            var uur = nu.getHours();
+            var dag = nu.getDate();
+            var maand = nu.getMonth(); // 0 = januari
+
+            var groetElement = document.getElementById("timeGreeting");
+            if (uur >= 22 || uur < 6) {
+                groetElement.innerText = "Voor als je 's nachts even aan ons denkt";
+            } else if (uur >= 6 && uur < 12) {
+                groetElement.innerText = "Een nieuw begin van de dag";
+            } else if (uur >= 18) {
+                groetElement.innerText = "Een rustige avond gewenst";
+            }
+
+            // Als het 23 januari is, toon de verjaardagsbanner
+            if (maand === 0 && dag === 23) {
+                document.getElementById("birthdayBanner").style.display = "block";
+            }
+        })();
     </script>
 </body>
 </html>
