@@ -3,27 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voor Felicia</title>
+    <title>Felicia de Laaf</title>
     
-    <!-- Geel/goud hartje als symbool voor warmte en licht -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💛</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤎</text></svg>">
     
-    <meta name="description" content="Lieve Felicia. Er is hier altijd plek voor jou, zonder verwachtingen, wanneer je er ook maar aan toe bent.">
+    <meta name="description" content="Felicia. Er is hier altijd plek voor jou, wanneer je er ook maar aan toe bent.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
-    
+
     <style>
+        /* Standaard (Dagmodus) variabelen */
         :root {
-            --sage: #7D8C78;
-            --sage-light: rgba(125, 140, 120, 0.08);
-            --sage-border: rgba(125, 140, 120, 0.22);
-            --warm-yellow: #D9A036;
-            --warm-yellow-soft: rgba(217, 160, 54, 0.14);
-            --terracotta: #C49D8B;
-            --text-main: #42403E;
-            --text-muted: #666360;
+            --bg-color: #F9F6F0;
+            --overlay-bg: rgba(0, 0, 0, 0.15);
+            --container-bg: rgba(255, 255, 255, 0.90);
+            --container-border: rgba(255, 255, 255, 0.6);
+            --container-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            --text-main: #4A4A4A;
+            --text-heading: #333333;
+            --text-message: #444444;
+            --text-muted: #555555;
+            --text-sub: #8C8884;
+            --divider-color: #D1D1D1;
+            --accent-green: #8C9987;
+            --accent-warm: #CBAA99;
+            --log-bg: rgba(140, 153, 135, 0.08);
+            --log-border: rgba(140, 153, 135, 0.2);
+            --log-line: rgba(140, 153, 135, 0.3);
+            --glimp-bg: rgba(255, 255, 255, 0.6);
+            --glimp-border: rgba(217, 160, 54, 0.25);
+            --glimp-divider: rgba(0, 0, 0, 0.08);
+            --beacon-color: #D9A036;
+            --beacon-glow: rgba(217, 160, 54, 0.45);
+        }
+
+        /* Nachtmodus variabelen (automatisch tussen 20:00 en 07:00 uur of via de knop) */
+        body.night-mode {
+            --bg-color: #0F141C;
+            --overlay-bg: radial-gradient(circle at center, rgba(242, 193, 78, 0.08) 0%, rgba(10, 14, 22, 0.65) 100%);
+            --container-bg: rgba(22, 27, 36, 0.88);
+            --container-border: rgba(242, 193, 78, 0.18);
+            --container-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(242, 193, 78, 0.06);
+            --text-main: #DCD9D4;
+            --text-heading: #F7F4EF;
+            --text-message: #E2DFDA;
+            --text-muted: #B5B0A8;
+            --text-sub: #9E9A93;
+            --divider-color: rgba(255, 255, 255, 0.15);
+            --accent-green: #7E8F78;
+            --accent-warm: #B89482;
+            --log-bg: rgba(255, 255, 255, 0.03);
+            --log-border: rgba(242, 193, 78, 0.16);
+            --log-line: rgba(242, 193, 78, 0.3);
+            --glimp-bg: rgba(255, 255, 255, 0.04);
+            --glimp-border: rgba(242, 193, 78, 0.22);
+            --glimp-divider: rgba(255, 255, 255, 0.1);
+            --beacon-color: #F2C14E;
+            --beacon-glow: rgba(242, 193, 78, 0.7);
         }
 
         body, html {
@@ -35,21 +73,41 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #FAF7F2;
-            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-color);
+            transition: background-color 1s ease, color 0.8s ease;
         }
 
-        .background-image {
+        /* Twee achtergrondlagen voor een vloeiende dag/nacht overgang */
+        .bg-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: 0;
-            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            transform: scale(1.02);
+            transition: opacity 1.2s ease-in-out;
+        }
+
+        /* Dag-achtergrond (jouw originele foto) */
+        .bg-day {
+            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
+            opacity: 1;
+        }
+
+        /* Nacht-achtergrond (rustige, diepe sterrenhemel) */
+        .bg-night {
+            background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2000&auto=format&fit=crop');
+            opacity: 0;
+        }
+
+        body.night-mode .bg-day {
+            opacity: 0;
+        }
+
+        body.night-mode .bg-night {
+            opacity: 1;
         }
 
         .overlay {
@@ -59,109 +117,125 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            /* Subtiele warme goudgele/crème gloed over de achtergrond */
-            background: linear-gradient(135deg, rgba(40, 35, 25, 0.18) 0%, rgba(217, 160, 54, 0.10) 100%);
+            background: var(--overlay-bg);
+            transition: background 1s ease;
         }
 
-        @keyframes rustigeAdem {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Subtiele schakelaar rechtsboven */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+            background: var(--container-bg);
+            border: 1px solid var(--container-border);
+            color: var(--text-muted);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 0.82em;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            color: var(--text-heading);
         }
 
         .container {
             position: relative;
             z-index: 1;
             max-width: 650px;
-            width: 100%;
-            padding: 55px 48px;
-            margin: 45px 20px;
-            background: rgba(255, 253, 250, 0.92);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+            padding: 55px 45px;
+            margin: 50px 20px;
+            background: var(--container-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: var(--container-shadow);
             text-align: center;
-            animation: rustigeAdem 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            box-sizing: border-box;
+            border: 1px solid var(--container-border);
+            transition: background 0.8s ease, border 0.8s ease, box-shadow 0.8s ease;
         }
 
-        .time-greeting {
-            font-size: 0.85em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--warm-yellow);
+        /* Het ademende lichtpuntje bovenin */
+        .beacon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        @keyframes ademLicht {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px 2px var(--beacon-glow), 0 0 22px 5px rgba(242, 193, 78, 0.15);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.25);
+                box-shadow: 0 0 18px 6px var(--beacon-glow), 0 0 35px 12px rgba(242, 193, 78, 0.3);
+                opacity: 1;
+            }
+        }
+
+        .beacon-light {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--beacon-color);
+            animation: ademLicht 4.5s infinite ease-in-out;
             margin-bottom: 10px;
-            font-weight: 400;
         }
 
-        /* Speciale banner die alleen op 23 januari zichtbaar wordt */
-        .birthday-banner {
-            display: none;
-            background: var(--warm-yellow-soft);
-            border: 1px solid rgba(217, 160, 54, 0.35);
-            color: #7A5916;
-            padding: 12px 20px;
-            border-radius: 12px;
-            margin-bottom: 22px;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.05em;
+        .beacon-caption {
+            font-size: 0.8em;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--beacon-color);
+            font-weight: 400;
+            opacity: 0.9;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
             font-weight: 600;
-            font-size: 2.8em;
-            color: #2E2C2A;
-            margin: 0 0 22px 0;
+            font-size: 2.6em;
+            color: var(--text-heading);
+            margin: 0 0 25px 0;
             letter-spacing: 0.5px;
+            transition: color 0.8s ease;
         }
 
         p.message {
-            font-size: 1.18em;
-            line-height: 1.85;
-            color: var(--text-main);
-            margin-bottom: 32px;
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: var(--text-message);
+            margin-bottom: 35px;
             font-weight: 300;
+            transition: color 0.8s ease;
         }
 
         .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 0 auto 35px auto;
-            width: 140px;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
             height: 1px;
-            flex: 1;
-            background-color: #DCD6CE;
-        }
-
-        .divider-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--warm-yellow);
-            opacity: 0.75;
+            width: 60px;
+            background-color: var(--divider-color);
+            margin: 0 auto 35px auto;
+            transition: background-color 0.8s ease;
         }
 
         .button-group {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 15px;
             align-items: center;
-            margin-bottom: 38px;
+            margin-bottom: 35px;
         }
 
         .action-button {
@@ -169,81 +243,65 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            padding: 16px 32px;
-            background-color: var(--sage);
+            padding: 16px 35px;
+            background-color: var(--accent-green);
             color: white;
             text-decoration: none;
-            font-size: 1.06em;
+            font-size: 1.1em;
             font-weight: 400;
             border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(125, 140, 120, 0.28);
-            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
-            border: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid transparent;
             width: 100%;
-            max-width: 335px;
+            max-width: 320px;
             box-sizing: border-box;
-            cursor: pointer;
         }
 
-        .action-button.secondary {
-            background-color: var(--terracotta);
-            box-shadow: 0 8px 25px rgba(196, 157, 139, 0.28);
+        .action-button:nth-child(2) {
+            background-color: var(--accent-warm);
         }
 
         .action-button:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05);
+            transform: translateY(-3px);
+            filter: brightness(1.06);
         }
 
         .action-button svg {
             width: 20px;
             height: 20px;
             fill: currentColor;
-            flex-shrink: 0;
-        }
-
-        .copy-helper {
-            font-size: 0.88em;
-            color: var(--text-muted);
-            margin-top: -4px;
-            cursor: pointer;
-            text-decoration: underline;
-            text-decoration-color: rgba(102, 99, 96, 0.3);
-            text-underline-offset: 4px;
-            transition: color 0.2s;
-        }
-
-        .copy-helper:hover {
-            color: var(--warm-yellow);
         }
 
         /* Logboek Sectie Stijlen */
         .logboek-container {
-            margin: 0 auto 28px auto;
-            padding: 32px 26px 28px 26px;
-            background: var(--sage-light);
-            border-radius: 18px;
-            border: 1px solid var(--sage-border);
+            margin: 0 auto 25px auto;
+            padding: 30px 20px 25px 20px;
+            background: var(--log-bg);
+            border-radius: 15px;
+            border: 1px solid var(--log-border);
             text-align: left;
+            transition: background 0.8s ease, border 0.8s ease;
         }
 
         .log-intro {
-            font-size: 1.04em;
-            color: #524F4C;
-            line-height: 1.68;
-            margin-bottom: 28px;
+            font-size: 1.05em;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
             font-style: italic;
             text-align: center;
-            padding: 0 10px;
+            transition: color 0.8s ease;
         }
 
         .log-entries {
             display: flex;
             flex-direction: column;
-            gap: 22px;
-            border-left: 2px solid rgba(217, 160, 54, 0.35);
-            padding-left: 22px;
-            margin-left: 8px;
+            gap: 18px;
+            border-left: 2px solid var(--log-line);
+            padding-left: 18px;
+            margin-left: 10px;
+            transition: border-color 0.8s ease;
         }
 
         .log-entry {
@@ -252,44 +310,54 @@
             position: relative;
         }
 
-        /* Goudgele stip op de tijdlijn */
+        /* Subtiele stip op de tijdlijn */
         .log-entry::before {
             content: '';
             position: absolute;
-            left: -27px;
+            left: -23px;
             top: 6px;
             width: 8px;
             height: 8px;
-            background-color: var(--warm-yellow);
+            background-color: var(--accent-green);
             border-radius: 50%;
-            box-shadow: 0 0 0 3px #F4F5F0;
+            transition: background-color 0.8s ease, box-shadow 0.8s ease;
+        }
+
+        body.night-mode .log-entry::before {
+            background-color: var(--beacon-color);
+            box-shadow: 0 0 8px var(--beacon-glow);
         }
 
         .log-date {
             font-family: 'Playfair Display', serif;
-            font-size: 0.92em;
-            color: var(--sage);
+            font-size: 0.9em;
+            color: var(--accent-green);
             font-weight: 600;
-            margin-bottom: 5px;
-            letter-spacing: 0.4px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+            transition: color 0.8s ease;
+        }
+
+        body.night-mode .log-date {
+            color: var(--beacon-color);
         }
 
         .log-text {
-            font-size: 1.02em;
-            color: var(--text-main);
-            line-height: 1.6;
-            font-weight: 300;
+            font-size: 1.05em;
+            color: var(--text-message);
+            line-height: 1.5;
+            transition: color 0.8s ease;
         }
 
         /* Uitklapbaar blokje voor een vrijblijvend kijkje thuis */
         details.glimp-container {
             margin: 0 auto 35px auto;
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(217, 160, 54, 0.25);
+            background: var(--glimp-bg);
+            border: 1px solid var(--glimp-border);
             border-radius: 15px;
             padding: 15px 22px;
             text-align: left;
-            transition: all 0.3s ease;
+            transition: background 0.8s ease, border 0.8s ease;
         }
 
         details.glimp-container summary {
@@ -300,7 +368,7 @@
             text-align: center;
             list-style: none;
             outline: none;
-            transition: color 0.2s;
+            transition: color 0.3s ease;
         }
 
         details.glimp-container summary::-webkit-details-marker {
@@ -308,30 +376,33 @@
         }
 
         details.glimp-container summary:hover {
-            color: var(--text-main);
+            color: var(--text-heading);
         }
 
         .glimp-content {
             margin-top: 15px;
             padding-top: 15px;
-            border-top: 1px dashed rgba(0, 0, 0, 0.08);
+            border-top: 1px dashed var(--glimp-divider);
             font-size: 0.98em;
             line-height: 1.65;
-            color: var(--text-main);
+            color: var(--text-message);
             font-weight: 300;
+            transition: color 0.8s ease, border-color 0.8s ease;
         }
 
         .decoration-icon {
             margin: 0 auto 18px auto;
-            color: var(--warm-yellow);
+            color: var(--beacon-color);
             opacity: 0.85;
+            transition: color 0.8s ease;
         }
 
         .footer-note {
             font-size: 1.25em;
-            color: #2E2C2A;
+            color: var(--text-heading);
             font-family: 'Playfair Display', serif;
             margin-bottom: 8px;
+            transition: color 0.8s ease;
         }
 
         .signature {
@@ -339,74 +410,81 @@
             font-size: 1.75em;
             color: var(--text-muted);
             margin-bottom: 4px;
+            transition: color 0.8s ease;
+        }
+
+        body.night-mode .signature {
+            color: var(--beacon-color);
         }
 
         .sub-signature {
             font-size: 0.85em;
-            color: #8C8884;
+            color: var(--text-sub);
             font-weight: 300;
             letter-spacing: 0.5px;
+            transition: color 0.8s ease;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 42px 24px;
-                margin: 25px 15px;
+                padding: 45px 25px;
             }
             h1 {
-                font-size: 2.35em;
+                font-size: 2.2em;
             }
             p.message {
-                font-size: 1.06em;
+                font-size: 1.05em;
             }
             .logboek-container {
-                padding: 24px 18px;
+                padding: 25px 15px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-image"></div>
+    <!-- De twee achtergronden die met elkaar meewisselen -->
+    <div class="bg-layer bg-day"></div>
+    <div class="bg-layer bg-night"></div>
     <div class="overlay"></div>
 
+    <!-- Knopje om zelf tussen Dag & Nacht sfeer te wisselen -->
+    <button class="theme-toggle" onclick="wisselSfeer()" id="themeBtn" title="Wissel tussen dag- en avondsfeer">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel">Avondsfeer</span>
+    </button>
+
     <div class="container">
-        <div id="timeGreeting" class="time-greeting">Een rustige plek voor jou</div>
         
-        <div id="birthdayBanner" class="birthday-banner">
-            Lieve Felicia, van harte gefeliciteerd met je verjaardag vandaag. Er wordt hier met zoveel liefde aan je gedacht. 💛
+        <!-- Het ademende lichtpuntje -->
+        <div class="beacon-wrapper">
+            <div class="beacon-light"></div>
+            <div id="beaconText" class="beacon-caption">Dit lichtje brandt altijd voor jou</div>
         </div>
 
         <h1>Felicia</h1>
         
         <p class="message">
             Er is hier altijd plek voor jou.<br>
-            Geen vragen, geen verwachtingen, geen druk.<br>
-            Precies op jouw tempo, wanneer je daar ook maar aan toe bent.
+            Geen verwachtingen, geen druk.<br>
+            Wanneer je daar ook maar aan toe bent.
         </p>
         
-        <div class="divider">
-            <span class="divider-dot"></span>
-        </div>
+        <div class="divider"></div>
         
         <div class="button-group">
-            <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" rel="noopener noreferrer" class="action-button">
+            <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="action-button">
                 <svg viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
                 Luister "You'll Be In My Heart"
             </a>
-            
-            <button onclick="stuurMail()" class="action-button secondary">
+            <a href="javascript:void(0)" onclick="stuurMail()" class="action-button">
                 <svg viewBox="0 0 24 24">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                 </svg>
-                Stuur een berichtje
-            </button>
-            
-            <span id="copyText" class="copy-helper" onclick="kopieerMail()">
-                Of klik hier om mijn e-mailadres te kopiëren
-            </span>
+                Mail mij
+            </a>
         </div>
 
         <div class="logboek-container">
@@ -429,7 +507,7 @@
                     <span class="log-date">Augustus 2026</span>
                     <span class="log-text">De deur staat nog steeds op een kier.</span>
                 </div>
-                <!-- Voeg hier in de toekomst eenvoudig een nieuw <div class="log-entry"> blokje bovenaan toe -->
+                <!-- Je kunt hier in de toekomst een nieuw <div class="log-entry"> blok toevoegen -->
             </div>
         </div>
 
@@ -440,7 +518,6 @@
             </div>
         </details>
 
-        <!-- Subtiele bloem/zonnebloem illustratie -->
         <div class="decoration-icon">
             <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="4"/>
@@ -458,60 +535,64 @@
         <div class="footer-note">
             Ons huis is jouw thuis.
         </div>
+
         <div class="signature">
             Liefs, papa
         </div>
+
         <div class="sub-signature">
             &amp; Jolien en Fianne
         </div>
     </div>
 
     <script>
-        // 1. E-mail beveiligd tegen spam-bots opbouwen
-        function getMailAdres() {
-            var deel1 = "jpsdelaaf";
-            var deel2 = "gmail.com";
-            return deel1 + "@" + deel2;
-        }
+        var handmatigGewisseld = false;
 
         function stuurMail() {
-            window.location.href = "mailto:" + getMailAdres() + "?subject=Hoi%20papa";
+            var deel1 = "jpsdelaaf";
+            var deel2 = "gmail.com";
+            window.location.href = "mailto:" + deel1 + "@" + deel2;
         }
 
-        function kopieerMail() {
-            var adres = getMailAdres();
-            navigator.clipboard.writeText(adres).then(function() {
-                var el = document.getElementById("copyText");
-                el.innerText = "✓ E-mailadres (" + adres + ") is gekopieerd";
-                el.style.color = "#7D8C78";
-                setTimeout(function() {
-                    el.innerText = "Of klik hier om mijn e-mailadres te kopiëren";
-                    el.style.color = "";
-                }, 4000);
-            });
+        // Dag & Nacht modus instellen
+        function updateThemeUI(isNight) {
+            var icon = document.getElementById("themeIcon");
+            var label = document.getElementById("themeLabel");
+            var beaconText = document.getElementById("beaconText");
+
+            if (isNight) {
+                document.body.classList.add("night-mode");
+                icon.innerText = "☀️";
+                label.innerText = "Dagsfeer";
+                beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
+            } else {
+                document.body.classList.remove("night-mode");
+                icon.innerText = "🌙";
+                label.innerText = "Avondsfeer";
+                beaconText.innerText = "Dit lichtje brandt altijd voor jou";
+            }
         }
 
-        // 2. Zachte begroeting op basis van het tijdstip & haar verjaardag (23 januari)
-        (function() {
-            var nu = new Date();
-            var uur = nu.getHours();
-            var dag = nu.getDate();
-            var maand = nu.getMonth(); // 0 = januari
+        function wisselSfeer() {
+            handmatigGewisseld = true;
+            var isNuNacht = document.body.classList.contains("night-mode");
+            updateThemeUI(!isNuNacht);
+        }
 
-            var groetElement = document.getElementById("timeGreeting");
-            if (uur >= 22 || uur < 6) {
-                groetElement.innerText = "Voor als je 's nachts even aan ons denkt";
-            } else if (uur >= 6 && uur < 12) {
-                groetElement.innerText = "Een nieuw begin van de dag";
-            } else if (uur >= 18) {
-                groetElement.innerText = "Een rustige avond gewenst";
+        function controleerTijdstip() {
+            if (handmatigGewisseld) return;
+            var uur = new Date().getHours();
+            // Tussen 20:00 's avonds en 07:00 's ochtends automatisch op avondsfeer
+            if (uur >= 20 || uur < 7) {
+                updateThemeUI(true);
+            } else {
+                updateThemeUI(false);
             }
+        }
 
-            // Als het 23 januari is, toon de verjaardagsbanner
-            if (maand === 0 && dag === 23) {
-                document.getElementById("birthdayBanner").style.display = "block";
-            }
-        })();
+        // Direct bij het openen controleren én elke minuut checken voor een live overgang
+        controleerTijdstip();
+        setInterval(controleerTijdstip, 60000);
     </script>
 </body>
 </html>
