@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
     <style>
-        /* Standaard (Dagmodus) variabelen */
+        /* 1. Standaard (Dagmodus) variabelen */
         :root {
             --bg-color: #F9F6F0;
             --overlay-bg: rgba(0, 0, 0, 0.15);
@@ -35,7 +35,32 @@
             --beacon-glow: rgba(217, 160, 54, 0.45);
         }
 
-        /* Nachtmodus variabelen (automatisch tussen 20:00 en 07:00 uur of via de knop) */
+        /* 2. Schemering variabelen (Ochtend- en avondschemering in Dordrecht) */
+        body.twilight-mode {
+            --bg-color: #26212C;
+            --overlay-bg: radial-gradient(circle at center, rgba(232, 165, 104, 0.14) 0%, rgba(28, 23, 38, 0.48) 100%);
+            --container-bg: rgba(42, 36, 48, 0.84);
+            --container-border: rgba(232, 165, 104, 0.25);
+            --container-shadow: 0 20px 55px rgba(0, 0, 0, 0.42), 0 0 35px rgba(232, 165, 104, 0.08);
+            --text-main: #EAE3DC;
+            --text-heading: #FAF6F0;
+            --text-message: #EFE9E2;
+            --text-muted: #CBBFB6;
+            --text-sub: #B0A39A;
+            --divider-color: rgba(255, 255, 255, 0.18);
+            --accent-green: #859680;
+            --accent-warm: #C49782;
+            --log-bg: rgba(255, 255, 255, 0.04);
+            --log-border: rgba(232, 165, 104, 0.22);
+            --log-line: rgba(232, 165, 104, 0.35);
+            --glimp-bg: rgba(255, 255, 255, 0.05);
+            --glimp-border: rgba(232, 165, 104, 0.25);
+            --glimp-divider: rgba(255, 255, 255, 0.12);
+            --beacon-color: #F0B265;
+            --beacon-glow: rgba(240, 178, 101, 0.65);
+        }
+
+        /* 3. Nachtmodus variabelen */
         body.night-mode {
             --bg-color: #0F141C;
             --overlay-bg: radial-gradient(circle at center, rgba(242, 193, 78, 0.08) 0%, rgba(10, 14, 22, 0.65) 100%);
@@ -70,10 +95,10 @@
             justify-content: center;
             align-items: center;
             background-color: var(--bg-color);
-            transition: background-color 1s ease, color 0.8s ease;
+            transition: background-color 1.5s ease, color 1s ease;
         }
 
-        /* Twee achtergrondlagen voor een vloeiende dag/nacht overgang */
+        /* Drie achtergrondlagen voor een vloeiende dag / schemer / nacht overgang */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -83,7 +108,7 @@
             z-index: 0;
             background-size: cover;
             background-position: center;
-            transition: opacity 1.2s ease-in-out;
+            transition: opacity 1.8s ease-in-out;
         }
 
         /* Dag-achtergrond */
@@ -92,19 +117,25 @@
             opacity: 1;
         }
 
-        /* Nacht-achtergrond */
+        /* Schemering-achtergrond (zachte warme horizon bij zonsopkomst/ondergang) */
+        .bg-twilight {
+            background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=2000&auto=format&fit=crop');
+            opacity: 0;
+        }
+
+        /* Nacht-achtergrond (rustige, diepe sterrenhemel) */
         .bg-night {
             background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2000&auto=format&fit=crop');
             opacity: 0;
         }
 
-        body.night-mode .bg-day {
-            opacity: 0;
-        }
+        body.twilight-mode .bg-day { opacity: 0; }
+        body.twilight-mode .bg-twilight { opacity: 1; }
+        body.twilight-mode .bg-night { opacity: 0; }
 
-        body.night-mode .bg-night {
-            opacity: 1;
-        }
+        body.night-mode .bg-day { opacity: 0; }
+        body.night-mode .bg-twilight { opacity: 0; }
+        body.night-mode .bg-night { opacity: 1; }
 
         .overlay {
             position: fixed;
@@ -114,41 +145,14 @@
             height: 100%;
             z-index: 0;
             background: var(--overlay-bg);
-            transition: background 1s ease;
-        }
-
-        /* Subtiele schakelaar rechtsboven */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-            background: var(--container-bg);
-            border: 1px solid var(--container-border);
-            color: var(--text-muted);
-            padding: 8px 15px;
-            border-radius: 30px;
-            font-family: 'Lato', sans-serif;
-            font-size: 0.82em;
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            transform: translateY(-1px);
-            color: var(--text-heading);
+            transition: background 1.5s ease;
         }
 
         .container {
             position: relative;
             z-index: 1;
             max-width: 650px;
-            padding: 55px 45px;
+            padding: 55px 45px 45px 45px;
             margin: 50px 20px;
             background: var(--container-bg);
             backdrop-filter: blur(12px);
@@ -157,7 +161,7 @@
             box-shadow: var(--container-shadow);
             text-align: center;
             border: 1px solid var(--container-border);
-            transition: background 0.8s ease, border 0.8s ease, box-shadow 0.8s ease;
+            transition: background 1.2s ease, border 1.2s ease, box-shadow 1.2s ease;
         }
 
         /* Het ademende lichtpuntje bovenin */
@@ -188,7 +192,7 @@
             background-color: var(--beacon-color);
             animation: ademLicht 4.5s infinite ease-in-out;
             margin-bottom: 10px;
-            transition: transform 0.6s ease, box-shadow 0.6s ease;
+            transition: transform 0.6s ease, box-shadow 0.6s ease, background-color 1s ease;
         }
 
         /* Extra gloed als iemand op de anonieme knop drukt */
@@ -204,6 +208,7 @@
             color: var(--beacon-color);
             font-weight: 400;
             opacity: 0.9;
+            transition: color 1s ease;
         }
 
         h1 {
@@ -213,7 +218,7 @@
             color: var(--text-heading);
             margin: 0 0 25px 0;
             letter-spacing: 0.5px;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
         p.message {
@@ -222,7 +227,7 @@
             color: var(--text-message);
             margin-bottom: 35px;
             font-weight: 300;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
         .divider {
@@ -230,7 +235,7 @@
             width: 60px;
             background-color: var(--divider-color);
             margin: 0 auto 35px auto;
-            transition: background-color 0.8s ease;
+            transition: background-color 1s ease;
         }
 
         .button-group {
@@ -284,7 +289,7 @@
             background: var(--glimp-bg);
             border: 1px dashed var(--glimp-border);
             border-radius: 16px;
-            transition: all 0.5s ease;
+            transition: all 0.8s ease;
         }
 
         .anon-button {
@@ -324,6 +329,7 @@
             line-height: 1.5;
             color: var(--text-sub);
             font-weight: 300;
+            transition: color 1s ease;
         }
 
         /* Logboek Sectie Stijlen */
@@ -334,7 +340,7 @@
             border-radius: 15px;
             border: 1px solid var(--log-border);
             text-align: left;
-            transition: background 0.8s ease, border 0.8s ease;
+            transition: background 1s ease, border 1s ease;
         }
 
         .log-intro {
@@ -344,7 +350,7 @@
             margin-bottom: 25px;
             font-style: italic;
             text-align: center;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
         .log-entries {
@@ -354,7 +360,7 @@
             border-left: 2px solid var(--log-line);
             padding-left: 18px;
             margin-left: 10px;
-            transition: border-color 0.8s ease;
+            transition: border-color 1s ease;
         }
 
         .log-entry {
@@ -373,9 +379,10 @@
             height: 8px;
             background-color: var(--accent-green);
             border-radius: 50%;
-            transition: background-color 0.8s ease, box-shadow 0.8s ease;
+            transition: background-color 1s ease, box-shadow 1s ease;
         }
 
+        body.twilight-mode .log-entry::before,
         body.night-mode .log-entry::before {
             background-color: var(--beacon-color);
             box-shadow: 0 0 8px var(--beacon-glow);
@@ -388,9 +395,10 @@
             font-weight: 600;
             margin-bottom: 4px;
             letter-spacing: 0.5px;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
+        body.twilight-mode .log-date,
         body.night-mode .log-date {
             color: var(--beacon-color);
         }
@@ -399,7 +407,7 @@
             font-size: 1.05em;
             color: var(--text-message);
             line-height: 1.5;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
         /* Uitklapbaar blokje voor een vrijblijvend kijkje thuis */
@@ -410,7 +418,7 @@
             border-radius: 15px;
             padding: 15px 22px;
             text-align: left;
-            transition: background 0.8s ease, border 0.8s ease;
+            transition: background 1s ease, border 1s ease;
         }
 
         details.glimp-container summary {
@@ -440,14 +448,14 @@
             line-height: 1.65;
             color: var(--text-message);
             font-weight: 300;
-            transition: color 0.8s ease, border-color 0.8s ease;
+            transition: color 1s ease, border-color 1s ease;
         }
 
         .decoration-icon {
             margin: 0 auto 18px auto;
             color: var(--beacon-color);
             opacity: 0.85;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
         .footer-note {
@@ -455,7 +463,7 @@
             color: var(--text-heading);
             font-family: 'Playfair Display', serif;
             margin-bottom: 8px;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
         .signature {
@@ -463,9 +471,10 @@
             font-size: 1.75em;
             color: var(--text-muted);
             margin-bottom: 4px;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
         }
 
+        body.twilight-mode .signature,
         body.night-mode .signature {
             color: var(--beacon-color);
         }
@@ -475,12 +484,31 @@
             color: var(--text-sub);
             font-weight: 300;
             letter-spacing: 0.5px;
-            transition: color 0.8s ease;
+            transition: color 1s ease;
+        }
+
+        /* Subtiel, volledig transparant weer-regeltje onderaan */
+        .weather-whisper {
+            margin-top: 26px;
+            font-size: 0.78em;
+            color: var(--text-sub);
+            font-weight: 300;
+            letter-spacing: 0.6px;
+            opacity: 0;
+            transition: opacity 1.2s ease, color 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .weather-whisper.visible {
+            opacity: 0.72;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 45px 25px;
+                padding: 45px 25px 35px 25px;
             }
             h1 {
                 font-size: 2.2em;
@@ -496,16 +524,11 @@
 </head>
 <body>
 
-    <!-- De twee achtergronden die met elkaar meewisselen -->
+    <!-- De drie achtergronden die vloeiend met het ritme van de dag meewisselen -->
     <div class="bg-layer bg-day"></div>
+    <div class="bg-layer bg-twilight"></div>
     <div class="bg-layer bg-night"></div>
     <div class="overlay"></div>
-
-    <!-- Knopje om zelf tussen Dag & Nacht sfeer te wisselen -->
-    <button class="theme-toggle" onclick="wisselSfeer()" id="themeBtn" title="Wissel tussen dag- en avondsfeer">
-        <span id="themeIcon">🌙</span>
-        <span id="themeLabel">Avondsfeer</span>
-    </button>
 
     <div class="container">
         
@@ -540,7 +563,7 @@
             </a>
         </div>
 
-        <!-- De nieuwe anonieme knop -->
+        <!-- De anonieme knop -->
         <div class="anon-section">
             <button id="anonBtn" class="anon-button" onclick="stuurAnoniemTeken()">
                 <span id="anonIcon">✨</span>
@@ -603,18 +626,19 @@
         <div class="sub-signature">
             &amp; Jolien en Fianne
         </div>
+
+        <!-- Subtiele, transparante weergave van het actuele weer in Dordrecht -->
+        <div id="dordrechtWeer" class="weather-whisper"></div>
     </div>
 
     <script>
-        var handmatigGewisseld = false;
-
         function stuurMail() {
             var deel1 = "jpsdelaaf";
             var deel2 = "gmail.com";
             window.location.href = "mailto:" + deel1 + "@" + deel2;
         }
 
-        // Functie voor het anonieme teken
+        // Functie voor het anonieme teken met jouw Web3Forms-sleutel
         function stuurAnoniemTeken() {
             var btn = document.getElementById("anonBtn");
             var btnText = document.getElementById("anonBtnText");
@@ -622,12 +646,10 @@
             var caption = document.getElementById("anonCaption");
             var beaconLight = document.getElementById("beaconLight");
 
-            // Knop direct vergrendelen en visuele bevestiging tonen
             btn.disabled = true;
             icon.innerText = "🤎";
             btnText.innerText = "Je stille teken wordt achtergelaten...";
 
-            // Laat het lichtje bovenin even extra warm oplichten
             beaconLight.classList.add("glow-boost");
             setTimeout(function() {
                 beaconLight.classList.remove("glow-boost");
@@ -635,7 +657,6 @@
 
             var tijdstip = new Date().toLocaleString("nl-NL");
 
-            // Verstuur het seintje op de achtergrond via Web3Forms
             fetch("https://api.web3forms.com/submit", {
                 method: "POST",
                 headers: {
@@ -654,51 +675,120 @@
                 caption.innerText = "Fijn dat je hier even was. Alles is volledig anoniem gebleven.";
             })
             .catch(function() {
-                // Zelfs als de verbinding hapert, geven we de bezoeker een fijn gevoel
                 btnText.innerText = "Dankjewel. Je stille teken is achtergelaten";
                 caption.innerText = "Fijn dat je hier even was.";
             });
         }
 
-        // Dag & Nacht modus instellen
-        function updateThemeUI(isNight) {
-            var icon = document.getElementById("themeIcon");
-            var label = document.getElementById("themeLabel");
+        /*
+         * Maandschema voor Dordrecht (in decimale uren, bijv. 7.5 = 07:30)
+         * [ochtendSchemerStart, dagStart, avondSchemerStart, nachtStart]
+         */
+        var dordrechtSchema = [
+            [7.92, 8.67, 17.00, 17.75], // Januari (07:55 - 08:40 - 17:00 - 17:45)
+            [7.25, 7.92, 17.92, 18.58], // Februari (07:15 - 07:55 - 17:55 - 18:35)
+            [6.25, 6.92, 18.75, 19.42], // Maart (06:15 - 06:55 - 18:45 - 19:25)
+            [6.00, 6.75, 20.67, 21.42], // April (06:00 - 06:45 - 20:40 - 21:25)
+            [5.00, 5.83, 21.42, 22.25], // Mei (05:00 - 05:50 - 21:25 - 22:15)
+            [4.50, 5.33, 22.00, 22.92], // Juni (04:30 - 05:20 - 22:00 - 22:55)
+            [4.83, 5.67, 21.83, 22.67], // Juli (04:50 - 05:40 - 21:50 - 22:40)
+            [5.75, 6.42, 21.08, 21.83], // Augustus (05:45 - 06:25 - 21:05 - 21:50)
+            [6.58, 7.25, 19.92, 20.58], // September (06:35 - 07:15 - 19:55 - 20:35)
+            [7.42, 8.08, 18.83, 19.50], // Oktober (07:25 - 08:05 - 18:50 - 19:30)
+            [7.33, 8.00, 16.83, 17.50], // November (07:20 - 08:00 - 16:50 - 17:30)
+            [8.00, 8.75, 16.50, 17.25]  // December (08:00 - 08:45 - 16:30 - 17:15)
+        ];
+
+        function controleerSfeerDordrecht() {
+            var nu = new Date();
+            var maand = nu.getMonth(); // 0 = januari, 11 = december
+            var tijdDecimaal = nu.getHours() + (nu.getMinutes() / 60);
+
+            var tijden = dordrechtSchema[maand];
+            var ochtendSchemer = tijden[0];
+            var dagStart = tijden[1];
+            var avondSchemer = tijden[2];
+            var nachtStart = tijden[3];
+
             var beaconText = document.getElementById("beaconText");
+            document.body.classList.remove("twilight-mode", "night-mode");
 
-            if (isNight) {
-                document.body.classList.add("night-mode");
-                icon.innerText = "☀️";
-                label.innerText = "Dagsfeer";
-                beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
-            } else {
-                document.body.classList.remove("night-mode");
-                icon.innerText = "🌙";
-                label.innerText = "Avondsfeer";
+            if (tijdDecimaal >= ochtendSchemer && tijdDecimaal < dagStart) {
+                // Ochtendschemering
+                document.body.classList.add("twilight-mode");
+                beaconText.innerText = "De dag ontwaakt rustig — dit lichtje brandt altijd voor jou";
+            } else if (tijdDecimaal >= dagStart && tijdDecimaal < avondSchemer) {
+                // Daglicht
                 beaconText.innerText = "Dit lichtje brandt altijd voor jou";
-            }
-        }
-
-        function wisselSfeer() {
-            handmatigGewisseld = true;
-            var isNuNacht = document.body.classList.contains("night-mode");
-            updateThemeUI(!isNuNacht);
-        }
-
-        function controleerTijdstip() {
-            if (handmatigGewisseld) return;
-            var uur = new Date().getHours();
-            // Tussen 20:00 's avonds en 07:00 's ochtends automatisch op avondsfeer
-            if (uur >= 20 || uur < 7) {
-                updateThemeUI(true);
+            } else if (tijdDecimaal >= avondSchemer && tijdDecimaal < nachtStart) {
+                // Avondschemering
+                document.body.classList.add("twilight-mode");
+                beaconText.innerText = "Terwijl de schemering valt, brandt dit lichtje hier voor jou";
             } else {
-                updateThemeUI(false);
+                // Nacht
+                document.body.classList.add("night-mode");
+                beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
             }
         }
 
-        // Direct bij het openen controleren én elke minuut checken voor een live overgang
-        controleerTijdstip();
-        setInterval(controleerTijdstip, 60000);
+        // Subtiel het actuele weer in Dordrecht ophalen (via Open-Meteo, geen API-sleutel nodig)
+        function haalWeerDordrechtOp() {
+            var url = "https://api.open-meteo.com/v1/forecast?latitude=51.8133&longitude=4.6901&current=temperature_2m,weather_code,is_day&timezone=Europe%2FAmsterdam";
+
+            fetch(url)
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    if (!data || !data.current) return;
+
+                    var temp = Math.round(data.current.temperature_2m);
+                    var code = data.current.weather_code;
+                    var isDay = data.current.is_day === 1;
+
+                    var omschrijving = "rustig weer";
+                    var icoon = isDay ? "🌤️" : "🌙";
+
+                    if (code === 0) {
+                        omschrijving = isDay ? "helder en zonnig" : "een heldere sterrenlucht";
+                        icoon = isDay ? "☀️" : "✨";
+                    } else if (code === 1 || code === 2) {
+                        omschrijving = "licht bewolkt";
+                        icoon = isDay ? "⛅" : "☁️";
+                    } else if (code === 3) {
+                        omschrijving = "bewolkt";
+                        icoon = "☁️";
+                    } else if (code === 45 || code === 48) {
+                        omschrijving = "mistig";
+                        icoon = "🌫️";
+                    } else if (code >= 51 && code <= 67) {
+                        omschrijving = "zachte regen";
+                        icoon = "🌧️";
+                    } else if (code >= 71 && code <= 77) {
+                        omschrijving = "winterse vlokken";
+                        icoon = "❄️";
+                    } else if (code >= 80 && code <= 82) {
+                        omschrijving = "een regenbui";
+                        icoon = "🌦️";
+                    } else if (code >= 95) {
+                        omschrijving = "onstuimig weer";
+                        icoon = "🌩️";
+                    }
+
+                    var weerElement = document.getElementById("dordrechtWeer");
+                    weerElement.innerHTML = "<span>" + icoon + "</span> <span>Nu in Dordrecht · " + temp + "°C en " + omschrijving + "</span>";
+                    weerElement.classList.add("visible");
+                })
+                .catch(function() {
+                    // Als het weer niet opgehaald kan worden, blijft het regeltje onzichtbaar
+                });
+        }
+
+        // Direct starten en elke minuut de sfeer controleren
+        controleerSfeerDordrecht();
+        setInterval(controleerSfeerDordrecht, 60000);
+
+        // Weer bij het openen ophalen en elk halfuur verversen
+        haalWeerDordrechtOp();
+        setInterval(haalWeerDordrechtOp, 1800000);
     </script>
 </body>
 </html>
