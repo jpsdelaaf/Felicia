@@ -13,7 +13,7 @@
         /* 1. Standaard (Dagmodus) variabelen */
         :root {
             --bg-color: #F9F6F0;
-            --overlay-bg: rgba(0, 0, 0, 0.15);
+            --overlay-bg: rgba(0, 0, 0, 0.14);
             --container-bg: rgba(255, 255, 255, 0.90);
             --container-border: rgba(255, 255, 255, 0.6);
             --container-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
@@ -63,8 +63,8 @@
         /* 3. Nachtmodus variabelen */
         body.night-mode {
             --bg-color: #0F141C;
-            --overlay-bg: radial-gradient(circle at center, rgba(242, 193, 78, 0.08) 0%, rgba(10, 14, 22, 0.65) 100%);
-            --container-bg: rgba(22, 27, 36, 0.88);
+            --overlay-bg: radial-gradient(circle at center, rgba(242, 193, 78, 0.08) 0%, rgba(10, 14, 22, 0.58) 100%);
+            --container-bg: rgba(22, 27, 36, 0.86);
             --container-border: rgba(242, 193, 78, 0.18);
             --container-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(242, 193, 78, 0.06);
             --text-main: #DCD9D4;
@@ -98,7 +98,7 @@
             transition: background-color 1.5s ease, color 1s ease;
         }
 
-        /* Drie achtergrondlagen voor een vloeiende dag / schemer / nacht overgang */
+        /* Drie 4K-achtergrondlagen voor een vloeiende dag / schemer / nacht overgang */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -106,27 +106,98 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
             transition: opacity 1.8s ease-in-out;
         }
 
-        /* Dag-achtergrond */
+        .bg-pan {
+            position: absolute;
+            top: -8%;
+            left: -8%;
+            width: 116%;
+            height: 116%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+        }
+
+        /* 1. Dag-achtergrond (4K UHD + zachte zomerse drift) */
         .bg-day {
-            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=2000&auto=format&fit=crop');
             opacity: 1;
+            background-color: #EFEAE1;
+        }
+        .bg-day .bg-pan {
+            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=90&w=3840&auto=format&fit=crop');
+            animation: dagDrift 85s ease-in-out infinite alternate;
         }
 
-        /* Schemering-achtergrond (zachte warme horizon bij zonsopkomst/ondergang) */
+        /* 2. Schemering-achtergrond (4K UHD + warme horizon-drift) */
         .bg-twilight {
-            background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=2000&auto=format&fit=crop');
             opacity: 0;
+            background-color: #1F1924;
+        }
+        .bg-twilight .bg-pan {
+            background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=90&w=3840&auto=format&fit=crop');
+            animation: schemerDrift 95s ease-in-out infinite alternate;
+            filter: contrast(1.04) saturate(1.08);
         }
 
-        /* Nacht-achtergrond (rustige, diepe sterrenhemel) */
+        /* 3. Nacht-achtergrond (4K UHD + diepe sterrenhemel-drift) */
         .bg-night {
-            background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=2000&auto=format&fit=crop');
             opacity: 0;
+            background-color: #060911;
+        }
+        .bg-night .bg-pan {
+            background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=90&w=3840&auto=format&fit=crop');
+            animation: nachtHemelDrift 90s ease-in-out infinite alternate;
+            filter: contrast(1.05) brightness(0.92);
+        }
+
+        @keyframes dagDrift {
+            0% {
+                transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.07) translate3d(1.8%, -1.2%, 0) rotate(0.3deg);
+            }
+            100% {
+                transform: scale(1.12) translate3d(-1.5%, 1.6%, 0) rotate(-0.3deg);
+            }
+        }
+
+        @keyframes schemerDrift {
+            0% {
+                transform: scale(1.02) translate3d(-1.5%, 0%, 0) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.09) translate3d(1.5%, -1.8%, 0) rotate(-0.35deg);
+            }
+            100% {
+                transform: scale(1.14) translate3d(2.2%, 1.2%, 0) rotate(0.35deg);
+            }
+        }
+
+        @keyframes nachtHemelDrift {
+            0% {
+                transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.08) translate3d(-2.2%, -1.2%, 0) rotate(0.45deg);
+            }
+            100% {
+                transform: scale(1.14) translate3d(1.8%, -2.5%, 0) rotate(-0.45deg);
+            }
+        }
+
+        /* Het gedeelde 4K/Retina sfeer-canvas voor zonlichtdeeltjes, schemergloed en sterren */
+        #sfeerCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
         body.twilight-mode .bg-day { opacity: 0; }
@@ -146,6 +217,7 @@
             z-index: 0;
             background: var(--overlay-bg);
             transition: background 1.5s ease;
+            pointer-events: none;
         }
 
         .container {
@@ -506,9 +578,45 @@
             opacity: 0.72;
         }
 
+        /* Subtiel zwevend knopje rechtsonder om van sfeer te wisselen */
+        .theme-switcher {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            border-radius: 30px;
+            background: var(--container-bg);
+            border: 1px solid var(--container-border);
+            color: var(--text-muted);
+            font-family: 'Lato', sans-serif;
+            font-size: 0.76em;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            opacity: 0.55;
+            transition: opacity 0.3s ease, transform 0.3s ease, background 1s ease, color 1s ease, border 1s ease;
+        }
+
+        .theme-switcher:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+
+        .theme-switcher-icon {
+            font-size: 1.05em;
+            line-height: 1;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 45px 25px 35px 25px;
+                margin-bottom: 70px;
             }
             h1 {
                 font-size: 2.2em;
@@ -519,19 +627,39 @@
             .logboek-container {
                 padding: 25px 15px;
             }
+            .theme-switcher {
+                bottom: 12px;
+                right: 12px;
+                padding: 6px 12px;
+                font-size: 0.72em;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- De drie 4K-achtergronden die vloeiend met het ritme van de dag meewisselen -->
+    <div class="bg-layer bg-day">
+        <div class="bg-pan"></div>
+    </div>
+    <div class="bg-layer bg-twilight">
+        <div class="bg-pan"></div>
+    </div>
+    <div class="bg-layer bg-night">
+        <div class="bg-pan"></div>
+    </div>
 
-    <!-- De drie achtergronden die vloeiend met het ritme van de dag meewisselen -->
-    <div class="bg-layer bg-day"></div>
-    <div class="bg-layer bg-twilight"></div>
-    <div class="bg-layer bg-night"></div>
+    <!-- Live 4K Canvas voor zonlichtdeeltjes (dag), avondgloed (schemer) en sterren (nacht) -->
+    <canvas id="sfeerCanvas"></canvas>
+
     <div class="overlay"></div>
 
+    <!-- Klein knopje rechtsonder om handmatig door de sferen te bladeren -->
+    <button id="themeSwitcher" class="theme-switcher" onclick="wisselSfeerHandmatig()" title="Wissel tussen Dag, Schemering, Nacht en Automatisch">
+        <span id="themeIcon" class="theme-switcher-icon">🕰️</span>
+        <span id="themeLabel">Sfeer: Auto</span>
+    </button>
+
     <div class="container">
-        
         <!-- Het ademende lichtpuntje -->
         <div class="beacon-wrapper">
             <div class="beacon-light" id="beaconLight"></div>
@@ -649,8 +777,8 @@
             btn.disabled = true;
             icon.innerText = "🤎";
             btnText.innerText = "Je stille teken wordt achtergelaten...";
-
             beaconLight.classList.add("glow-boost");
+
             setTimeout(function() {
                 beaconLight.classList.remove("glow-boost");
             }, 2500);
@@ -668,8 +796,7 @@
                     subject: "✨ Er is een anoniem teken achtergelaten op de pagina van Felicia",
                     from_name: "Felicia Pagina",
                     message: "Iemand heeft zojuist anoniem op de knop 'Laat een stil teken achter' gedrukt.\n\nDatum en tijd: " + tijdstip
-                })
-            })
+                })            })
             .then(function() {
                 btnText.innerText = "Dankjewel. Je stille teken is achtergelaten";
                 caption.innerText = "Fijn dat je hier even was. Alles is volledig anoniem gebleven.";
@@ -680,10 +807,9 @@
             });
         }
 
-        /*
-         * Maandschema voor Dordrecht (in decimale uren, bijv. 7.5 = 07:30)
-         * [ochtendSchemerStart, dagStart, avondSchemerStart, nachtStart]
-         */
+        /* Maandschema voor Dordrecht (in decimale uren, bijv. 7.5 = 07:30)
+           [ochtendSchemerStart, dagStart, avondSchemerStart, nachtStart]
+        */
         var dordrechtSchema = [
             [7.92, 8.67, 17.00, 17.75], // Januari (07:55 - 08:40 - 17:00 - 17:45)
             [7.25, 7.92, 17.92, 18.58], // Februari (07:15 - 07:55 - 17:55 - 18:35)
@@ -699,9 +825,41 @@
             [8.00, 8.75, 16.50, 17.25]  // December (08:00 - 08:45 - 16:30 - 17:15)
         ];
 
+        // Thema-beheer: 'auto', 'day', 'twilight', 'night'
+        var themaOpties = ["auto", "day", "twilight", "night"];
+        var huidigeThemaIndex = 0;
+        var actieveSfeer = "day"; // 'day', 'twilight' of 'night'
+
+        function pasSfeerToe(sfeer, isOchtend) {
+            actieveSfeer = sfeer;
+            var beaconText = document.getElementById("beaconText");
+            document.body.classList.remove("twilight-mode", "night-mode");
+
+            if (sfeer === "twilight") {
+                document.body.classList.add("twilight-mode");
+                if (isOchtend) {
+                    beaconText.innerText = "De dag ontwaakt rustig — dit lichtje brandt altijd voor jou";
+                } else {
+                    beaconText.innerText = "Terwijl de schemering valt, brandt dit lichtje hier voor jou";
+                }
+            } else if (sfeer === "night") {
+                document.body.classList.add("night-mode");
+                beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
+            } else {
+                beaconText.innerText = "Dit lichtje brandt altijd voor jou";
+            }
+        }
+
         function controleerSfeerDordrecht() {
+            var gekozenModus = themaOpties[huidigeThemaIndex];
+
+            if (gekozenModus !== "auto") {
+                pasSfeerToe(gekozenModus, false);
+                return;
+            }
+
             var nu = new Date();
-            var maand = nu.getMonth(); // 0 = januari, 11 = december
+            var maand = nu.getMonth();
             var tijdDecimaal = nu.getHours() + (nu.getMinutes() / 60);
 
             var tijden = dordrechtSchema[maand];
@@ -710,26 +868,286 @@
             var avondSchemer = tijden[2];
             var nachtStart = tijden[3];
 
-            var beaconText = document.getElementById("beaconText");
-            document.body.classList.remove("twilight-mode", "night-mode");
-
             if (tijdDecimaal >= ochtendSchemer && tijdDecimaal < dagStart) {
-                // Ochtendschemering
-                document.body.classList.add("twilight-mode");
-                beaconText.innerText = "De dag ontwaakt rustig — dit lichtje brandt altijd voor jou";
+                pasSfeerToe("twilight", true);
             } else if (tijdDecimaal >= dagStart && tijdDecimaal < avondSchemer) {
-                // Daglicht
-                beaconText.innerText = "Dit lichtje brandt altijd voor jou";
+                pasSfeerToe("day", false);
             } else if (tijdDecimaal >= avondSchemer && tijdDecimaal < nachtStart) {
-                // Avondschemering
-                document.body.classList.add("twilight-mode");
-                beaconText.innerText = "Terwijl de schemering valt, brandt dit lichtje hier voor jou";
+                pasSfeerToe("twilight", false);
             } else {
-                // Nacht
-                document.body.classList.add("night-mode");
-                beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
+                pasSfeerToe("night", false);
             }
         }
+
+        function wisselSfeerHandmatig() {
+            huidigeThemaIndex = (huidigeThemaIndex + 1) % themaOpties.length;
+            var modus = themaOpties[huidigeThemaIndex];
+            var iconEl = document.getElementById("themeIcon");
+            var labelEl = document.getElementById("themeLabel");
+
+            if (modus === "auto") {
+                iconEl.innerText = "🕰️";
+                labelEl.innerText = "Sfeer: Auto";
+            } else if (modus === "day") {
+                iconEl.innerText = "☀️";
+                labelEl.innerText = "Sfeer: Dag";
+            } else if (modus === "twilight") {
+                iconEl.innerText = "🌅";
+                labelEl.innerText = "Sfeer: Schemer";
+            } else if (modus === "night") {
+                iconEl.innerText = "🌙";
+                labelEl.innerText = "Sfeer: Nacht";
+            }
+
+            controleerSfeerDordrecht();
+        }
+
+        /* =========================================================================
+           4K / Retina Sfeer-Canvas (Crossfade tussen Dag, Schemering en Nacht)
+           ========================================================================= */
+        var sfeerCanvas = document.getElementById("sfeerCanvas");
+        var ctx = sfeerCanvas.getContext("2d");
+        var schermBreedte = 0;
+        var schermHoogte = 0;
+
+        var dagDeeltjes = [];
+        var schemerDeeltjes = [];
+        var nachtSterren = [];
+        var vallendeSter = null;
+
+        // Vloeiende overgangswaarden (0 tot 1) voor elk dagdeel
+        var mixDag = 0;
+        var mixSchemer = 0;
+        var mixNacht = 0;
+
+        function schaalSfeerCanvas() {
+            var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+            schermBreedte = window.innerWidth;
+            schermHoogte = window.innerHeight;
+            sfeerCanvas.width = schermBreedte * dpr;
+            sfeerCanvas.height = schermHoogte * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initieerAlleDeeltjes();
+        }
+
+        function initieerAlleDeeltjes() {
+            // 1. DAG: Zachte, warme zonlicht-stofjes en bokeh-kringen die rustig zweven
+            dagDeeltjes = [];
+            var aantalDag = Math.max(45, Math.min(Math.floor((schermBreedte * schermHoogte) / 22000), 95));
+            var dagKleuren = [
+                "255, 252, 240", // Warm zonwit
+                "255, 238, 195", // Zacht goudgeel
+                "242, 193, 78"   // Zonnebloemgeel
+            ];
+            for (var i = 0; i < aantalDag; i++) {
+                var isBokeh = Math.random() < 0.22;
+                dagDeeltjes.push({
+                    x: Math.random() * schermBreedte,
+                    y: Math.random() * schermHoogte,
+                    straal: isBokeh ? (4 + Math.random() * 10) : (1.1 + Math.random() * 2.2),
+                    basisAlpha: isBokeh ? (0.06 + Math.random() * 0.09) : (0.22 + Math.random() * 0.35),
+                    fase: Math.random() * Math.PI * 2,
+                    faseSnelheid: 0.005 + Math.random() * 0.01,
+                    snelheidX: 0.08 + Math.random() * 0.14,
+                    snelheidY: -(0.06 + Math.random() * 0.12),
+                    kleur: dagKleuren[Math.floor(Math.random() * dagKleuren.length)],
+                    isBokeh: isBokeh
+                });
+            }
+
+            // 2. SCHEMERING: Eerste avondsterren hoog in de lucht + warme amber gloeddeeltjes onderin
+            schemerDeeltjes = [];
+            var aantalSchemer = Math.max(70, Math.min(Math.floor((schermBreedte * schermHoogte) / 14000), 140));
+            for (var j = 0; j < aantalSchemer; j++) {
+                var isAvondSter = j < aantalSchemer * 0.55;
+                schemerDeeltjes.push({
+                    x: Math.random() * schermBreedte,
+                    y: isAvondSter ? (Math.random() * schermHoogte * 0.65) : (schermHoogte * 0.3 + Math.random() * schermHoogte * 0.7),
+                    straal: isAvondSter ? (0.6 + Math.random() * 1.1) : (1.5 + Math.random() * 3.2),
+                    basisAlpha: isAvondSter ? (0.2 + Math.random() * 0.45) : (0.14 + Math.random() * 0.28),
+                    fase: Math.random() * Math.PI * 2,
+                    faseSnelheid: 0.006 + Math.random() * 0.014,
+                    snelheidX: isAvondSter ? -0.02 : (0.04 - Math.random() * 0.08),
+                    snelheidY: isAvondSter ? -0.006 : -(0.08 + Math.random() * 0.14),
+                    kleur: isAvondSter ? "255, 244, 228" : (Math.random() < 0.5 ? "240, 178, 101" : "232, 145, 95"),
+                    gloed: !isAvondSter
+                });
+            }
+
+            // 3. NACHT: Drie parallax-dieptelagen met heldere 4K-sterren
+            nachtSterren = [];
+            var aantalNacht = Math.max(140, Math.min(Math.floor((schermBreedte * schermHoogte) / 7500), 280));
+            var nachtKleuren = [
+                "255, 255, 255", // Helder wit
+                "255, 246, 224", // Zacht ivoorwit
+                "216, 232, 255", // Koel sterrenblauw
+                "242, 193, 78"   // Warm goudgeel
+            ];
+            for (var k = 0; k < aantalNacht; k++) {
+                var laag = Math.random();
+                var diepte = laag < 0.6 ? 1 : (laag < 0.9 ? 2 : 3);
+                var kleurIndex = Math.random() < 0.14 ? 3 : Math.floor(Math.random() * 3);
+
+                nachtSterren.push({
+                    x: Math.random() * schermBreedte,
+                    y: Math.random() * schermHoogte,
+                    straal: diepte === 1 ? (0.4 + Math.random() * 0.5) : (diepte === 2 ? (0.8 + Math.random() * 0.6) : (1.3 + Math.random() * 0.8)),
+                    basisAlpha: diepte === 1 ? (0.25 + Math.random() * 0.35) : (0.45 + Math.random() * 0.45),
+                    fase: Math.random() * Math.PI * 2,
+                    faseSnelheid: 0.006 + Math.random() * 0.016,
+                    snelheidX: -0.025 * diepte,
+                    snelheidY: -0.008 * diepte,
+                    kleur: nachtKleuren[kleurIndex],
+                    gloed: diepte === 3
+                });
+            }
+        }
+
+        function planVallendeSter() {
+            var startX = Math.random() * (schermBreedte * 0.75) + (schermBreedte * 0.15);
+            var startY = Math.random() * (schermHoogte * 0.35);
+
+            vallendeSter = {
+                x: startX,
+                y: startY,
+                lengte: 70 + Math.random() * 50,
+                snelheidX: -(4.5 + Math.random() * 2.5),
+                snelheidY: 2.2 + Math.random() * 1.5,
+                alpha: 0,
+                fase: "in"
+            };
+        }
+
+        function tekenSfeerCanvas() {
+            // Vloeiende crossfade berekenen richting de actieve sfeer
+            var doelDag = actieveSfeer === "day" ? 1 : 0;
+            var doelSchemer = actieveSfeer === "twilight" ? 1 : 0;
+            var doelNacht = actieveSfeer === "night" ? 1 : 0;
+
+            mixDag += (doelDag - mixDag) * 0.035;
+            mixSchemer += (doelSchemer - mixSchemer) * 0.035;
+            mixNacht += (doelNacht - mixNacht) * 0.035;
+
+            ctx.clearRect(0, 0, schermBreedte, schermHoogte);
+
+            // 1. Teken Dag-deeltjes (zonlicht & bokeh)
+            if (mixDag > 0.01) {
+                for (var i = 0; i < dagDeeltjes.length; i++) {
+                    var d = dagDeeltjes[i];
+                    d.x += d.snelheidX + Math.sin(d.fase) * 0.08;
+                    d.y += d.snelheidY;
+                    d.fase += d.faseSnelheid;
+
+                    if (d.x > schermBreedte + 20) d.x = -20;
+                    if (d.x < -20) d.x = schermBreedte + 20;
+                    if (d.y < -20) d.y = schermHoogte + 20;
+
+                    var dAlpha = Math.max(0.02, d.basisAlpha + Math.sin(d.fase) * (d.isBokeh ? 0.03 : 0.12)) * mixDag;
+
+                    ctx.beginPath();
+                    ctx.arc(d.x, d.y, d.straal, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(" + d.kleur + ", " + dAlpha + ")";
+                    ctx.fill();
+                }
+            }
+
+            // 2. Teken Schemer-deeltjes (eerste avondsterren & warme gouden-uur gloed)
+            if (mixSchemer > 0.01) {
+                for (var j = 0; j < schemerDeeltjes.length; j++) {
+                    var sc = schemerDeeltjes[j];
+                    sc.x += sc.snelheidX + (sc.gloed ? Math.sin(sc.fase) * 0.06 : 0);
+                    sc.y += sc.snelheidY;
+                    sc.fase += sc.faseSnelheid;
+
+                    if (sc.x < -10) sc.x = schermBreedte + 10;
+                    if (sc.x > schermBreedte + 10) sc.x = -10;
+                    if (sc.y < -10) sc.y = schermHoogte + 10;
+
+                    var scAlpha = Math.max(0.04, sc.basisAlpha + Math.sin(sc.fase) * 0.16) * mixSchemer;
+
+                    ctx.beginPath();
+                    ctx.arc(sc.x, sc.y, sc.straal, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(" + sc.kleur + ", " + scAlpha + ")";
+                    ctx.fill();
+
+                    if (sc.gloed) {
+                        ctx.beginPath();
+                        ctx.arc(sc.x, sc.y, sc.straal * 2.8, 0, Math.PI * 2);
+                        ctx.fillStyle = "rgba(" + sc.kleur + ", " + (scAlpha * 0.22) + ")";
+                        ctx.fill();
+                    }
+                }
+            }
+
+            // 3. Teken Nacht-sterren & vallende ster
+            if (mixNacht > 0.01) {
+                for (var k = 0; k < nachtSterren.length; k++) {
+                    var s = nachtSterren[k];
+                    s.x += s.snelheidX;
+                    s.y += s.snelheidY;
+                    s.fase += s.faseSnelheid;
+
+                    if (s.x < -5) s.x = schermBreedte + 5;
+                    if (s.y < -5) s.y = schermHoogte + 5;
+
+                    var schommeling = Math.sin(s.fase) * 0.25;
+                    var sAlpha = Math.max(0.08, Math.min(1, s.basisAlpha + schommeling)) * mixNacht;
+
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.straal, 0, Math.PI * 2);
+                    ctx.fillStyle = "rgba(" + s.kleur + ", " + sAlpha + ")";
+                    ctx.fill();
+
+                    if (s.gloed && sAlpha > 0.4) {
+                        ctx.beginPath();
+                        ctx.arc(s.x, s.y, s.straal * 3.2, 0, Math.PI * 2);
+                        ctx.fillStyle = "rgba(" + s.kleur + ", " + (sAlpha * 0.14) + ")";
+                        ctx.fill();
+                    }
+                }
+
+                if (vallendeSter) {
+                    var v = vallendeSter;
+                    v.x += v.snelheidX;
+                    v.y += v.snelheidY;
+
+                    if (v.fase === "in") {
+                        v.alpha += 0.04;
+                        if (v.alpha >= 0.85) v.fase = "uit";
+                    } else {
+                        v.alpha -= 0.015;
+                    }
+
+                    var vAlpha = v.alpha * mixNacht;
+
+                    if (v.alpha <= 0 || v.x < -100 || v.y > schermHoogte + 100) {
+                        vallendeSter = null;
+                    } else {
+                        var staartX = v.x - (v.snelheidX * (v.lengte / 6));
+                        var staartY = v.y - (v.snelheidY * (v.lengte / 6));
+                        var grad = ctx.createLinearGradient(v.x, v.y, staartX, staartY);
+                        grad.addColorStop(0, "rgba(255, 248, 225, " + vAlpha + ")");
+                        grad.addColorStop(0.3, "rgba(242, 193, 78, " + (vAlpha * 0.5) + ")");
+                        grad.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+                        ctx.beginPath();
+                        ctx.moveTo(v.x, v.y);
+                        ctx.lineTo(staartX, staartY);
+                        ctx.strokeStyle = grad;
+                        ctx.lineWidth = 1.4;
+                        ctx.lineCap = "round";
+                        ctx.stroke();
+                    }
+                } else if (mixNacht > 0.7 && Math.random() < 0.0007) {
+                    planVallendeSter();
+                }
+            }
+
+            requestAnimationFrame(tekenSfeerCanvas);
+        }
+
+        window.addEventListener("resize", schaalSfeerCanvas);
+        schaalSfeerCanvas();
 
         // Subtiel het actuele weer in Dordrecht ophalen (via Open-Meteo, geen API-sleutel nodig)
         function haalWeerDordrechtOp() {
@@ -782,8 +1200,9 @@
                 });
         }
 
-        // Direct starten en elke minuut de sfeer controleren
+        // Direct starten, sfeer-canvas aanzetten en elke minuut de tijd in Dordrecht controleren
         controleerSfeerDordrecht();
+        requestAnimationFrame(tekenSfeerCanvas);
         setInterval(controleerSfeerDordrecht, 60000);
 
         // Weer bij het openen ophalen en elk halfuur verversen
