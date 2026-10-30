@@ -98,7 +98,7 @@
             transition: background-color 1.5s ease, color 1s ease;
         }
 
-        /* Drie 4K-achtergrondlagen voor een vloeiende dag / schemer / nacht overgang */
+        /* Drie Full-HD achtergrondlagen voor een vloeiende dag / schemer / nacht overgang */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -121,37 +121,34 @@
             will-change: transform;
         }
 
-        /* 1. Dag-achtergrond (4K UHD + zachte zomerse drift) */
+        /* 1. Dag-achtergrond (Full HD 1920px + zachte zomerse drift) */
         .bg-day {
             opacity: 1;
             background-color: #EFEAE1;
         }
-
         .bg-day .bg-pan {
-            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=90&w=3840&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=1920&auto=format&fit=crop');
             animation: dagDrift 85s ease-in-out infinite alternate;
         }
 
-        /* 2. Schemering-achtergrond (4K UHD + warme horizon-drift) */
+        /* 2. Schemering-achtergrond (Full HD 1920px + warme horizon-drift) */
         .bg-twilight {
             opacity: 0;
             background-color: #1F1924;
         }
-
         .bg-twilight .bg-pan {
-            background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=90&w=3840&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1920&auto=format&fit=crop');
             animation: schemerDrift 95s ease-in-out infinite alternate;
             filter: contrast(1.04) saturate(1.08);
         }
 
-        /* 3. Nacht-achtergrond (4K UHD + diepe sterrenhemel-drift) */
+        /* 3. Nacht-achtergrond (Full HD 1920px + diepe sterrenhemel-drift) */
         .bg-night {
             opacity: 0;
             background-color: #060911;
         }
-
         .bg-night .bg-pan {
-            background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=90&w=3840&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=1920&auto=format&fit=crop');
             animation: nachtHemelDrift 90s ease-in-out infinite alternate;
             filter: contrast(1.05) brightness(0.92);
         }
@@ -192,7 +189,7 @@
             }
         }
 
-        /* Het gedeelde 4K/Retina sfeer-canvas voor zonlichtdeeltjes, schemergloed en sterren */
+        /* Het gedeelde sfeer-canvas voor zonlichtdeeltjes, schemergloed en sterren */
         #sfeerCanvas {
             position: fixed;
             top: 0;
@@ -684,7 +681,7 @@
 </head>
 <body>
 
-    <!-- De drie 4K-achtergronden die vloeiend met het ritme van de dag meewisselen -->
+    <!-- De drie Full-HD achtergronden die vloeiend met het ritme van de dag meewisselen -->
     <div class="bg-layer bg-day">
         <div class="bg-pan"></div>
     </div>
@@ -695,7 +692,7 @@
         <div class="bg-pan"></div>
     </div>
 
-    <!-- Live 4K Canvas voor zonlichtdeeltjes (dag), avondgloed (schemer), sterren (nacht) én de sterren Felicia & Papa -->
+    <!-- Sfeer-canvas voor zonlichtdeeltjes (dag), avondgloed (schemer) en sterren (nacht) -->
     <canvas id="sfeerCanvas"></canvas>
 
     <div class="overlay"></div>
@@ -833,8 +830,8 @@
             btn.disabled = true;
             icon.innerText = "🤎";
             btnText.innerText = "Je stille teken wordt achtergelaten...";
-            beaconLight.classList.add("glow-boost");
 
+            beaconLight.classList.add("glow-boost");
             setTimeout(function() {
                 beaconLight.classList.remove("glow-boost");
             }, 2500);
@@ -909,6 +906,7 @@
 
         function controleerSfeerDordrecht() {
             var gekozenModus = themaOpties[huidigeThemaIndex];
+
             if (gekozenModus !== "auto") {
                 pasSfeerToe(gekozenModus, false);
                 return;
@@ -917,8 +915,8 @@
             var nu = new Date();
             var maand = nu.getMonth();
             var tijdDecimaal = nu.getHours() + (nu.getMinutes() / 60);
-            var tijden = dordrechtSchema[maand];
 
+            var tijden = dordrechtSchema[maand];
             var ochtendSchemer = tijden[0];
             var dagStart = tijden[1];
             var avondSchemer = tijden[2];
@@ -954,6 +952,7 @@
                 iconEl.innerText = "🌙";
                 labelEl.innerText = "Sfeer: Nacht";
             }
+
             controleerSfeerDordrecht();
         }
 
@@ -1017,13 +1016,13 @@
 
             var wetGain = audioCtx.createGain();
             wetGain.gain.value = 0.48;
+
             var dryGain = audioCtx.createGain();
             dryGain.gain.value = 0.72;
 
             masterGain.connect(dryGain);
             masterGain.connect(convolver);
             convolver.connect(wetGain);
-
             dryGain.connect(audioCtx.destination);
             wetGain.connect(audioCtx.destination);
         }
@@ -1190,8 +1189,7 @@
         }
 
         /* =========================================================================
-           4K / Retina Sfeer-Canvas (Crossfade tussen Dag, Schemering en Nacht
-           + De twee sterren 'Felicia' links & 'Papa' rechts in schemer/nacht)
+           Geoptimaliseerd Sfeer-Canvas (Crossfade tussen Dag, Schemering en Nacht)
            ========================================================================= */
         var sfeerCanvas = document.getElementById("sfeerCanvas");
         var ctx = sfeerCanvas.getContext("2d");
@@ -1209,7 +1207,7 @@
         var mixNacht = 0;
 
         function schaalSfeerCanvas() {
-            var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+            var dpr = Math.min(window.devicePixelRatio || 1, 1.25);
             schermBreedte = window.innerWidth;
             schermHoogte = window.innerHeight;
             sfeerCanvas.width = schermBreedte * dpr;
@@ -1221,7 +1219,7 @@
         function initieerAlleDeeltjes() {
             // 1. DAG: Zachte, warme zonlicht-stofjes en bokeh-kringen die rustig zweven
             dagDeeltjes = [];
-            var aantalDag = Math.max(45, Math.min(Math.floor((schermBreedte * schermHoogte) / 22000), 95));
+            var aantalDag = Math.max(40, Math.min(Math.floor((schermBreedte * schermHoogte) / 24000), 85));
             var dagKleuren = [
                 "255, 252, 240", // Warm zonwit
                 "255, 238, 195", // Zacht goudgeel
@@ -1245,7 +1243,7 @@
 
             // 2. SCHEMERING: Eerste avondsterren hoog in de lucht + warme amber gloeddeeltjes onderin
             schemerDeeltjes = [];
-            var aantalSchemer = Math.max(70, Math.min(Math.floor((schermBreedte * schermHoogte) / 14000), 140));
+            var aantalSchemer = Math.max(60, Math.min(Math.floor((schermBreedte * schermHoogte) / 16000), 120));
             for (var j = 0; j < aantalSchemer; j++) {
                 var isAvondSter = j < aantalSchemer * 0.55;
                 schemerDeeltjes.push({
@@ -1262,9 +1260,9 @@
                 });
             }
 
-            // 3. NACHT: Drie parallax-dieptelagen met heldere 4K-sterren
+            // 3. NACHT: Drie parallax-dieptelagen met heldere sterren
             nachtSterren = [];
-            var aantalNacht = Math.max(140, Math.min(Math.floor((schermBreedte * schermHoogte) / 7500), 280));
+            var aantalNacht = Math.max(110, Math.min(Math.floor((schermBreedte * schermHoogte) / 9000), 220));
             var nachtKleuren = [
                 "255, 255, 255", // Helder wit
                 "255, 246, 224", // Zacht ivoorwit
@@ -1304,166 +1302,7 @@
             };
         }
 
-        /**
-         * Tekent een vierpuntige ster met zachte nevel-halo, levenslijn-spoor en naamlabel
-         * (Exact in de stijl van de 'Life is a journey'-video)
-         */
-        function tekenSpecialeSter(x, y, rgbKleur, hexLabelKleur, naam, alpha, tijdFase, labelPositie) {
-            if (alpha <= 0.01) return;
-            ctx.save();
-
-            var adem = 0.92 + 0.08 * Math.sin(tijdFase);
-            var haloStraal = 36 * adem;
-
-            // 1. Subtiel, golvend levenslijn-spoor onder de ster dat zachtjes naar beneden vervaagt
-            var spoorLengte = Math.min(130, schermHoogte * 0.18);
-            var spoorGrad = ctx.createLinearGradient(x, y, x, y + spoorLengte);
-            spoorGrad.addColorStop(0, "rgba(" + rgbKleur + ", " + (alpha * 0.55) + ")");
-            spoorGrad.addColorStop(0.5, "rgba(" + rgbKleur + ", " + (alpha * 0.18) + ")");
-            spoorGrad.addColorStop(1, "rgba(" + rgbKleur + ", 0)");
-
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-            for (var stap = 1; stap <= 20; stap++) {
-                var voortgang = stap / 20;
-                var sy = y + voortgang * spoorLengte;
-                var sx = x + Math.sin(voortgang * 3.5 + tijdFase * 0.6) * 4.5;
-                ctx.lineTo(sx, sy);
-            }
-            ctx.strokeStyle = spoorGrad;
-            ctx.lineWidth = 1.8;
-            ctx.lineCap = "round";
-            ctx.stroke();
-
-            // 2. Zachte radiale nevel-halo rondom de ster
-            var radGrad = ctx.createRadialGradient(x, y, 1, x, y, haloStraal);
-            radGrad.addColorStop(0, "rgba(255, 255, 255, " + alpha + ")");
-            radGrad.addColorStop(0.22, "rgba(" + rgbKleur + ", " + (alpha * 0.85) + ")");
-            radGrad.addColorStop(0.55, "rgba(" + rgbKleur + ", " + (alpha * 0.22) + ")");
-            radGrad.addColorStop(1, "rgba(" + rgbKleur + ", 0)");
-
-            ctx.fillStyle = radGrad;
-            ctx.beginPath();
-            ctx.arc(x, y, haloStraal, 0, Math.PI * 2);
-            ctx.fill();
-
-            // 3. Vierpuntige ster-stralen (horizontaal & verticaal)
-            var straalLengte = 16 * adem;
-            ctx.strokeStyle = "rgba(255, 253, 245, " + (alpha * 0.95) + ")";
-            ctx.lineWidth = 1.35;
-
-            ctx.beginPath();
-            ctx.moveTo(x - straalLengte, y);
-            ctx.lineTo(x + straalLengte, y);
-            ctx.moveTo(x, y - straalLengte);
-            ctx.lineTo(x, y + straalLengte);
-            ctx.stroke();
-
-            // 4. Heldere witte kern
-            ctx.fillStyle = "rgba(255, 255, 255, " + alpha + ")";
-            ctx.beginPath();
-            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-            ctx.fill();
-
-            // 5. Naamlabel ('Felicia' of 'Papa')
-            ctx.globalAlpha = alpha;
-            ctx.font = "400 13.5px 'Lato', sans-serif";
-            ctx.fillStyle = hexLabelKleur;
-            ctx.shadowColor = "rgba(0, 0, 0, 0.9)";
-            ctx.shadowBlur = 7;
-            ctx.textBaseline = "middle";
-
-            if (labelPositie === "right") {
-                ctx.textAlign = "left";
-                ctx.fillText(naam, x + 14, y + 1);
-            } else if (labelPositie === "left") {
-                ctx.textAlign = "right";
-                ctx.fillText(naam, x - 14, y + 1);
-            } else {
-                ctx.textAlign = "center";
-                ctx.fillText(naam, x, y - 20);
-            }
-
-            ctx.restore();
-        }
-
-        function tekenFeliciaEnPapaSterren(tijdMs) {
-            // Alleen zichtbaar tijdens Schemering (twilight) en Nacht (night); overdag 0
-            var sterAlpha = Math.min(1, mixSchemer * 0.85 + mixNacht);
-            if (sterAlpha <= 0.01) return;
-
-            var tijdSec = tijdMs * 0.0022;
-            var isBreedScherm = schermBreedte >= 1020;
-
-            // Posities bepalen zodat ze altijd vrij in de sterrenhemel staan:
-            // Op brede schermen links en rechts naast de centrale kaart,
-            // op mobiel/smalle schermen linksboven en rechtsboven de kaart.
-            var feliciaX, feliciaY, papaX, papaY, feliciaLabelPos, papaLabelPos;
-
-            if (isBreedScherm) {
-                var middenX = schermBreedte * 0.5;
-                var kaartHalveBreedte = 340;
-                var vrijeZijruimte = Math.max(80, (schermBreedte - kaartHalveBreedte * 2) * 0.5);
-
-                feliciaX = Math.max(55, middenX - kaartHalveBreedte - vrijeZijruimte * 0.52);
-                feliciaY = schermHoogte * 0.28 + Math.sin(tijdSec * 0.7) * 4;
-                feliciaLabelPos = "right";
-
-                papaX = Math.min(schermBreedte - 55, middenX + kaartHalveBreedte + vrijeZijruimte * 0.52);
-                papaY = schermHoogte * 0.25 + Math.cos(tijdSec * 0.65) * 4;
-                papaLabelPos = "left";
-            } else {
-                feliciaX = Math.max(36, schermBreedte * 0.16);
-                feliciaY = 44 + Math.sin(tijdSec * 0.7) * 2.5;
-                feliciaLabelPos = "right";
-
-                papaX = Math.min(schermBreedte - 36, schermBreedte * 0.84);
-                papaY = 42 + Math.cos(tijdSec * 0.65) * 2.5;
-                papaLabelPos = "left";
-            }
-
-            // Subtiele, ragfijne sterrenbeeld-verbindingslijn tussen Felicia en Papa in de avond/nacht
-            ctx.save();
-            var lijnGrad = ctx.createLinearGradient(feliciaX, feliciaY, papaX, papaY);
-            lijnGrad.addColorStop(0, "rgba(255, 194, 212, " + (sterAlpha * 0.24) + ")");
-            lijnGrad.addColorStop(0.5, "rgba(255, 248, 231, " + (sterAlpha * 0.12) + ")");
-            lijnGrad.addColorStop(1, "rgba(242, 193, 78, " + (sterAlpha * 0.24) + ")");
-
-            ctx.strokeStyle = lijnGrad;
-            ctx.lineWidth = 0.9;
-            ctx.setLineDash([3, 7]);
-            ctx.beginPath();
-            ctx.moveTo(feliciaX, feliciaY);
-            ctx.lineTo(papaX, papaY);
-            ctx.stroke();
-            ctx.restore();
-
-            // Links: Ster 'Felicia' (Warm zachtroze / sterrenwit)
-            tekenSpecialeSter(
-                feliciaX,
-                feliciaY,
-                "255, 175, 200",
-                "#FFD6E4",
-                "Felicia",
-                sterAlpha,
-                tijdSec,
-                feliciaLabelPos
-            );
-
-            // Rechts: Ster 'Papa' (Warm zonnebloem-/goudgeel, passend bij papa's lievelingskleur geel)
-            tekenSpecialeSter(
-                papaX,
-                papaY,
-                "242, 193, 78",
-                "#FDE68A",
-                "Papa",
-                sterAlpha,
-                tijdSec + 1.4,
-                papaLabelPos
-            );
-        }
-
-        function tekenSfeerCanvas(tijdMs) {
+        function tekenSfeerCanvas() {
             // Vloeiende crossfade berekenen richting de actieve sfeer
             var doelDag = actieveSfeer === "day" ? 1 : 0;
             var doelSchemer = actieveSfeer === "twilight" ? 1 : 0;
@@ -1585,9 +1424,6 @@
                     planVallendeSter();
                 }
             }
-
-            // 4. Teken de twee sterren 'Felicia' (links) & 'Papa' (rechts) tijdens schemer en nacht
-            tekenFeliciaEnPapaSterren(tijdMs || performance.now());
 
             requestAnimationFrame(tekenSfeerCanvas);
         }
