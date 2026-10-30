@@ -4,656 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Felicia de Laaf</title>
+    <!-- Robots meta-tag: wel indexeren op naam, geen snippets of cache tonen in zoekresultaten -->
+    <meta name="robots" content="index, noarchive, nosnippet">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤎</text></svg>">
     <meta name="description" content="Felicia. Er is hier altijd plek voor jou, wanneer je er ook maar aan toe bent.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #F9F6F0;
-            --overlay-bg: rgba(0, 0, 0, 0.14);
-            --container-bg: rgba(255, 255, 255, 0.90);
-            --container-border: rgba(255, 255, 255, 0.6);
-            --container-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-            --text-main: #4A4A4A;
-            --text-heading: #333333;
-            --text-message: #444444;
-            --text-muted: #555555;
-            --text-sub: #8C8884;
-            --divider-color: #D1D1D1;
-            --accent-green: #8C9987;
-            --accent-warm: #CBAA99;
-            --log-bg: rgba(140, 153, 135, 0.08);
-            --log-border: rgba(140, 153, 135, 0.2);
-            --log-line: rgba(140, 153, 135, 0.3);
-            --glimp-bg: rgba(255, 255, 255, 0.6);
-            --glimp-border: rgba(217, 160, 54, 0.25);
-            --glimp-divider: rgba(0, 0, 0, 0.08);
-            --beacon-color: #D9A036;
-            --beacon-glow: rgba(217, 160, 54, 0.45);
-        }
-
-        body.twilight-mode {
-            --bg-color: #26212C;
-            --overlay-bg: radial-gradient(circle at center, rgba(232, 165, 104, 0.14) 0%, rgba(28, 23, 38, 0.48) 100%);
-            --container-bg: rgba(42, 36, 48, 0.86);
-            --container-border: rgba(232, 165, 104, 0.25);
-            --container-shadow: 0 20px 55px rgba(0, 0, 0, 0.42), 0 0 35px rgba(232, 165, 104, 0.08);
-            --text-main: #EAE3DC;
-            --text-heading: #FAF6F0;
-            --text-message: #EFE9E2;
-            --text-muted: #CBBFB6;
-            --text-sub: #B0A39A;
-            --divider-color: rgba(255, 255, 255, 0.18);
-            --accent-green: #859680;
-            --accent-warm: #C49782;
-            --log-bg: rgba(255, 255, 255, 0.04);
-            --log-border: rgba(232, 165, 104, 0.22);
-            --log-line: rgba(232, 165, 104, 0.35);
-            --glimp-bg: rgba(255, 255, 255, 0.05);
-            --glimp-border: rgba(232, 165, 104, 0.25);
-            --glimp-divider: rgba(255, 255, 255, 0.12);
-            --beacon-color: #F0B265;
-            --beacon-glow: rgba(240, 178, 101, 0.65);
-        }
-
-        body.night-mode {
-            --bg-color: #0F141C;
-            --overlay-bg: radial-gradient(circle at center, rgba(242, 193, 78, 0.08) 0%, rgba(10, 14, 22, 0.58) 100%);
-            --container-bg: rgba(22, 27, 36, 0.88);
-            --container-border: rgba(242, 193, 78, 0.18);
-            --container-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(242, 193, 78, 0.06);
-            --text-main: #DCD9D4;
-            --text-heading: #F7F4EF;
-            --text-message: #E2DFDA;
-            --text-muted: #B5B0A8;
-            --text-sub: #9E9A93;
-            --divider-color: rgba(255, 255, 255, 0.15);
-            --accent-green: #7E8F78;
-            --accent-warm: #B89482;
-            --log-bg: rgba(255, 255, 255, 0.03);
-            --log-border: rgba(242, 193, 78, 0.16);
-            --log-line: rgba(242, 193, 78, 0.3);
-            --glimp-bg: rgba(255, 255, 255, 0.04);
-            --glimp-border: rgba(242, 193, 78, 0.22);
-            --glimp-divider: rgba(255, 255, 255, 0.1);
-            --beacon-color: #F2C14E;
-            --beacon-glow: rgba(242, 193, 78, 0.7);
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100%;
-            font-family: 'Lato', sans-serif;
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: var(--bg-color);
-            transition: background-color 1.5s ease, color 1s ease;
-        }
-
-        .bg-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            transition: opacity 1.8s ease-in-out;
-        }
-
-        .bg-pan {
-            position: absolute;
-            top: -8%;
-            left: -8%;
-            width: 116%;
-            height: 116%;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .bg-day {
-            opacity: 1;
-            background-color: #EFEAE1;
-        }
-        .bg-day .bg-pan {
-            background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=1920&auto=format&fit=crop');
-            animation: dagDrift 85s ease-in-out infinite alternate;
-            animation-play-state: running;
-        }
-
-        .bg-twilight {
-            opacity: 0;
-            background-color: #1F1924;
-        }
-        .bg-twilight .bg-pan {
-            background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1920&auto=format&fit=crop');
-            animation: schemerDrift 95s ease-in-out infinite alternate;
-            animation-play-state: paused;
-            filter: contrast(1.04) saturate(1.08);
-        }
-
-        .bg-night {
-            opacity: 0;
-            background-color: #060911;
-        }
-        .bg-night .bg-pan {
-            background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=1920&auto=format&fit=crop');
-            animation: nachtHemelDrift 90s ease-in-out infinite alternate;
-            animation-play-state: paused;
-            filter: contrast(1.05) brightness(0.92);
-        }
-
-        @keyframes dagDrift {
-            0% { transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg); }
-            50% { transform: scale(1.07) translate3d(1.8%, -1.2%, 0) rotate(0.3deg); }
-            100% { transform: scale(1.12) translate3d(-1.5%, 1.6%, 0) rotate(-0.3deg); }
-        }
-
-        @keyframes schemerDrift {
-            0% { transform: scale(1.02) translate3d(-1.5%, 0%, 0) rotate(0deg); }
-            50% { transform: scale(1.09) translate3d(1.5%, -1.8%, 0) rotate(-0.35deg); }
-            100% { transform: scale(1.14) translate3d(2.2%, 1.2%, 0) rotate(0.35deg); }
-        }
-
-        @keyframes nachtHemelDrift {
-            0% { transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg); }
-            50% { transform: scale(1.08) translate3d(-2.2%, -1.2%, 0) rotate(0.45deg); }
-            100% { transform: scale(1.14) translate3d(1.8%, -2.5%, 0) rotate(-0.45deg); }
-        }
-
-        #sfeerCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        body.twilight-mode .bg-day { opacity: 0; }
-        body.twilight-mode .bg-day .bg-pan { animation-play-state: paused; }
-        body.twilight-mode .bg-twilight { opacity: 1; }
-        body.twilight-mode .bg-twilight .bg-pan { animation-play-state: running; }
-        body.twilight-mode .bg-night { opacity: 0; }
-        body.twilight-mode .bg-night .bg-pan { animation-play-state: paused; }
-
-        body.night-mode .bg-day { opacity: 0; }
-        body.night-mode .bg-day .bg-pan { animation-play-state: paused; }
-        body.night-mode .bg-twilight { opacity: 0; }
-        body.night-mode .bg-twilight .bg-pan { animation-play-state: paused; }
-        body.night-mode .bg-night { opacity: 1; }
-        body.night-mode .bg-night .bg-pan { animation-play-state: running; }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background: var(--overlay-bg);
-            transition: background 1.5s ease;
-            pointer-events: none;
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 650px;
-            padding: 55px 45px 45px 45px;
-            margin: 50px 20px;
-            background: var(--container-bg);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border-radius: 20px;
-            box-shadow: var(--container-shadow);
-            text-align: center;
-            border: 1px solid var(--container-border);
-            transition: background 1.2s ease, border 1.2s ease, box-shadow 1.2s ease;
-        }
-
-        .beacon-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        @keyframes ademLicht {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 10px 2px var(--beacon-glow), 0 0 22px 5px rgba(242, 193, 78, 0.15);
-                opacity: 0.8;
-            }
-            50% {
-                transform: scale(1.25);
-                box-shadow: 0 0 18px 6px var(--beacon-glow), 0 0 35px 12px rgba(242, 193, 78, 0.3);
-                opacity: 1;
-            }
-        }
-
-        .beacon-light {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: var(--beacon-color);
-            animation: ademLicht 4.5s infinite ease-in-out;
-            margin-bottom: 10px;
-            transition: transform 0.6s ease, box-shadow 0.6s ease, background-color 1s ease;
-        }
-
-        .beacon-light.birthday-glow {
-            box-shadow: 0 0 18px 6px var(--beacon-glow), 0 0 38px 14px var(--beacon-color);
-        }
-
-        .beacon-light.glow-boost {
-            transform: scale(1.8) !important;
-            box-shadow: 0 0 25px 10px var(--beacon-glow), 0 0 50px 20px var(--beacon-color) !important;
-        }
-
-        .beacon-caption {
-            font-size: 0.8em;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--beacon-color);
-            font-weight: 400;
-            opacity: 0.9;
-            transition: color 1s ease;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 600;
-            font-size: 2.6em;
-            color: var(--text-heading);
-            margin: 0 0 25px 0;
-            letter-spacing: 0.5px;
-            transition: color 1s ease;
-        }
-
-        p.message {
-            font-size: 1.15em;
-            line-height: 1.8;
-            color: var(--text-message);
-            margin-bottom: 35px;
-            font-weight: 300;
-            transition: color 1s ease;
-        }
-
-        .divider {
-            height: 1px;
-            width: 60px;
-            background-color: var(--divider-color);
-            margin: 0 auto 35px auto;
-            transition: background-color 1s ease;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 22px;
-        }
-
-        .action-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 35px;
-            background-color: var(--accent-green);
-            color: white;
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: 400;
-            border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            border: 1px solid transparent;
-            width: 100%;
-            max-width: 320px;
-            box-sizing: border-box;
-        }
-
-        .action-button:nth-child(2) {
-            background-color: var(--accent-warm);
-        }
-
-        .action-button:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.06);
-        }
-
-        .action-button svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        .anon-section {
-            margin: 0 auto 35px auto;
-            padding: 18px 20px;
-            max-width: 420px;
-            background: var(--glimp-bg);
-            border: 1px dashed var(--glimp-border);
-            border-radius: 16px;
-            transition: all 0.8s ease;
-        }
-
-        .anon-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-            padding: 11px 24px;
-            background: transparent;
-            color: var(--text-heading);
-            border: 1px solid var(--beacon-color);
-            border-radius: 30px;
-            font-family: 'Lato', sans-serif;
-            font-size: 0.96em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-        }
-
-        .anon-button:hover:not(:disabled) {
-            background: rgba(217, 160, 54, 0.12);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px var(--beacon-glow);
-        }
-
-        .anon-button:disabled {
-            cursor: default;
-            border-color: var(--accent-green);
-            background: rgba(140, 153, 135, 0.15);
-            color: var(--text-heading);
-            transform: none;
-        }
-
-        .anon-caption {
-            margin-top: 10px;
-            font-size: 0.82em;
-            line-height: 1.5;
-            color: var(--text-sub);
-            font-weight: 300;
-            transition: color 1s ease;
-        }
-
-        .logboek-container {
-            margin: 0 auto 25px auto;
-            padding: 30px 20px 25px 20px;
-            background: var(--log-bg);
-            border-radius: 15px;
-            border: 1px solid var(--log-border);
-            text-align: left;
-            transition: background 1s ease, border 1s ease;
-        }
-
-        .log-intro {
-            font-size: 1.05em;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 25px;
-            font-style: italic;
-            text-align: center;
-            transition: color 1s ease;
-        }
-
-        .log-entries {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-            border-left: 2px solid var(--log-line);
-            padding-left: 18px;
-            margin-left: 10px;
-            transition: border-color 1s ease;
-        }
-
-        .log-entry {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .log-entry::before {
-            content: '';
-            position: absolute;
-            left: -23px;
-            top: 6px;
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-green);
-            border-radius: 50%;
-            transition: background-color 1s ease, box-shadow 1s ease;
-        }
-
-        body.twilight-mode .log-entry::before,
-        body.night-mode .log-entry::before {
-            background-color: var(--beacon-color);
-            box-shadow: 0 0 8px var(--beacon-glow);
-        }
-
-        .log-date {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.9em;
-            color: var(--accent-green);
-            font-weight: 600;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
-            transition: color 1s ease;
-        }
-
-        body.twilight-mode .log-date,
-        body.night-mode .log-date {
-            color: var(--beacon-color);
-        }
-
-        .log-text {
-            font-size: 1.05em;
-            color: var(--text-message);
-            line-height: 1.5;
-            transition: color 1s ease;
-        }
-
-        details.glimp-container {
-            margin: 0 auto 35px auto;
-            background: var(--glimp-bg);
-            border: 1px solid var(--glimp-border);
-            border-radius: 15px;
-            padding: 15px 22px;
-            text-align: left;
-            transition: background 1s ease, border 1s ease;
-        }
-
-        details.glimp-container summary {
-            font-family: 'Playfair Display', serif;
-            font-size: 0.98em;
-            color: var(--text-muted);
-            cursor: pointer;
-            text-align: center;
-            list-style: none;
-            outline: none;
-            transition: color 0.3s ease;
-        }
-
-        details.glimp-container summary::-webkit-details-marker {
-            display: none;
-        }
-
-        details.glimp-container summary:hover {
-            color: var(--text-heading);
-        }
-
-        .glimp-content {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed var(--glimp-divider);
-            font-size: 0.98em;
-            line-height: 1.65;
-            color: var(--text-message);
-            font-weight: 300;
-            transition: color 1s ease, border-color 1s ease;
-        }
-
-        .decoration-icon {
-            margin: 0 auto 18px auto;
-            color: var(--beacon-color);
-            opacity: 0.85;
-            transition: color 1s ease;
-        }
-
-        .footer-note {
-            font-size: 1.25em;
-            color: var(--text-heading);
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 8px;
-            transition: color 1s ease;
-        }
-
-        .signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.75em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            transition: color 1s ease;
-        }
-
-        body.twilight-mode .signature,
-        body.night-mode .signature {
-            color: var(--beacon-color);
-        }
-
-        .sub-signature {
-            font-size: 0.85em;
-            color: var(--text-sub);
-            font-weight: 300;
-            letter-spacing: 0.5px;
-            transition: color 1s ease;
-        }
-
-        .weather-whisper {
-            margin-top: 26px;
-            font-size: 0.78em;
-            color: var(--text-sub);
-            font-weight: 300;
-            letter-spacing: 0.6px;
-            opacity: 0;
-            transition: opacity 1.2s ease, color 1s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .weather-whisper.visible {
-            opacity: 0.72;
-        }
-
-        .theme-switcher,
-        .music-switcher {
-            position: fixed;
-            bottom: 16px;
-            z-index: 10;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 14px;
-            border-radius: 30px;
-            background: var(--container-bg);
-            border: 1px solid var(--container-border);
-            color: var(--text-muted);
-            font-family: 'Lato', sans-serif;
-            font-size: 0.76em;
-            letter-spacing: 0.4px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-            opacity: 0.65;
-            transition: opacity 0.3s ease, transform 0.3s ease, background 1s ease, color 1s ease, border 1s ease, box-shadow 0.4s ease;
-        }
-
-        .theme-switcher { right: 16px; }
-        .music-switcher { left: 16px; }
-
-        .theme-switcher:hover,
-        .music-switcher:hover {
-            opacity: 0.95;
-            transform: translateY(-2px);
-        }
-
-        .theme-switcher-icon {
-            font-size: 1.05em;
-            line-height: 1;
-        }
-
-        .music-switcher.playing {
-            opacity: 0.9;
-            border-color: var(--beacon-color);
-            box-shadow: 0 4px 18px var(--beacon-glow);
-        }
-
-        @media (max-width: 600px) {
-            :root {
-                --container-bg: rgba(255, 255, 255, 0.95);
-            }
-            body.twilight-mode {
-                --container-bg: rgba(42, 36, 48, 0.94);
-            }
-            body.night-mode {
-                --container-bg: rgba(22, 27, 36, 0.95);
-            }
-            .container {
-                padding: 45px 25px 35px 25px;
-                margin-top: 90px;
-                margin-bottom: 70px;
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-            }
-            h1 {
-                font-size: 2.2em;
-            }
-            p.message {
-                font-size: 1.05em;
-            }
-            .logboek-container {
-                padding: 25px 15px;
-            }
-            .theme-switcher {
-                bottom: 12px;
-                right: 12px;
-                padding: 6px 12px;
-                font-size: 0.72em;
-            }
-            .music-switcher {
-                bottom: 12px;
-                left: 12px;
-                padding: 6px 12px;
-                font-size: 0.72em;
-            }
-        }
-    </style>
+    <style>:root{--bg-color:#F9F6F0;--overlay-bg:rgba(0,0,0,0.14);--container-bg:rgba(255,255,255,0.90);--container-border:rgba(255,255,255,0.6);--container-shadow:0 15px 50px rgba(0,0,0,0.15);--text-main:#4A4A4A;--text-heading:#333333;--text-message:#444444;--text-muted:#555555;--text-sub:#8C8884;--divider-color:#D1D1D1;--accent-green:#8C9987;--accent-warm:#CBAA99;--log-bg:rgba(140,153,135,0.08);--log-border:rgba(140,153,135,0.2);--log-line:rgba(140,153,135,0.3);--glimp-bg:rgba(255,255,255,0.6);--glimp-border:rgba(217,160,54,0.25);--glimp-divider:rgba(0,0,0,0.08);--beacon-color:#D9A036;--beacon-glow:rgba(217,160,54,0.45)}body.twilight-mode{--bg-color:#26212C;--overlay-bg:radial-gradient(circle at center,rgba(232,165,104,0.14) 0%,rgba(28,23,38,0.48) 100%);--container-bg:rgba(42,36,48,0.86);--container-border:rgba(232,165,104,0.25);--container-shadow:0 20px 55px rgba(0,0,0,0.42),0 0 35px rgba(232,165,104,0.08);--text-main:#EAE3DC;--text-heading:#FAF6F0;--text-message:#EFE9E2;--text-muted:#CBBFB6;--text-sub:#B0A39A;--divider-color:rgba(255,255,255,0.18);--accent-green:#859680;--accent-warm:#C49782;--log-bg:rgba(255,255,255,0.04);--log-border:rgba(232,165,104,0.22);--log-line:rgba(232,165,104,0.35);--glimp-bg:rgba(255,255,255,0.05);--glimp-border:rgba(232,165,104,0.25);--glimp-divider:rgba(255,255,255,0.12);--beacon-color:#F0B265;--beacon-glow:rgba(240,178,101,0.65)}body.night-mode{--bg-color:#0F141C;--overlay-bg:radial-gradient(circle at center,rgba(242,193,78,0.08) 0%,rgba(10,14,22,0.58) 100%);--container-bg:rgba(22,27,36,0.88);--container-border:rgba(242,193,78,0.18);--container-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 40px rgba(242,193,78,0.06);--text-main:#DCD9D4;--text-heading:#F7F4EF;--text-message:#E2DFDA;--text-muted:#B5B0A8;--text-sub:#9E9A93;--divider-color:rgba(255,255,255,0.15);--accent-green:#7E8F78;--accent-warm:#B89482;--log-bg:rgba(255,255,255,0.03);--log-border:rgba(242,193,78,0.16);--log-line:rgba(242,193,78,0.3);--glimp-bg:rgba(255,255,255,0.04);--glimp-border:rgba(242,193,78,0.22);--glimp-divider:rgba(255,255,255,0.1);--beacon-color:#F2C14E;--beacon-glow:rgba(242,193,78,0.7)}body,html{margin:0;padding:0;min-height:100%;font-family:'Lato',sans-serif;color:var(--text-main);display:flex;justify-content:center;align-items:center;background-color:var(--bg-color);transition:background-color 1.5s ease,color 1s ease;-webkit-user-select:none;user-select:none}.bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;transition:opacity 1.8s ease-in-out}.bg-pan{position:absolute;top:-8%;left:-8%;width:116%;height:116%;background-size:cover;background-position:center}.bg-day{opacity:1;background-color:#EFEAE1}.bg-day .bg-pan{background-image:url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=1920&auto=format&fit=crop');animation:dagDrift 85s ease-in-out infinite alternate;animation-play-state:running}.bg-twilight{opacity:0;background-color:#1F1924}.bg-twilight .bg-pan{background-image:url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1920&auto=format&fit=crop');animation:schemerDrift 95s ease-in-out infinite alternate;animation-play-state:paused;filter:contrast(1.04) saturate(1.08)}.bg-night{opacity:0;background-color:#060911}.bg-night .bg-pan{background-image:url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=1920&auto=format&fit=crop');animation:nachtHemelDrift 90s ease-in-out infinite alternate;animation-play-state:paused;filter:contrast(1.05) brightness(0.92)}@keyframes dagDrift{0%{transform:scale(1) translate3d(0,0,0) rotate(0deg)}50%{transform:scale(1.07) translate3d(1.8%,-1.2%,0) rotate(.3deg)}100%{transform:scale(1.12) translate3d(-1.5%,1.6%,0) rotate(-.3deg)}}@keyframes schemerDrift{0%{transform:scale(1.02) translate3d(-1.5%,0,0) rotate(0deg)}50%{transform:scale(1.09) translate3d(1.5%,-1.8%,0) rotate(-.35deg)}100%{transform:scale(1.14) translate3d(2.2%,1.2%,0) rotate(.35deg)}}@keyframes nachtHemelDrift{0%{transform:scale(1) translate3d(0,0,0) rotate(0deg)}50%{transform:scale(1.08) translate3d(-2.2%,-1.2%,0) rotate(.45deg)}100%{transform:scale(1.14) translate3d(1.8%,-2.5%,0) rotate(-.45deg)}}#sfeerCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}body.twilight-mode .bg-day{opacity:0}body.twilight-mode .bg-day .bg-pan{animation-play-state:paused}body.twilight-mode .bg-twilight{opacity:1}body.twilight-mode .bg-twilight .bg-pan{animation-play-state:running}body.twilight-mode .bg-night{opacity:0}body.twilight-mode .bg-night .bg-pan{animation-play-state:paused}body.night-mode .bg-day{opacity:0}body.night-mode .bg-day .bg-pan{animation-play-state:paused}body.night-mode .bg-twilight{opacity:0}body.night-mode .bg-twilight .bg-pan{animation-play-state:paused}body.night-mode .bg-night{opacity:1}body.night-mode .bg-night .bg-pan{animation-play-state:running}.overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background:var(--overlay-bg);transition:background 1.5s ease;pointer-events:none}.container{position:relative;z-index:1;max-width:650px;padding:55px 45px 45px 45px;margin:50px 20px;background:var(--container-bg);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:20px;box-shadow:var(--container-shadow);text-align:center;border:1px solid var(--container-border);transition:background 1.2s ease,border 1.2s ease,box-shadow 1.2s ease}.beacon-wrapper{display:flex;flex-direction:column;align-items:center;margin-bottom:16px}@keyframes ademLicht{0%,100%{transform:scale(1);box-shadow:0 0 10px 2px var(--beacon-glow),0 0 22px 5px rgba(242,193,78,0.15);opacity:.8}50%{transform:scale(1.25);box-shadow:0 0 18px 6px var(--beacon-glow),0 0 35px 12px rgba(242,193,78,0.3);opacity:1}}.beacon-light{width:10px;height:10px;border-radius:50%;background-color:var(--beacon-color);animation:ademLicht 4.5s infinite ease-in-out;margin-bottom:10px;transition:transform .6s ease,box-shadow .6s ease,background-color 1s ease}.beacon-light.birthday-glow{box-shadow:0 0 18px 6px var(--beacon-glow),0 0 38px 14px var(--beacon-color)}.beacon-light.glow-boost{transform:scale(1.8)!important;box-shadow:0 0 25px 10px var(--beacon-glow),0 0 50px 20px var(--beacon-color)!important}.beacon-caption{font-size:.8em;letter-spacing:1.5px;text-transform:uppercase;color:var(--beacon-color);font-weight:400;opacity:.9;transition:color 1s ease}h1{font-family:'Playfair Display',serif;font-weight:600;font-size:2.6em;color:var(--text-heading);margin:0 0 25px 0;letter-spacing:.5px;transition:color 1s ease}p.message{font-size:1.15em;line-height:1.8;color:var(--text-message);margin-bottom:35px;font-weight:300;transition:color 1s ease}.divider{height:1px;width:60px;background-color:var(--divider-color);margin:0 auto 35px auto;transition:background-color 1s ease}.button-group{display:flex;flex-direction:column;gap:15px;align-items:center;margin-bottom:22px}.action-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;padding:16px 35px;background-color:var(--accent-green);color:#fff;text-decoration:none;font-size:1.1em;font-weight:400;border-radius:50px;box-shadow:0 8px 25px rgba(0,0,0,0.18);transition:all .4s cubic-bezier(.165,.84,.44,1);border:1px solid transparent;width:100%;max-width:320px;box-sizing:border-box}.action-button:nth-child(2){background-color:var(--accent-warm)}.action-button:hover{transform:translateY(-3px);filter:brightness(1.06)}.action-button svg{width:20px;height:20px;fill:currentColor}.anon-section{margin:0 auto 35px auto;padding:18px 20px;max-width:420px;background:var(--glimp-bg);border:1px dashed var(--glimp-border);border-radius:16px;transition:all .8s ease}.anon-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:11px 24px;background:transparent;color:var(--text-heading);border:1px solid var(--beacon-color);border-radius:30px;font-family:'Lato',sans-serif;font-size:.96em;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 10px rgba(0,0,0,0.04)}.anon-button:hover:not(:disabled){background:rgba(217,160,54,0.12);transform:translateY(-2px);box-shadow:0 4px 15px var(--beacon-glow)}.anon-button:disabled{cursor:default;border-color:var(--accent-green);background:rgba(140,153,135,0.15);color:var(--text-heading);transform:none}.anon-caption{margin-top:10px;font-size:.82em;line-height:1.5;color:var(--text-sub);font-weight:300;transition:color 1s ease}.logboek-container{margin:0 auto 25px auto;padding:30px 20px 25px 20px;background:var(--log-bg);border-radius:15px;border:1px solid var(--log-border);text-align:left;transition:background 1s ease,border 1s ease}.log-intro{font-size:1.05em;color:var(--text-muted);line-height:1.6;margin-bottom:25px;font-style:italic;text-align:center;transition:color 1s ease}.log-entries{display:flex;flex-direction:column;gap:18px;border-left:2px solid var(--log-line);padding-left:18px;margin-left:10px;transition:border-color 1s ease}.log-entry{display:flex;flex-direction:column;position:relative}.log-entry::before{content:'';position:absolute;left:-23px;top:6px;width:8px;height:8px;background-color:var(--accent-green);border-radius:50%;transition:background-color 1s ease,box-shadow 1s ease}body.twilight-mode .log-entry::before,body.night-mode .log-entry::before{background-color:var(--beacon-color);box-shadow:0 0 8px var(--beacon-glow)}.log-date{font-family:'Playfair Display',serif;font-size:.9em;color:var(--accent-green);font-weight:600;margin-bottom:4px;letter-spacing:.5px;transition:color 1s ease}body.twilight-mode .log-date,body.night-mode .log-date{color:var(--beacon-color)}.log-text{font-size:1.05em;color:var(--text-message);line-height:1.5;transition:color 1s ease}details.glimp-container{margin:0 auto 35px auto;background:var(--glimp-bg);border:1px solid var(--glimp-border);border-radius:15px;padding:15px 22px;text-align:left;transition:background 1s ease,border 1s ease}details.glimp-container summary{font-family:'Playfair Display',serif;font-size:.98em;color:var(--text-muted);cursor:pointer;text-align:center;list-style:none;outline:none;transition:color .3s ease}details.glimp-container summary::-webkit-details-marker{display:none}details.glimp-container summary:hover{color:var(--text-heading)}.glimp-content{margin-top:15px;padding-top:15px;border-top:1px dashed var(--glimp-divider);font-size:.98em;line-height:1.65;color:var(--text-message);font-weight:300;transition:color 1s ease,border-color 1s ease}.decoration-icon{margin:0 auto 18px auto;color:var(--beacon-color);opacity:.85;transition:color 1s ease}.footer-note{font-size:1.25em;color:var(--text-heading);font-family:'Playfair Display',serif;margin-bottom:8px;transition:color 1s ease}.signature{font-family:'Dancing Script',cursive;font-size:1.75em;color:var(--text-muted);margin-bottom:4px;transition:color 1s ease}body.twilight-mode .signature,body.night-mode .signature{color:var(--beacon-color)}.sub-signature{font-size:.85em;color:var(--text-sub);font-weight:300;letter-spacing:.5px;transition:color 1s ease}.weather-whisper{margin-top:26px;font-size:.78em;color:var(--text-sub);font-weight:300;letter-spacing:.6px;opacity:0;transition:opacity 1.2s ease,color 1s ease;display:flex;align-items:center;justify-content:center;gap:6px}.weather-whisper.visible{opacity:.72}.theme-switcher,.music-switcher{position:fixed;bottom:16px;z-index:10;display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:30px;background:var(--container-bg);border:1px solid var(--container-border);color:var(--text-muted);font-family:'Lato',sans-serif;font-size:.76em;letter-spacing:.4px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.12);opacity:.65;transition:opacity .3s ease,transform .3s ease,background 1s ease,color 1s ease,border 1s ease,box-shadow .4s ease}.theme-switcher{right:16px}.music-switcher{left:16px}.theme-switcher:hover,.music-switcher:hover{opacity:.95;transform:translateY(-2px)}.theme-switcher-icon{font-size:1.05em;line-height:1}.music-switcher.playing{opacity:.9;border-color:var(--beacon-color);box-shadow:0 4px 18px var(--beacon-glow)}@media (max-width:600px){:root{--container-bg:rgba(255,255,255,0.95)}body.twilight-mode{--container-bg:rgba(42,36,48,0.94)}body.night-mode{--container-bg:rgba(22,27,36,0.95)}.container{padding:45px 25px 35px 25px;margin-top:90px;margin-bottom:70px;backdrop-filter:none;-webkit-backdrop-filter:none}h1{font-size:2.2em}p.message{font-size:1.05em}.logboek-container{padding:25px 15px}.theme-switcher{bottom:12px;right:12px;padding:6px 12px;font-size:.72em}.music-switcher{bottom:12px;left:12px;padding:6px 12px;font-size:.72em}}</style>
 </head>
 <body>
 
-    <div class="bg-layer bg-day">
-        <div class="bg-pan"></div>
-    </div>
-    <div class="bg-layer bg-twilight">
-        <div class="bg-pan"></div>
-    </div>
-    <div class="bg-layer bg-night">
-        <div class="bg-pan"></div>
-    </div>
+    <div class="bg-layer bg-day"><div class="bg-pan"></div></div>
+    <div class="bg-layer bg-twilight"><div class="bg-pan"></div></div>
+    <div class="bg-layer bg-night"><div class="bg-pan"></div></div>
 
     <canvas id="sfeerCanvas"></canvas>
-
     <div class="overlay"></div>
 
     <button id="musicSwitcher" class="music-switcher" onclick="wisselMuziek()" title="Zet de achtergrondmuziek aan of uit">
@@ -684,16 +50,12 @@
         
         <div class="button-group">
             <a href="https://www.youtube.com/watch?v=w0ZHlp6atUQ" target="_blank" class="action-button">
-                <svg viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                </svg>
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                 Luister "You'll Be In My Heart"
             </a>
 
             <a href="javascript:void(0)" onclick="stuurMail()" class="action-button">
-                <svg viewBox="0 0 24 24">
-                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                 Mail mij
             </a>
         </div>
@@ -708,6 +70,9 @@
             </div>
         </div>
 
+        <!-- ================================================================= -->
+        <!-- LOGBOEK GEDEELTE (Hier kun je zelf eenvoudig nieuwe blokken plaatsen) -->
+        <!-- ================================================================= -->
         <div class="logboek-container">
             <div class="log-intro">
                 Ergens voel ik dat we elkaar weer zullen spreken rond de tijd dat je twintig bent. Tot dat moment vallen de stilte en het wachten me soms onnoemelijk zwaar, maar voor jou heb ik al het geduld van de wereld.
@@ -730,6 +95,7 @@
                 </div>
             </div>
         </div>
+        <!-- ================================================================= -->
 
         <details class="glimp-container">
             <summary>✦ Een klein glimpje van ons leven nu (alleen als je nieuwsgierig bent)</summary>
@@ -740,704 +106,291 @@
 
         <div class="decoration-icon">
             <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="4"/>
-                <path d="M12 2v3"/>
-                <path d="M12 19v3"/>
-                <path d="m4.93 4.93 2.12 2.12"/>
-                <path d="m16.95 16.95 2.12 2.12"/>
-                <path d="M2 12h3"/>
-                <path d="M19 12h3"/>
-                <path d="m4.93 19.07 2.12-2.12"/>
-                <path d="m16.95 7.05 2.12-2.12"/>
+                <circle cx="12" cy="12" r="4"/><path d="M12 2v3"/><path d="M12 19v3"/><path d="m4.93 4.93 2.12 2.12"/><path d="m16.95 16.95 2.12 2.12"/><path d="M2 12h3"/><path d="M19 12h3"/><path d="m4.93 19.07 2.12-2.12"/><path d="m16.95 7.05 2.12-2.12"/>
             </svg>
         </div>
 
-        <div class="footer-note">
-            Ons huis is jouw thuis.
-        </div>
-        <div class="signature">
-            Liefs, papa
-        </div>
-        <div class="sub-signature">
-            &amp; Jolien en Fianne
-        </div>
-
+        <div class="footer-note">Ons huis is jouw thuis.</div>
+        <div class="signature">Liefs, papa</div>
+        <div class="sub-signature">&amp; Jolien en Fianne</div>
         <div id="dordrechtWeer" class="weather-whisper"></div>
     </div>
 
     <script>
-        function stuurMail() {
-            var deel1 = "jpsdelaaf";
-            var deel2 = "gmail.com";
-            window.location.href = "mailto:" + deel1 + "@" + deel2;
-        }
+    (function(){
+        const _0x = [
+            "bWFpbHRvOmpwc2RlbGFhZkBnbWFpbC5jb20=",
+            "aHR0cHM6Ly9hcGkud2ViM2Zvcm1zLmNvbS9zdWJtaXQ=",
+            "ZTYwMTE5Y2QtNTU3NS00N2EzLThhOTYtMjU3ZGUyNDBkZDEx",
+            "4pyoIEVyIGlzIGVlbiBhbm9uaWVtIHRla2VuIGFjaHRlcmdlbGF0ZW4gb3AgZGUgcGFnaW5hIHZhbiBGZWxpY2lh",
+            "RmVsaWNpYSBQYWdpbmE=",
+            "SWVtYW5kIGhlZWZ0IHpvanVpc3QgYW5vbmllbSBvcCBkZSBrbm9wICdMYWF0IGVlbiBzdGlsIHRla2VuIGFjaHRlcicgZ2VkcnVrdC5cbkxkYXR1bSBlbiB0aWpkOiA=",
+            "VmFuZGFhZyBicmFuZHQgZGl0IGxpY2h0amUgbm9nIGVlbiBrbGVpbiBiZWV0amUgZmVsbGVyIHZvb3Igam91",
+            "RGUgZGFnIG9udHdhYWt0IHJ1c3RpZyDigJQgZGl0IGxpY2h0amUgYnJhbmR0IGFsdGlqZCB2b29yIGpvdQ==",
+            "VGVyd2lqbCBkZSBzY2hlbWVyaW5n vag0dGFsdCBkaXQgbGljaHRqZSBoaWVyIHZvb3Igam91",
+            "T29rIGluIGhldCBkb25rZXIgYnJhbmR0IGVyIGhpZXIgZWVuIGxpY2h0amUgdm9vciBqZQ==",
+            "RGl0IGxpY2h0amUgYnJhbmR0IGFsdGlqZCB2b29yIGpvdQ==",
+            "aHR0cHM6Ly9hcGkub3Blbi1tZXRlby5jb20vdjEvZm9yZWNhc3Q/bGF0aXR1ZGU9NTEuODEzMyZsb25naXR1ZGU9NC42OTAxJmN1cnJlbnQ9dGVtcGVyYXR1cmVfMm0sd2VhdGhlcl9jb2RlLGlzX2RheSZ0aW1lem9uZT1FdXJvcGUlMkZBbXN0ZXJkYW0="
+        ];
+        const _d = function(i){ return decodeURIComponent(escape(window.atob(_0x[i]))); };
 
-        function stuurAnoniemTeken() {
-            var btn = document.getElementById("anonBtn");
-            var btnText = document.getElementById("anonBtnText");
-            var icon = document.getElementById("anonIcon");
-            var caption = document.getElementById("anonCaption");
-            var beaconLight = document.getElementById("beaconLight");
+        document.addEventListener("contextmenu", function(e){ e.preventDefault(); });
+        document.addEventListener("keydown", function(e){
+            if(e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83))){
+                e.preventDefault();
+                return false;
+            }
+        });
 
-            btn.disabled = true;
-            icon.innerText = "🤎";
-            btnText.innerText = "Je stille teken wordt achtergelaten...";
+        window.stuurMail = function(){ window.location.href = _d(0); };
 
-            beaconLight.classList.add("glow-boost");
-            setTimeout(function() {
-                beaconLight.classList.remove("glow-boost");
-            }, 2500);
-
-            var tijdstip = new Date().toLocaleString("nl-NL");
-
-            fetch("https://api.web3forms.com/submit", {
+        window.stuurAnoniemTeken = function(){
+            var b = document.getElementById("anonBtn"), bt = document.getElementById("anonBtnText"), ic = document.getElementById("anonIcon"), cp = document.getElementById("anonCaption"), bl = document.getElementById("beaconLight");
+            b.disabled = true; ic.innerText = "🤎"; bt.innerText = "Je stille teken wordt achtergelaten...";
+            bl.classList.add("glow-boost"); setTimeout(function(){ bl.classList.remove("glow-boost"); }, 2500);
+            fetch(_d(1), {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    access_key: "e60119cd-5575-47a3-8a96-257de240dd11",
-                    subject: "✨ Er is een anoniem teken achtergelaten op de pagina van Felicia",
-                    from_name: "Felicia Pagina",
-                    message: "Iemand heeft zojuist anoniem op de knop 'Laat een stil teken achter' gedrukt.\n\nDatum en tijd: " + tijdstip
-                })
-            })
-            .then(function() {
-                btnText.innerText = "Dankjewel. Je stille teken is achtergelaten";
-                caption.innerText = "Fijn dat je hier even was. Alles is volledig anoniem gebleven.";
-            })
-            .catch(function() {
-                btnText.innerText = "Dankjewel. Je stille teken is achtergelaten";
-                caption.innerText = "Fijn dat je hier even was.";
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify({ access_key: _d(2), subject: _d(3), from_name: _d(4), message: _d(5) + new Date().toLocaleString("nl-NL") })
+            }).then(function(){
+                bt.innerText = "Dankjewel. Je stille teken is achtergelaten";
+                cp.innerText = "Fijn dat je hier even was. Alles is volledig anoniem gebleven.";
+            }).catch(function(){
+                bt.innerText = "Dankjewel. Je stille teken is achtergelaten";
+                cp.innerText = "Fijn dat je hier even was.";
             });
+        };
+
+        var _sc = [[7.92,8.67,17,17.75],[7.25,7.92,17.92,18.58],[6.25,6.92,18.75,19.42],[6,6.75,20.67,21.42],[5,5.83,21.42,22.25],[4.5,5.33,22,22.92],[4.83,5.67,21.83,22.67],[5.75,6.42,21.08,21.83],[6.58,7.25,19.92,20.58],[7.42,8.08,18.83,19.5],[7.33,8,16.83,17.5],[8,8.75,16.5,17.25]];
+        var _to = ["auto","day","twilight","night"], _ti = 0, _as = "day";
+
+        function _ps(sf, io){
+            _as = sf;
+            var bt = document.getElementById("beaconText"), bl = document.getElementById("beaconLight"), n = new Date();
+            var _sp = (n.getDate() === (0x17) && n.getMonth() === (0x0));
+            document.body.classList.remove("twilight-mode","night-mode");
+            if(sf === "twilight") document.body.classList.add("twilight-mode");
+            else if(sf === "night") document.body.classList.add("night-mode");
+
+            if(_sp){
+                bl.classList.add("birthday-glow");
+                bt.innerText = _d(6);
+            } else {
+                bl.classList.remove("birthday-glow");
+                if(sf === "twilight") bt.innerText = io ? _d(7) : _d(8);
+                else if(sf === "night") bt.innerText = _d(9);
+                else bt.innerText = _d(10);
+            }
         }
 
-        var dordrechtSchema = [
-            [7.92, 8.67, 17.00, 17.75],
-            [7.25, 7.92, 17.92, 18.58],
-            [6.25, 6.92, 18.75, 19.42],
-            [6.00, 6.75, 20.67, 21.42],
-            [5.00, 5.83, 21.42, 22.25],
-            [4.50, 5.33, 22.00, 22.92],
-            [4.83, 5.67, 21.83, 22.67],
-            [5.75, 6.42, 21.08, 21.83],
-            [6.58, 7.25, 19.92, 20.58],
-            [7.42, 8.08, 18.83, 19.50],
-            [7.33, 8.00, 16.83, 17.50],
-            [8.00, 8.75, 16.50, 17.25]
+        function _cs(){
+            var gm = _to[_ti];
+            if(gm !== "auto"){ _ps(gm, false); return; }
+            var n = new Date(), m = n.getMonth(), td = n.getHours() + (n.getMinutes() / 60), t = _sc[m];
+            if(td >= t[0] && td < t[1]) _ps("twilight", true);
+            else if(td >= t[1] && td < t[2]) _ps("day", false);
+            else if(td >= t[2] && td < t[3]) _ps("twilight", false);
+            else _ps("night", false);
+        }
+
+        window.wisselSfeerHandmatig = function(){
+            _ti = (_ti + 1) % _to.length;
+            var m = _to[_ti], ic = document.getElementById("themeIcon"), lb = document.getElementById("themeLabel");
+            if(m === "auto"){ ic.innerText = "🕰️"; lb.innerText = "Sfeer: Auto"; }
+            else if(m === "day"){ ic.innerText = "☀️"; lb.innerText = "Sfeer: Dag"; }
+            else if(m === "twilight"){ ic.innerText = "🌅"; lb.innerText = "Sfeer: Schemer"; }
+            else if(m === "night"){ ic.innerText = "🌙"; lb.innerText = "Sfeer: Nacht"; }
+            _cs();
+        };
+
+        var _ma = false, _ac = null, _mg = null, _mi = null, _ms = 0;
+        var _ak = [
+            {bass:130.81,pad:[261.63,329.63,392,493.88],pluck:[261.63,329.63,392,493.88,523.25,392,329.63,392],melody:[659.25,null,null,587.33,523.25,null,392,null]},
+            {bass:123.47,pad:[246.94,293.66,392,440],pluck:[246.94,293.66,392,493.88,587.33,392,293.66,392],melody:[587.33,null,null,523.25,493.88,null,392,null]},
+            {bass:110,pad:[220,261.63,329.63,392],pluck:[220,261.63,329.63,440,523.25,392,329.63,261.63],melody:[523.25,null,587.33,null,659.25,null,440,null]},
+            {bass:87.31,pad:[174.61,261.63,329.63,440],pluck:[174.61,261.63,329.63,440,523.25,440,329.63,261.63],melody:[440,null,523.25,null,392,null,null,null]}
         ];
 
-        var themaOpties = ["auto", "day", "twilight", "night"];
-        var huidigeThemaIndex = 0;
-        var actieveSfeer = "day";
-
-        function pasSfeerToe(sfeer, isOchtend) {
-            actieveSfeer = sfeer;
-            var beaconText = document.getElementById("beaconText");
-            var beaconLight = document.getElementById("beaconLight");
-            var nu = new Date();
-            var isSpecialeDag = (nu.getDate() === 23 && nu.getMonth() === 0);
-
-            document.body.classList.remove("twilight-mode", "night-mode");
-
-            if (sfeer === "twilight") {
-                document.body.classList.add("twilight-mode");
-            } else if (sfeer === "night") {
-                document.body.classList.add("night-mode");
+        function _im(){
+            if(_ac) return;
+            var AC = window.AudioContext || window.webkitAudioContext;
+            _ac = new AC(); _mg = _ac.createGain(); _mg.gain.value = 0.0001;
+            var cv = _ac.createConvolver(), rt = _ac.sampleRate, ln = Math.floor(rt * 3.2), imp = _ac.createBuffer(2, ln, rt);
+            for(var c = 0; c < 2; c++){
+                var d = imp.getChannelData(c);
+                for(var i = 0; i < ln; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / ln, 2.5);
             }
+            cv.buffer = imp;
+            var wg = _ac.createGain(), dg = _ac.createGain();
+            wg.gain.value = 0.48; dg.gain.value = 0.72;
+            _mg.connect(dg); _mg.connect(cv); cv.connect(wg); dg.connect(_ac.destination); wg.connect(_ac.destination);
+        }
 
-            if (isSpecialeDag) {
-                beaconLight.classList.add("birthday-glow");
-                beaconText.innerText = "Vandaag brandt dit lichtje nog een klein beetje feller voor jou";
+        function _gt(f, t, d, v){
+            if(!_ac) return;
+            var o1 = _ac.createOscillator(), o2 = _ac.createOscillator(), fl = _ac.createBiquadFilter(), g = _ac.createGain(), hg = _ac.createGain();
+            o1.type = "triangle"; o2.type = "sine"; o1.frequency.setValueAtTime(f, t); o2.frequency.setValueAtTime(f * 2, t);
+            fl.type = "lowpass"; fl.frequency.setValueAtTime(f * 4.2, t); fl.frequency.exponentialRampToValueAtTime(f * 1.15, t + d * 0.8);
+            g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0004, t + d);
+            hg.gain.value = 0.16; o1.connect(fl); o2.connect(hg); hg.connect(fl); fl.connect(g); g.connect(_mg);
+            o1.start(t); o2.start(t); o1.stop(t + d); o2.stop(t + d);
+        }
+
+        function _pn(f, t, d, v){
+            if(!_ac || !f) return;
+            var o = _ac.createOscillator(), s = _ac.createOscillator(), fl = _ac.createBiquadFilter(), g = _ac.createGain();
+            o.type = "sine"; s.type = "triangle"; o.frequency.setValueAtTime(f, t); s.frequency.setValueAtTime(f, t); s.detune.setValueAtTime(4, t);
+            fl.type = "lowpass"; fl.frequency.setValueAtTime(1500, t); fl.frequency.exponentialRampToValueAtTime(420, t + d);
+            g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + 0.035); g.gain.exponentialRampToValueAtTime(0.0004, t + d);
+            o.connect(fl); s.connect(fl); fl.connect(g); g.connect(_mg);
+            o.start(t); s.start(t); o.stop(t + d); s.stop(t + d);
+        }
+
+        function _sa(fs, bf, t, d, v){
+            if(!_ac) return;
+            var af = [bf].concat(fs);
+            for(var i = 0; i < af.length; i++){
+                var f = af[i], o = _ac.createOscillator(), fl = _ac.createBiquadFilter(), g = _ac.createGain();
+                o.type = i === 0 ? "sawtooth" : "triangle"; o.frequency.setValueAtTime(f, t); o.detune.setValueAtTime((i % 2 === 0 ? 1 : -1) * 5, t);
+                fl.type = "lowpass"; fl.frequency.setValueAtTime(i === 0 ? 340 : 880, t);
+                var nv = i === 0 ? v * 1.1 : v * 0.6;
+                g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(nv, t + d * 0.45); g.gain.exponentialRampToValueAtTime(0.0004, t + d);
+                o.connect(fl); fl.connect(g); g.connect(_mg); o.start(t); o.stop(t + d);
+            }
+        }
+
+        function _pms(){
+            if(!_ma || !_ac || document.hidden) return;
+            var n = _ac.currentTime + 0.05, ai = Math.floor(_ms / 8) % _ak.length, sm = _ms % 8, ak = _ak[ai];
+            if(sm === 0){ _gt(ak.bass, n, 2.5, 0.13); _sa(ak.pad, ak.bass, n, 2.9, 0.042); }
+            _gt(ak.pluck[sm], n, 1.6, sm === 0 ? 0.10 : 0.075);
+            if(ak.melody[sm]) _pn(ak.melody[sm], n, 2.3, 0.10);
+            _ms++;
+        }
+
+        window.wisselMuziek = function(){
+            _im();
+            var b = document.getElementById("musicSwitcher"), ic = document.getElementById("musicIcon"), lb = document.getElementById("musicLabel");
+            if(!_ma){
+                if(_ac.state === "suspended") _ac.resume();
+                _ma = true; _mg.gain.cancelScheduledValues(_ac.currentTime);
+                _mg.gain.setValueAtTime(Math.max(0.0001, _mg.gain.value), _ac.currentTime);
+                _mg.gain.linearRampToValueAtTime(0.65, _ac.currentTime + 1.2);
+                _pms(); _mi = setInterval(_pms, 350);
+                b.classList.add("playing"); ic.innerText = "🎶"; lb.innerText = "Muziek: Aan";
             } else {
-                beaconLight.classList.remove("birthday-glow");
-                if (sfeer === "twilight") {
-                    if (isOchtend) {
-                        beaconText.innerText = "De dag ontwaakt rustig — dit lichtje brandt altijd voor jou";
-                    } else {
-                        beaconText.innerText = "Terwijl de schemering valt, brandt dit lichtje hier voor jou";
+                _ma = false; if(_mi){ clearInterval(_mi); _mi = null; }
+                _mg.gain.cancelScheduledValues(_ac.currentTime);
+                _mg.gain.setTargetAtTime(0.0001, _ac.currentTime, 0.35);
+                b.classList.remove("playing"); ic.innerText = "🎵"; lb.innerText = "Muziek: Uit";
+            }
+        };
+
+        var _cv = document.getElementById("sfeerCanvas"), _cx = _cv.getContext("2d"), _sb = 0, _sh = 0;
+        var _dd = [], _sd = [], _ns = [], _vs = null, _md = 0, _msc = 0, _mn = 0;
+
+        function _id(){
+            _dd = [];
+            var ad = Math.max(40, Math.min(Math.floor((_sb * _sh) / 24000), 85)), dk = ["255, 252, 240","255, 238, 195","242, 193, 78"];
+            for(var i = 0; i < ad; i++){
+                var ib = Math.random() < 0.22;
+                _dd.push({x:Math.random()*_sb,y:Math.random()*_sh,straal:ib?(4+Math.random()*10):(1.1+Math.random()*2.2),basisAlpha:ib?(0.06+Math.random()*0.09):(0.22+Math.random()*0.35),fase:Math.random()*Math.PI*2,faseSnelheid:0.005+Math.random()*0.01,snelheidX:0.08+Math.random()*0.14,snelheidY:-(0.06+Math.random()*0.12),kleur:dk[Math.floor(Math.random()*dk.length)],isBokeh:ib});
+            }
+            _sd = [];
+            var asc = Math.max(60, Math.min(Math.floor((_sb * _sh) / 16000), 120));
+            for(var j = 0; j < asc; j++){
+                var ia = j < asc * 0.55;
+                _sd.push({x:Math.random()*_sb,y:ia?(Math.random()*_sh*0.65):(_sh*0.3+Math.random()*_sh*0.7),straal:ia?(0.6+Math.random()*1.1):(1.5+Math.random()*3.2),basisAlpha:ia?(0.2+Math.random()*0.45):(0.14+Math.random()*0.28),fase:Math.random()*Math.PI*2,faseSnelheid:0.006+Math.random()*0.014,snelheidX:ia?-0.02:(0.04-Math.random()*0.08),snelheidY:ia?-0.006:-(0.08+Math.random()*0.14),kleur:ia?"255, 244, 228":(Math.random()<0.5?"240, 178, 101":"232, 145, 95"),gloed:!ia});
+            }
+            _ns = [];
+            var an = Math.max(110, Math.min(Math.floor((_sb * _sh) / 9000), 220)), nk = ["255, 255, 255","255, 246, 224","216, 232, 255","242, 193, 78"];
+            for(var k = 0; k < an; k++){
+                var l = Math.random(), dp = l < 0.6 ? 1 : (l < 0.9 ? 2 : 3), ki = Math.random() < 0.14 ? 3 : Math.floor(Math.random() * 3);
+                _ns.push({x:Math.random()*_sb,y:Math.random()*_sh,straal:dp===1?(0.4+Math.random()*0.5):(dp===2?(0.8+Math.random()*0.6):(1.3+Math.random()*0.8)),basisAlpha:dp===1?(0.25+Math.random()*0.35):(0.45+Math.random()*0.45),fase:Math.random()*Math.PI*2,faseSnelheid:0.006+Math.random()*0.016,snelheidX:-0.025*dp,snelheidY:-0.008*dp,kleur:nk[ki],gloed:dp===3});
+            }
+        }
+
+        function _ssc(fi){
+            var nb = window.innerWidth, nh = window.innerHeight, bv = Math.abs(nb - _sb) > 10, dpr = Math.min(window.devicePixelRatio || 1, 1.25);
+            _sb = nb; _sh = nh; _cv.width = _sb * dpr; _cv.height = _sh * dpr; _cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            if(fi === true || bv) _id();
+        }
+
+        function _pvs(){
+            _vs = {x:Math.random()*(_sb*0.75)+(_sb*0.15),y:Math.random()*(_sh*0.35),lengte:70+Math.random()*50,snelheidX:-(4.5+Math.random()*2.5),snelheidY:2.2+Math.random()*1.5,alpha:0,fase:"in"};
+        }
+
+        function _tsc(){
+            if(document.hidden){ requestAnimationFrame(_tsc); return; }
+            _md += ((_as === "day" ? 1 : 0) - _md) * 0.035;
+            _msc += ((_as === "twilight" ? 1 : 0) - _msc) * 0.035;
+            _mn += ((_as === "night" ? 1 : 0) - _mn) * 0.035;
+            _cx.clearRect(0, 0, _sb, _sh);
+
+            if(_md > 0.01){
+                for(var i = 0; i < _dd.length; i++){
+                    var d = _dd[i]; d.x += d.snelheidX + Math.sin(d.fase) * 0.08; d.y += d.snelheidY; d.fase += d.faseSnelheid;
+                    if(d.x > _sb + 20) d.x = -20; if(d.x < -20) d.x = _sb + 20; if(d.y < -20) d.y = _sh + 20;
+                    var da = Math.max(0.02, d.basisAlpha + Math.sin(d.fase) * (d.isBokeh ? 0.03 : 0.12)) * _md;
+                    _cx.beginPath(); _cx.arc(d.x, d.y, d.straal, 0, Math.PI * 2); _cx.fillStyle = "rgba(" + d.kleur + ", " + da + ")"; _cx.fill();
+                }
+            }
+            if(_msc > 0.01){
+                for(var j = 0; j < _sd.length; j++){
+                    var sc = _sd[j]; sc.x += sc.snelheidX + (sc.gloed ? Math.sin(sc.fase) * 0.06 : 0); sc.y += sc.snelheidY; sc.fase += sc.faseSnelheid;
+                    if(sc.x < -10) sc.x = _sb + 10; if(sc.x > _sb + 10) sc.x = -10; if(sc.y < -10) sc.y = _sh + 10;
+                    var sa = Math.max(0.04, sc.basisAlpha + Math.sin(sc.fase) * 0.16) * _msc;
+                    _cx.beginPath(); _cx.arc(sc.x, sc.y, sc.straal, 0, Math.PI * 2); _cx.fillStyle = "rgba(" + sc.kleur + ", " + sa + ")"; _cx.fill();
+                    if(sc.gloed){ _cx.beginPath(); _cx.arc(sc.x, sc.y, sc.straal * 2.8, 0, Math.PI * 2); _cx.fillStyle = "rgba(" + sc.kleur + ", " + (sa * 0.22) + ")"; _cx.fill(); }
+                }
+            }
+            if(_mn > 0.01){
+                for(var k = 0; k < _ns.length; k++){
+                    var s = _ns[k]; s.x += s.snelheidX; s.y += s.snelheidY; s.fase += s.faseSnelheid;
+                    if(s.x < -5) s.x = _sb + 5; if(s.y < -5) s.y = _sh + 5;
+                    var na = Math.max(0.08, Math.min(1, s.basisAlpha + Math.sin(s.fase) * 0.25)) * _mn;
+                    _cx.beginPath(); _cx.arc(s.x, s.y, s.straal, 0, Math.PI * 2); _cx.fillStyle = "rgba(" + s.kleur + ", " + na + ")"; _cx.fill();
+                    if(s.gloed && na > 0.4){ _cx.beginPath(); _cx.arc(s.x, s.y, s.straal * 3.2, 0, Math.PI * 2); _cx.fillStyle = "rgba(" + s.kleur + ", " + (na * 0.14) + ")"; _cx.fill(); }
+                }
+                if(_vs){
+                    var v = _vs; v.x += v.snelheidX; v.y += v.snelheidY;
+                    if(v.fase === "in"){ v.alpha += 0.04; if(v.alpha >= 0.85) v.fase = "uit"; } else v.alpha -= 0.015;
+                    var va = v.alpha * _mn;
+                    if(v.alpha <= 0 || v.x < -100 || v.y > _sh + 100) _vs = null;
+                    else {
+                        var sx = v.x - (v.snelheidX * (v.lengte / 6)), sy = v.y - (v.snelheidY * (v.lengte / 6)), gr = _cx.createLinearGradient(v.x, v.y, sx, sy);
+                        gr.addColorStop(0, "rgba(255, 248, 225, " + va + ")"); gr.addColorStop(0.3, "rgba(242, 193, 78, " + (va * 0.5) + ")"); gr.addColorStop(1, "rgba(255, 255, 255, 0)");
+                        _cx.beginPath(); _cx.moveTo(v.x, v.y); _cx.lineTo(sx, sy); _cx.strokeStyle = gr; _cx.lineWidth = 1.4; _cx.lineCap = "round"; _cx.stroke();
                     }
-                } else if (sfeer === "night") {
-                    beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
-                } else {
-                    beaconText.innerText = "Dit lichtje brandt altijd voor jou";
-                }
+                } else if(_mn > 0.7 && Math.random() < 0.0007) _pvs();
             }
+            requestAnimationFrame(_tsc);
         }
 
-        function controleerSfeerDordrecht() {
-            var gekozenModus = themaOpties[huidigeThemaIndex];
+        window.addEventListener("resize", function(){ _ssc(false); });
+        _ssc(true);
 
-            if (gekozenModus !== "auto") {
-                pasSfeerToe(gekozenModus, false);
-                return;
-            }
-
-            var nu = new Date();
-            var maand = nu.getMonth();
-            var tijdDecimaal = nu.getHours() + (nu.getMinutes() / 60);
-
-            var tijden = dordrechtSchema[maand];
-            var ochtendSchemer = tijden[0];
-            var dagStart = tijden[1];
-            var avondSchemer = tijden[2];
-            var nachtStart = tijden[3];
-
-            if (tijdDecimaal >= ochtendSchemer && tijdDecimaal < dagStart) {
-                pasSfeerToe("twilight", true);
-            } else if (tijdDecimaal >= dagStart && tijdDecimaal < avondSchemer) {
-                pasSfeerToe("day", false);
-            } else if (tijdDecimaal >= avondSchemer && tijdDecimaal < nachtStart) {
-                pasSfeerToe("twilight", false);
-            } else {
-                pasSfeerToe("night", false);
-            }
+        function _hwd(){
+            fetch(_d(11)).then(function(r){ return r.json(); }).then(function(d){
+                if(!d || !d.current) return;
+                var tp = Math.round(d.current.temperature_2m), cd = d.current.weather_code, id = d.current.is_day === 1, om = "rustig weer", ic = id ? "🌤️" : "🌙";
+                if(cd === 0){ om = id ? "helder en zonnig" : "een heldere sterrenlucht"; ic = id ? "☀️" : "✨"; }
+                else if(cd === 1 || cd === 2){ om = "licht bewolkt"; ic = id ? "⛅" : "☁️"; }
+                else if(cd === 3){ om = "bewolkt"; ic = "☁️"; }
+                else if(cd === 45 || cd === 48){ om = "mistig"; ic = "🌫️"; }
+                else if(cd >= 51 && cd <= 67){ om = "zachte regen"; ic = "🌧️"; }
+                else if(cd >= 71 && cd <= 77){ om = "winterse vlokken"; ic = "❄️"; }
+                else if(cd >= 80 && cd <= 82){ om = "een regenbui"; ic = "🌦️"; }
+                else if(cd >= 95){ om = "onstuimig weer"; ic = "🌩️"; }
+                var we = document.getElementById("dordrechtWeer");
+                we.innerHTML = "<span>" + ic + "</span> <span>Nu in Dordrecht · " + tp + "°C en " + om + "</span>";
+                we.classList.add("visible");
+            }).catch(function(){});
         }
 
-        function wisselSfeerHandmatig() {
-            huidigeThemaIndex = (huidigeThemaIndex + 1) % themaOpties.length;
-            var modus = themaOpties[huidigeThemaIndex];
-            var iconEl = document.getElementById("themeIcon");
-            var labelEl = document.getElementById("themeLabel");
-
-            if (modus === "auto") {
-                iconEl.innerText = "🕰️";
-                labelEl.innerText = "Sfeer: Auto";
-            } else if (modus === "day") {
-                iconEl.innerText = "☀️";
-                labelEl.innerText = "Sfeer: Dag";
-            } else if (modus === "twilight") {
-                iconEl.innerText = "🌅";
-                labelEl.innerText = "Sfeer: Schemer";
-            } else if (modus === "night") {
-                iconEl.innerText = "🌙";
-                labelEl.innerText = "Sfeer: Nacht";
-            }
-
-            controleerSfeerDordrecht();
-        }
-
-        var muziekActief = false;
-        var audioCtx = null;
-        var masterGain = null;
-        var muziekInterval = null;
-        var muziekStap = 0;
-
-        var akkoorden = [
-            {
-                bass: 130.81,
-                pad: [261.63, 329.63, 392.00, 493.88],
-                pluck: [261.63, 329.63, 392.00, 493.88, 523.25, 392.00, 329.63, 392.00],
-                melody: [659.25, null, null, 587.33, 523.25, null, 392.00, null]
-            },
-            {
-                bass: 123.47,
-                pad: [246.94, 293.66, 392.00, 440.00],
-                pluck: [246.94, 293.66, 392.00, 493.88, 587.33, 392.00, 293.66, 392.00],
-                melody: [587.33, null, null, 523.25, 493.88, null, 392.00, null]
-            },
-            {
-                bass: 110.00,
-                pad: [220.00, 261.63, 329.63, 392.00],
-                pluck: [220.00, 261.63, 329.63, 440.00, 523.25, 392.00, 329.63, 261.63],
-                melody: [523.25, null, 587.33, null, 659.25, null, 440.00, null]
-            },
-            {
-                bass: 87.31,
-                pad: [174.61, 261.63, 329.63, 440.00],
-                pluck: [174.61, 261.63, 329.63, 440.00, 523.25, 440.00, 329.63, 261.63],
-                melody: [440.00, null, 523.25, null, 392.00, null, null, null]
-            }
-        ];
-
-        function initieerMuziekEngine() {
-            if (audioCtx) return;
-            var AudioContextClass = window.AudioContext || window.webkitAudioContext;
-            audioCtx = new AudioContextClass();
-
-            masterGain = audioCtx.createGain();
-            masterGain.gain.value = 0.0001;
-
-            var convolver = audioCtx.createConvolver();
-            var rate = audioCtx.sampleRate;
-            var length = Math.floor(rate * 3.2);
-            var impulse = audioCtx.createBuffer(2, length, rate);
-            for (var ch = 0; ch < 2; ch++) {
-                var data = impulse.getChannelData(ch);
-                for (var i = 0; i < length; i++) {
-                    data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 2.5);
-                }
-            }
-            convolver.buffer = impulse;
-
-            var wetGain = audioCtx.createGain();
-            wetGain.gain.value = 0.48;
-
-            var dryGain = audioCtx.createGain();
-            dryGain.gain.value = 0.72;
-
-            masterGain.connect(dryGain);
-            masterGain.connect(convolver);
-            convolver.connect(wetGain);
-            dryGain.connect(audioCtx.destination);
-            wetGain.connect(audioCtx.destination);
-        }
-
-        function speelGitaarTokkel(freq, time, duration, volume) {
-            if (!audioCtx) return;
-            var osc1 = audioCtx.createOscillator();
-            var osc2 = audioCtx.createOscillator();
-            var filter = audioCtx.createBiquadFilter();
-            var gain = audioCtx.createGain();
-
-            osc1.type = "triangle";
-            osc2.type = "sine";
-            osc1.frequency.setValueAtTime(freq, time);
-            osc2.frequency.setValueAtTime(freq * 2, time);
-
-            filter.type = "lowpass";
-            filter.frequency.setValueAtTime(freq * 4.2, time);
-            filter.frequency.exponentialRampToValueAtTime(freq * 1.15, time + duration * 0.8);
-
-            gain.gain.setValueAtTime(0.0001, time);
-            gain.gain.linearRampToValueAtTime(volume, time + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0004, time + duration);
-
-            var harmGain = audioCtx.createGain();
-            harmGain.gain.value = 0.16;
-
-            osc1.connect(filter);
-            osc2.connect(harmGain);
-            harmGain.connect(filter);
-            filter.connect(gain);
-            gain.connect(masterGain);
-
-            osc1.start(time);
-            osc2.start(time);
-            osc1.stop(time + duration);
-            osc2.stop(time + duration);
-        }
-
-        function speelPianoNoot(freq, time, duration, volume) {
-            if (!audioCtx || !freq) return;
-            var osc = audioCtx.createOscillator();
-            var sub = audioCtx.createOscillator();
-            var filter = audioCtx.createBiquadFilter();
-            var gain = audioCtx.createGain();
-
-            osc.type = "sine";
-            sub.type = "triangle";
-            osc.frequency.setValueAtTime(freq, time);
-            sub.frequency.setValueAtTime(freq, time);
-            sub.detune.setValueAtTime(4, time);
-
-            filter.type = "lowpass";
-            filter.frequency.setValueAtTime(1500, time);
-            filter.frequency.exponentialRampToValueAtTime(420, time + duration);
-
-            gain.gain.setValueAtTime(0.0001, time);
-            gain.gain.linearRampToValueAtTime(volume, time + 0.035);
-            gain.gain.exponentialRampToValueAtTime(0.0004, time + duration);
-
-            osc.connect(filter);
-            sub.connect(filter);
-            filter.connect(gain);
-            gain.connect(masterGain);
-
-            osc.start(time);
-            sub.start(time);
-            osc.stop(time + duration);
-            sub.stop(time + duration);
-        }
-
-        function speelStrijkersAkkoord(freqs, bassFreq, time, duration, volume) {
-            if (!audioCtx) return;
-            var alleFreqs = [bassFreq].concat(freqs);
-            for (var idx = 0; idx < alleFreqs.length; idx++) {
-                var f = alleFreqs[idx];
-                var osc = audioCtx.createOscillator();
-                var filter = audioCtx.createBiquadFilter();
-                var gain = audioCtx.createGain();
-
-                osc.type = idx === 0 ? "sawtooth" : "triangle";
-                osc.frequency.setValueAtTime(f, time);
-                osc.detune.setValueAtTime((idx % 2 === 0 ? 1 : -1) * 5, time);
-
-                filter.type = "lowpass";
-                filter.frequency.setValueAtTime(idx === 0 ? 340 : 880, time);
-
-                var nootVol = idx === 0 ? volume * 1.1 : volume * 0.6;
-                gain.gain.setValueAtTime(0.0001, time);
-                gain.gain.linearRampToValueAtTime(nootVol, time + duration * 0.45);
-                gain.gain.exponentialRampToValueAtTime(0.0004, time + duration);
-
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(masterGain);
-
-                osc.start(time);
-                osc.stop(time + duration);
-            }
-        }
-
-        function planVolgendeMuziekStap() {
-            if (!muziekActief || !audioCtx || document.hidden) return;
-            var nu = audioCtx.currentTime + 0.05;
-            var akkoordIndex = Math.floor(muziekStap / 8) % akkoorden.length;
-            var stapInMaat = muziekStap % 8;
-            var akkoord = akkoorden[akkoordIndex];
-
-            var pluckFreq = akkoord.pluck[stapInMaat];
-            if (stapInMaat === 0) {
-                speelGitaarTokkel(akkoord.bass, nu, 2.5, 0.13);
-            }
-            speelGitaarTokkel(pluckFreq, nu, 1.6, stapInMaat === 0 ? 0.10 : 0.075);
-
-            if (stapInMaat === 0) {
-                speelStrijkersAkkoord(akkoord.pad, akkoord.bass, nu, 2.9, 0.042);
-            }
-
-            var melFreq = akkoord.melody[stapInMaat];
-            if (melFreq) {
-                speelPianoNoot(melFreq, nu, 2.3, 0.10);
-            }
-
-            muziekStap++;
-        }
-
-        function wisselMuziek() {
-            initieerMuziekEngine();
-            var btn = document.getElementById("musicSwitcher");
-            var icon = document.getElementById("musicIcon");
-            var label = document.getElementById("musicLabel");
-
-            if (!muziekActief) {
-                if (audioCtx.state === "suspended") {
-                    audioCtx.resume();
-                }
-                muziekActief = true;
-                masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-                masterGain.gain.setValueAtTime(Math.max(0.0001, masterGain.gain.value), audioCtx.currentTime);
-                masterGain.gain.linearRampToValueAtTime(0.65, audioCtx.currentTime + 1.2);
-
-                planVolgendeMuziekStap();
-                muziekInterval = setInterval(planVolgendeMuziekStap, 350);
-
-                btn.classList.add("playing");
-                icon.innerText = "🎶";
-                label.innerText = "Muziek: Aan";
-            } else {
-                muziekActief = false;
-                if (muziekInterval) {
-                    clearInterval(muziekInterval);
-                    muziekInterval = null;
-                }
-                masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-                masterGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.35);
-
-                btn.classList.remove("playing");
-                icon.innerText = "🎵";
-                label.innerText = "Muziek: Uit";
-            }
-        }
-
-        var sfeerCanvas = document.getElementById("sfeerCanvas");
-        var ctx = sfeerCanvas.getContext("2d");
-        var schermBreedte = 0;
-        var schermHoogte = 0;
-
-        var dagDeeltjes = [];
-        var schemerDeeltjes = [];
-        var nachtSterren = [];
-        var vallendeSter = null;
-
-        var mixDag = 0;
-        var mixSchemer = 0;
-        var mixNacht = 0;
-
-        function schaalSfeerCanvas(forceerInit) {
-            var nieuweBreedte = window.innerWidth;
-            var nieuweHoogte = window.innerHeight;
-            var breedteVeranderd = Math.abs(nieuweBreedte - schermBreedte) > 10;
-
-            var dpr = Math.min(window.devicePixelRatio || 1, 1.25);
-            schermBreedte = nieuweBreedte;
-            schermHoogte = nieuweHoogte;
-            sfeerCanvas.width = schermBreedte * dpr;
-            sfeerCanvas.height = schermHoogte * dpr;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            if (forceerInit === true || breedteVeranderd) {
-                initieerAlleDeeltjes();
-            }
-        }
-
-        function initieerAlleDeeltjes() {
-            dagDeeltjes = [];
-            var aantalDag = Math.max(40, Math.min(Math.floor((schermBreedte * schermHoogte) / 24000), 85));
-            var dagKleuren = [
-                "255, 252, 240",
-                "255, 238, 195",
-                "242, 193, 78"
-            ];
-            for (var i = 0; i < aantalDag; i++) {
-                var isBokeh = Math.random() < 0.22;
-                dagDeeltjes.push({
-                    x: Math.random() * schermBreedte,
-                    y: Math.random() * schermHoogte,
-                    straal: isBokeh ? (4 + Math.random() * 10) : (1.1 + Math.random() * 2.2),
-                    basisAlpha: isBokeh ? (0.06 + Math.random() * 0.09) : (0.22 + Math.random() * 0.35),
-                    fase: Math.random() * Math.PI * 2,
-                    faseSnelheid: 0.005 + Math.random() * 0.01,
-                    snelheidX: 0.08 + Math.random() * 0.14,
-                    snelheidY: -(0.06 + Math.random() * 0.12),
-                    kleur: dagKleuren[Math.floor(Math.random() * dagKleuren.length)],
-                    isBokeh: isBokeh
-                });
-            }
-
-            schemerDeeltjes = [];
-            var aantalSchemer = Math.max(60, Math.min(Math.floor((schermBreedte * schermHoogte) / 16000), 120));
-            for (var j = 0; j < aantalSchemer; j++) {
-                var isAvondSter = j < aantalSchemer * 0.55;
-                schemerDeeltjes.push({
-                    x: Math.random() * schermBreedte,
-                    y: isAvondSter ? (Math.random() * schermHoogte * 0.65) : (schermHoogte * 0.3 + Math.random() * schermHoogte * 0.7),
-                    straal: isAvondSter ? (0.6 + Math.random() * 1.1) : (1.5 + Math.random() * 3.2),
-                    basisAlpha: isAvondSter ? (0.2 + Math.random() * 0.45) : (0.14 + Math.random() * 0.28),
-                    fase: Math.random() * Math.PI * 2,
-                    faseSnelheid: 0.006 + Math.random() * 0.014,
-                    snelheidX: isAvondSter ? -0.02 : (0.04 - Math.random() * 0.08),
-                    snelheidY: isAvondSter ? -0.006 : -(0.08 + Math.random() * 0.14),
-                    kleur: isAvondSter ? "255, 244, 228" : (Math.random() < 0.5 ? "240, 178, 101" : "232, 145, 95"),
-                    gloed: !isAvondSter
-                });
-            }
-
-            nachtSterren = [];
-            var aantalNacht = Math.max(110, Math.min(Math.floor((schermBreedte * schermHoogte) / 9000), 220));
-            var nachtKleuren = [
-                "255, 255, 255",
-                "255, 246, 224",
-                "216, 232, 255",
-                "242, 193, 78"
-            ];
-            for (var k = 0; k < aantalNacht; k++) {
-                var laag = Math.random();
-                var diepte = laag < 0.6 ? 1 : (laag < 0.9 ? 2 : 3);
-                var kleurIndex = Math.random() < 0.14 ? 3 : Math.floor(Math.random() * 3);
-                nachtSterren.push({
-                    x: Math.random() * schermBreedte,
-                    y: Math.random() * schermHoogte,
-                    straal: diepte === 1 ? (0.4 + Math.random() * 0.5) : (diepte === 2 ? (0.8 + Math.random() * 0.6) : (1.3 + Math.random() * 0.8)),
-                    basisAlpha: diepte === 1 ? (0.25 + Math.random() * 0.35) : (0.45 + Math.random() * 0.45),
-                    fase: Math.random() * Math.PI * 2,
-                    faseSnelheid: 0.006 + Math.random() * 0.016,
-                    snelheidX: -0.025 * diepte,
-                    snelheidY: -0.008 * diepte,
-                    kleur: nachtKleuren[kleurIndex],
-                    gloed: diepte === 3
-                });
-            }
-        }
-
-        function planVallendeSter() {
-            var startX = Math.random() * (schermBreedte * 0.75) + (schermBreedte * 0.15);
-            var startY = Math.random() * (schermHoogte * 0.35);
-            vallendeSter = {
-                x: startX,
-                y: startY,
-                lengte: 70 + Math.random() * 50,
-                snelheidX: -(4.5 + Math.random() * 2.5),
-                snelheidY: 2.2 + Math.random() * 1.5,
-                alpha: 0,
-                fase: "in"
-            };
-        }
-
-        function tekenSfeerCanvas() {
-            if (document.hidden) {
-                requestAnimationFrame(tekenSfeerCanvas);
-                return;
-            }
-
-            var doelDag = actieveSfeer === "day" ? 1 : 0;
-            var doelSchemer = actieveSfeer === "twilight" ? 1 : 0;
-            var doelNacht = actieveSfeer === "night" ? 1 : 0;
-
-            mixDag += (doelDag - mixDag) * 0.035;
-            mixSchemer += (doelSchemer - mixSchemer) * 0.035;
-            mixNacht += (doelNacht - mixNacht) * 0.035;
-
-            ctx.clearRect(0, 0, schermBreedte, schermHoogte);
-
-            if (mixDag > 0.01) {
-                for (var i = 0; i < dagDeeltjes.length; i++) {
-                    var d = dagDeeltjes[i];
-                    d.x += d.snelheidX + Math.sin(d.fase) * 0.08;
-                    d.y += d.snelheidY;
-                    d.fase += d.faseSnelheid;
-
-                    if (d.x > schermBreedte + 20) d.x = -20;
-                    if (d.x < -20) d.x = schermBreedte + 20;
-                    if (d.y < -20) d.y = schermHoogte + 20;
-
-                    var dAlpha = Math.max(0.02, d.basisAlpha + Math.sin(d.fase) * (d.isBokeh ? 0.03 : 0.12)) * mixDag;
-                    ctx.beginPath();
-                    ctx.arc(d.x, d.y, d.straal, 0, Math.PI * 2);
-                    ctx.fillStyle = "rgba(" + d.kleur + ", " + dAlpha + ")";
-                    ctx.fill();
-                }
-            }
-
-            if (mixSchemer > 0.01) {
-                for (var j = 0; j < schemerDeeltjes.length; j++) {
-                    var sc = schemerDeeltjes[j];
-                    sc.x += sc.snelheidX + (sc.gloed ? Math.sin(sc.fase) * 0.06 : 0);
-                    sc.y += sc.snelheidY;
-                    sc.fase += sc.faseSnelheid;
-
-                    if (sc.x < -10) sc.x = schermBreedte + 10;
-                    if (sc.x > schermBreedte + 10) sc.x = -10;
-                    if (sc.y < -10) sc.y = schermHoogte + 10;
-
-                    var scAlpha = Math.max(0.04, sc.basisAlpha + Math.sin(sc.fase) * 0.16) * mixSchemer;
-                    ctx.beginPath();
-                    ctx.arc(sc.x, sc.y, sc.straal, 0, Math.PI * 2);
-                    ctx.fillStyle = "rgba(" + sc.kleur + ", " + scAlpha + ")";
-                    ctx.fill();
-
-                    if (sc.gloed) {
-                        ctx.beginPath();
-                        ctx.arc(sc.x, sc.y, sc.straal * 2.8, 0, Math.PI * 2);
-                        ctx.fillStyle = "rgba(" + sc.kleur + ", " + (scAlpha * 0.22) + ")";
-                        ctx.fill();
-                    }
-                }
-            }
-
-            if (mixNacht > 0.01) {
-                for (var k = 0; k < nachtSterren.length; k++) {
-                    var s = nachtSterren[k];
-                    s.x += s.snelheidX;
-                    s.y += s.snelheidY;
-                    s.fase += s.faseSnelheid;
-
-                    if (s.x < -5) s.x = schermBreedte + 5;
-                    if (s.y < -5) s.y = schermHoogte + 5;
-
-                    var schommeling = Math.sin(s.fase) * 0.25;
-                    var sAlpha = Math.max(0.08, Math.min(1, s.basisAlpha + schommeling)) * mixNacht;
-
-                    ctx.beginPath();
-                    ctx.arc(s.x, s.y, s.straal, 0, Math.PI * 2);
-                    ctx.fillStyle = "rgba(" + s.kleur + ", " + sAlpha + ")";
-                    ctx.fill();
-
-                    if (s.gloed && sAlpha > 0.4) {
-                        ctx.beginPath();
-                        ctx.arc(s.x, s.y, s.straal * 3.2, 0, Math.PI * 2);
-                        ctx.fillStyle = "rgba(" + s.kleur + ", " + (sAlpha * 0.14) + ")";
-                        ctx.fill();
-                    }
-                }
-
-                if (vallendeSter) {
-                    var v = vallendeSter;
-                    v.x += v.snelheidX;
-                    v.y += v.snelheidY;
-
-                    if (v.fase === "in") {
-                        v.alpha += 0.04;
-                        if (v.alpha >= 0.85) v.fase = "uit";
-                    } else {
-                        v.alpha -= 0.015;
-                    }
-
-                    var vAlpha = v.alpha * mixNacht;
-
-                    if (v.alpha <= 0 || v.x < -100 || v.y > schermHoogte + 100) {
-                        vallendeSter = null;
-                    } else {
-                        var staartX = v.x - (v.snelheidX * (v.lengte / 6));
-                        var staartY = v.y - (v.snelheidY * (v.lengte / 6));
-                        var grad = ctx.createLinearGradient(v.x, v.y, staartX, staartY);
-                        grad.addColorStop(0, "rgba(255, 248, 225, " + vAlpha + ")");
-                        grad.addColorStop(0.3, "rgba(242, 193, 78, " + (vAlpha * 0.5) + ")");
-                        grad.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-                        ctx.beginPath();
-                        ctx.moveTo(v.x, v.y);
-                        ctx.lineTo(staartX, staartY);
-                        ctx.strokeStyle = grad;
-                        ctx.lineWidth = 1.4;
-                        ctx.lineCap = "round";
-                        ctx.stroke();
-                    }
-                } else if (mixNacht > 0.7 && Math.random() < 0.0007) {
-                    planVallendeSter();
-                }
-            }
-
-            requestAnimationFrame(tekenSfeerCanvas);
-        }
-
-        window.addEventListener("resize", function() { schaalSfeerCanvas(false); });
-        schaalSfeerCanvas(true);
-
-        function haalWeerDordrechtOp() {
-            var url = "https://api.open-meteo.com/v1/forecast?latitude=51.8133&longitude=4.6901&current=temperature_2m,weather_code,is_day&timezone=Europe%2FAmsterdam";
-            fetch(url)
-                .then(function(response) { return response.json(); })
-                .then(function(data) {
-                    if (!data || !data.current) return;
-                    var temp = Math.round(data.current.temperature_2m);
-                    var code = data.current.weather_code;
-                    var isDay = data.current.is_day === 1;
-
-                    var omschrijving = "rustig weer";
-                    var icoon = isDay ? "🌤️" : "🌙";
-
-                    if (code === 0) {
-                        omschrijving = isDay ? "helder en zonnig" : "een heldere sterrenlucht";
-                        icoon = isDay ? "☀️" : "✨";
-                    } else if (code === 1 || code === 2) {
-                        omschrijving = "licht bewolkt";
-                        icoon = isDay ? "⛅" : "☁️";
-                    } else if (code === 3) {
-                        omschrijving = "bewolkt";
-                        icoon = "☁️";
-                    } else if (code === 45 || code === 48) {
-                        omschrijving = "mistig";
-                        icoon = "🌫️";
-                    } else if (code >= 51 && code <= 67) {
-                        omschrijving = "zachte regen";
-                        icoon = "🌧️";
-                    } else if (code >= 71 && code <= 77) {
-                        omschrijving = "winterse vlokken";
-                        icoon = "❄️";
-                    } else if (code >= 80 && code <= 82) {
-                        omschrijving = "een regenbui";
-                        icoon = "🌦️";
-                    } else if (code >= 95) {
-                        omschrijving = "onstuimig weer";
-                        icoon = "🌩️";
-                    }
-
-                    var weerElement = document.getElementById("dordrechtWeer");
-                    weerElement.innerHTML = "<span>" + icoon + "</span> <span>Nu in Dordrecht · " + temp + "°C en " + omschrijving + "</span>";
-                    weerElement.classList.add("visible");
-                })
-                .catch(function() {});
-        }
-
-        controleerSfeerDordrecht();
-        requestAnimationFrame(tekenSfeerCanvas);
-        setInterval(controleerSfeerDordrecht, 60000);
-
-        haalWeerDordrechtOp();
-        setInterval(haalWeerDordrechtOp, 1800000);
+        _cs(); requestAnimationFrame(_tsc); setInterval(_cs, 60000);
+        _hwd(); setInterval(_hwd, 1800000);
+    })();
     </script>
 </body>
 </html>
