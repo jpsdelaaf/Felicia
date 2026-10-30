@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;400i&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
     <style>
-        /* 1. Standaard (Dagmodus) variabelen */
         :root {
             --bg-color: #F9F6F0;
             --overlay-bg: rgba(0, 0, 0, 0.14);
@@ -35,11 +34,10 @@
             --beacon-glow: rgba(217, 160, 54, 0.45);
         }
 
-        /* 2. Schemering variabelen (Ochtend- en avondschemering in Dordrecht) */
         body.twilight-mode {
             --bg-color: #26212C;
             --overlay-bg: radial-gradient(circle at center, rgba(232, 165, 104, 0.14) 0%, rgba(28, 23, 38, 0.48) 100%);
-            --container-bg: rgba(42, 36, 48, 0.84);
+            --container-bg: rgba(42, 36, 48, 0.86);
             --container-border: rgba(232, 165, 104, 0.25);
             --container-shadow: 0 20px 55px rgba(0, 0, 0, 0.42), 0 0 35px rgba(232, 165, 104, 0.08);
             --text-main: #EAE3DC;
@@ -60,11 +58,10 @@
             --beacon-glow: rgba(240, 178, 101, 0.65);
         }
 
-        /* 3. Nachtmodus variabelen */
         body.night-mode {
             --bg-color: #0F141C;
             --overlay-bg: radial-gradient(circle at center, rgba(242, 193, 78, 0.08) 0%, rgba(10, 14, 22, 0.58) 100%);
-            --container-bg: rgba(22, 27, 36, 0.86);
+            --container-bg: rgba(22, 27, 36, 0.88);
             --container-border: rgba(242, 193, 78, 0.18);
             --container-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(242, 193, 78, 0.06);
             --text-main: #DCD9D4;
@@ -98,7 +95,6 @@
             transition: background-color 1.5s ease, color 1s ease;
         }
 
-        /* Drie Full-HD achtergrondlagen voor een vloeiende dag / schemer / nacht overgang */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -118,10 +114,8 @@
             height: 116%;
             background-size: cover;
             background-position: center;
-            will-change: transform;
         }
 
-        /* 1. Dag-achtergrond (Full HD 1920px + zachte zomerse drift) */
         .bg-day {
             opacity: 1;
             background-color: #EFEAE1;
@@ -129,9 +123,9 @@
         .bg-day .bg-pan {
             background-image: url('https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=1920&auto=format&fit=crop');
             animation: dagDrift 85s ease-in-out infinite alternate;
+            animation-play-state: running;
         }
 
-        /* 2. Schemering-achtergrond (Full HD 1920px + warme horizon-drift) */
         .bg-twilight {
             opacity: 0;
             background-color: #1F1924;
@@ -139,10 +133,10 @@
         .bg-twilight .bg-pan {
             background-image: url('https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=1920&auto=format&fit=crop');
             animation: schemerDrift 95s ease-in-out infinite alternate;
+            animation-play-state: paused;
             filter: contrast(1.04) saturate(1.08);
         }
 
-        /* 3. Nacht-achtergrond (Full HD 1920px + diepe sterrenhemel-drift) */
         .bg-night {
             opacity: 0;
             background-color: #060911;
@@ -150,46 +144,28 @@
         .bg-night .bg-pan {
             background-image: url('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?q=80&w=1920&auto=format&fit=crop');
             animation: nachtHemelDrift 90s ease-in-out infinite alternate;
+            animation-play-state: paused;
             filter: contrast(1.05) brightness(0.92);
         }
 
         @keyframes dagDrift {
-            0% {
-                transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.07) translate3d(1.8%, -1.2%, 0) rotate(0.3deg);
-            }
-            100% {
-                transform: scale(1.12) translate3d(-1.5%, 1.6%, 0) rotate(-0.3deg);
-            }
+            0% { transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg); }
+            50% { transform: scale(1.07) translate3d(1.8%, -1.2%, 0) rotate(0.3deg); }
+            100% { transform: scale(1.12) translate3d(-1.5%, 1.6%, 0) rotate(-0.3deg); }
         }
 
         @keyframes schemerDrift {
-            0% {
-                transform: scale(1.02) translate3d(-1.5%, 0%, 0) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.09) translate3d(1.5%, -1.8%, 0) rotate(-0.35deg);
-            }
-            100% {
-                transform: scale(1.14) translate3d(2.2%, 1.2%, 0) rotate(0.35deg);
-            }
+            0% { transform: scale(1.02) translate3d(-1.5%, 0%, 0) rotate(0deg); }
+            50% { transform: scale(1.09) translate3d(1.5%, -1.8%, 0) rotate(-0.35deg); }
+            100% { transform: scale(1.14) translate3d(2.2%, 1.2%, 0) rotate(0.35deg); }
         }
 
         @keyframes nachtHemelDrift {
-            0% {
-                transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.08) translate3d(-2.2%, -1.2%, 0) rotate(0.45deg);
-            }
-            100% {
-                transform: scale(1.14) translate3d(1.8%, -2.5%, 0) rotate(-0.45deg);
-            }
+            0% { transform: scale(1) translate3d(0%, 0%, 0) rotate(0deg); }
+            50% { transform: scale(1.08) translate3d(-2.2%, -1.2%, 0) rotate(0.45deg); }
+            100% { transform: scale(1.14) translate3d(1.8%, -2.5%, 0) rotate(-0.45deg); }
         }
 
-        /* Het gedeelde sfeer-canvas voor zonlichtdeeltjes, schemergloed en sterren */
         #sfeerCanvas {
             position: fixed;
             top: 0;
@@ -201,12 +177,18 @@
         }
 
         body.twilight-mode .bg-day { opacity: 0; }
+        body.twilight-mode .bg-day .bg-pan { animation-play-state: paused; }
         body.twilight-mode .bg-twilight { opacity: 1; }
+        body.twilight-mode .bg-twilight .bg-pan { animation-play-state: running; }
         body.twilight-mode .bg-night { opacity: 0; }
+        body.twilight-mode .bg-night .bg-pan { animation-play-state: paused; }
 
         body.night-mode .bg-day { opacity: 0; }
+        body.night-mode .bg-day .bg-pan { animation-play-state: paused; }
         body.night-mode .bg-twilight { opacity: 0; }
+        body.night-mode .bg-twilight .bg-pan { animation-play-state: paused; }
         body.night-mode .bg-night { opacity: 1; }
+        body.night-mode .bg-night .bg-pan { animation-play-state: running; }
 
         .overlay {
             position: fixed;
@@ -227,8 +209,8 @@
             padding: 55px 45px 45px 45px;
             margin: 50px 20px;
             background: var(--container-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             border-radius: 20px;
             box-shadow: var(--container-shadow);
             text-align: center;
@@ -236,7 +218,6 @@
             transition: background 1.2s ease, border 1.2s ease, box-shadow 1.2s ease;
         }
 
-        /* Het ademende lichtpuntje bovenin */
         .beacon-wrapper {
             display: flex;
             flex-direction: column;
@@ -267,7 +248,10 @@
             transition: transform 0.6s ease, box-shadow 0.6s ease, background-color 1s ease;
         }
 
-        /* Extra gloed als iemand op de anonieme knop drukt */
+        .beacon-light.birthday-glow {
+            box-shadow: 0 0 18px 6px var(--beacon-glow), 0 0 38px 14px var(--beacon-color);
+        }
+
         .beacon-light.glow-boost {
             transform: scale(1.8) !important;
             box-shadow: 0 0 25px 10px var(--beacon-glow), 0 0 50px 20px var(--beacon-color) !important;
@@ -353,7 +337,6 @@
             fill: currentColor;
         }
 
-        /* Stijl voor het anonieme 'Stil teken' gedeelte */
         .anon-section {
             margin: 0 auto 35px auto;
             padding: 18px 20px;
@@ -404,7 +387,6 @@
             transition: color 1s ease;
         }
 
-        /* Logboek Sectie Stijlen */
         .logboek-container {
             margin: 0 auto 25px auto;
             padding: 30px 20px 25px 20px;
@@ -441,7 +423,6 @@
             position: relative;
         }
 
-        /* Subtiele stip op de tijdlijn */
         .log-entry::before {
             content: '';
             position: absolute;
@@ -482,7 +463,6 @@
             transition: color 1s ease;
         }
 
-        /* Uitklapbaar blokje voor een vrijblijvend kijkje thuis */
         details.glimp-container {
             margin: 0 auto 35px auto;
             background: var(--glimp-bg);
@@ -559,7 +539,6 @@
             transition: color 1s ease;
         }
 
-        /* Subtiel, volledig transparant weer-regeltje onderaan */
         .weather-whisper {
             margin-top: 26px;
             font-size: 0.78em;
@@ -578,11 +557,10 @@
             opacity: 0.72;
         }
 
-        /* Subtiel zwevend knopje rechtsonder om van sfeer te wisselen */
-        .theme-switcher {
+        .theme-switcher,
+        .music-switcher {
             position: fixed;
             bottom: 16px;
-            right: 16px;
             z-index: 10;
             display: inline-flex;
             align-items: center;
@@ -596,14 +574,16 @@
             font-size: 0.76em;
             letter-spacing: 0.4px;
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-            opacity: 0.55;
-            transition: opacity 0.3s ease, transform 0.3s ease, background 1s ease, color 1s ease, border 1s ease;
+            opacity: 0.65;
+            transition: opacity 0.3s ease, transform 0.3s ease, background 1s ease, color 1s ease, border 1s ease, box-shadow 0.4s ease;
         }
 
-        .theme-switcher:hover {
+        .theme-switcher { right: 16px; }
+        .music-switcher { left: 16px; }
+
+        .theme-switcher:hover,
+        .music-switcher:hover {
             opacity: 0.95;
             transform: translateY(-2px);
         }
@@ -613,47 +593,28 @@
             line-height: 1;
         }
 
-        /* Subtiel zwevend knopje linksonder voor de achtergrondmuziek */
-        .music-switcher {
-            position: fixed;
-            bottom: 16px;
-            left: 16px;
-            z-index: 10;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 14px;
-            border-radius: 30px;
-            background: var(--container-bg);
-            border: 1px solid var(--container-border);
-            color: var(--text-muted);
-            font-family: 'Lato', sans-serif;
-            font-size: 0.76em;
-            letter-spacing: 0.4px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-            opacity: 0.55;
-            transition: opacity 0.3s ease, transform 0.3s ease, background 1s ease, color 1s ease, border 1s ease, box-shadow 0.4s ease;
-        }
-
-        .music-switcher:hover {
-            opacity: 0.95;
-            transform: translateY(-2px);
-        }
-
         .music-switcher.playing {
-            opacity: 0.88;
+            opacity: 0.9;
             border-color: var(--beacon-color);
             box-shadow: 0 4px 18px var(--beacon-glow);
         }
 
         @media (max-width: 600px) {
+            :root {
+                --container-bg: rgba(255, 255, 255, 0.95);
+            }
+            body.twilight-mode {
+                --container-bg: rgba(42, 36, 48, 0.94);
+            }
+            body.night-mode {
+                --container-bg: rgba(22, 27, 36, 0.95);
+            }
             .container {
                 padding: 45px 25px 35px 25px;
                 margin-top: 90px;
                 margin-bottom: 70px;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
             }
             h1 {
                 font-size: 2.2em;
@@ -681,7 +642,6 @@
 </head>
 <body>
 
-    <!-- De drie Full-HD achtergronden die vloeiend met het ritme van de dag meewisselen -->
     <div class="bg-layer bg-day">
         <div class="bg-pan"></div>
     </div>
@@ -692,25 +652,21 @@
         <div class="bg-pan"></div>
     </div>
 
-    <!-- Sfeer-canvas voor zonlichtdeeltjes (dag), avondgloed (schemer) en sterren (nacht) -->
     <canvas id="sfeerCanvas"></canvas>
 
     <div class="overlay"></div>
 
-    <!-- Klein knopje linksonder om de rustgevende gitaar-, cello- & pianomuziek aan of uit te zetten -->
-    <button id="musicSwitcher" class="music-switcher" onclick="wisselMuziek()" title="Zet de rustgevende achtergrondmuziek aan of uit">
+    <button id="musicSwitcher" class="music-switcher" onclick="wisselMuziek()" title="Zet de achtergrondmuziek aan of uit">
         <span id="musicIcon" class="theme-switcher-icon">🎵</span>
         <span id="musicLabel">Muziek: Uit</span>
     </button>
 
-    <!-- Klein knopje rechtsonder om handmatig door de sferen te bladeren -->
-    <button id="themeSwitcher" class="theme-switcher" onclick="wisselSfeerHandmatig()" title="Wissel tussen Dag, Schemering, Nacht en Automatisch">
+    <button id="themeSwitcher" class="theme-switcher" onclick="wisselSfeerHandmatig()" title="Wissel van sfeer">
         <span id="themeIcon" class="theme-switcher-icon">🕰️</span>
         <span id="themeLabel">Sfeer: Auto</span>
     </button>
 
     <div class="container">
-        <!-- Het ademende lichtpuntje -->
         <div class="beacon-wrapper">
             <div class="beacon-light" id="beaconLight"></div>
             <div id="beaconText" class="beacon-caption">Dit lichtje brandt altijd voor jou</div>
@@ -742,7 +698,6 @@
             </a>
         </div>
 
-        <!-- De anonieme knop -->
         <div class="anon-section">
             <button id="anonBtn" class="anon-button" onclick="stuurAnoniemTeken()">
                 <span id="anonIcon">✨</span>
@@ -773,7 +728,6 @@
                     <span class="log-date">Augustus 2026</span>
                     <span class="log-text">De deur staat nog steeds op een kier.</span>
                 </div>
-                <!-- Je kunt hier in de toekomst een nieuw <div class="log-entry"> blok toevoegen -->
             </div>
         </div>
 
@@ -808,7 +762,6 @@
             &amp; Jolien en Fianne
         </div>
 
-        <!-- Subtiele, transparante weergave van het actuele weer in Dordrecht -->
         <div id="dordrechtWeer" class="weather-whisper"></div>
     </div>
 
@@ -819,7 +772,6 @@
             window.location.href = "mailto:" + deel1 + "@" + deel2;
         }
 
-        // Functie voor het anonieme teken met jouw Web3Forms-sleutel
         function stuurAnoniemTeken() {
             var btn = document.getElementById("anonBtn");
             var btnText = document.getElementById("anonBtnText");
@@ -861,46 +813,56 @@
             });
         }
 
-        /* Maandschema voor Dordrecht (in decimale uren, bijv. 7.5 = 07:30)
-           [ochtendSchemerStart, dagStart, avondSchemerStart, nachtStart]
-        */
         var dordrechtSchema = [
-            [7.92, 8.67, 17.00, 17.75], // Januari (07:55 - 08:40 - 17:00 - 17:45)
-            [7.25, 7.92, 17.92, 18.58], // Februari (07:15 - 07:55 - 17:55 - 18:35)
-            [6.25, 6.92, 18.75, 19.42], // Maart (06:15 - 06:55 - 18:45 - 19:25)
-            [6.00, 6.75, 20.67, 21.42], // April (06:00 - 06:45 - 20:40 - 21:25)
-            [5.00, 5.83, 21.42, 22.25], // Mei (05:00 - 05:50 - 21:25 - 22:15)
-            [4.50, 5.33, 22.00, 22.92], // Juni (04:30 - 05:20 - 22:00 - 22:55)
-            [4.83, 5.67, 21.83, 22.67], // Juli (04:50 - 05:40 - 21:50 - 22:40)
-            [5.75, 6.42, 21.08, 21.83], // Augustus (05:45 - 06:25 - 21:05 - 21:50)
-            [6.58, 7.25, 19.92, 20.58], // September (06:35 - 07:15 - 19:55 - 20:35)
-            [7.42, 8.08, 18.83, 19.50], // Oktober (07:25 - 08:05 - 18:50 - 19:30)
-            [7.33, 8.00, 16.83, 17.50], // November (07:20 - 08:00 - 16:50 - 17:30)
-            [8.00, 8.75, 16.50, 17.25]  // December (08:00 - 08:45 - 16:30 - 17:15)
+            [7.92, 8.67, 17.00, 17.75],
+            [7.25, 7.92, 17.92, 18.58],
+            [6.25, 6.92, 18.75, 19.42],
+            [6.00, 6.75, 20.67, 21.42],
+            [5.00, 5.83, 21.42, 22.25],
+            [4.50, 5.33, 22.00, 22.92],
+            [4.83, 5.67, 21.83, 22.67],
+            [5.75, 6.42, 21.08, 21.83],
+            [6.58, 7.25, 19.92, 20.58],
+            [7.42, 8.08, 18.83, 19.50],
+            [7.33, 8.00, 16.83, 17.50],
+            [8.00, 8.75, 16.50, 17.25]
         ];
 
-        // Thema-beheer: 'auto', 'day', 'twilight', 'night'
         var themaOpties = ["auto", "day", "twilight", "night"];
         var huidigeThemaIndex = 0;
-        var actieveSfeer = "day"; // 'day', 'twilight' of 'night'
+        var actieveSfeer = "day";
 
         function pasSfeerToe(sfeer, isOchtend) {
             actieveSfeer = sfeer;
             var beaconText = document.getElementById("beaconText");
+            var beaconLight = document.getElementById("beaconLight");
+            var nu = new Date();
+            var isSpecialeDag = (nu.getDate() === 23 && nu.getMonth() === 0);
+
             document.body.classList.remove("twilight-mode", "night-mode");
 
             if (sfeer === "twilight") {
                 document.body.classList.add("twilight-mode");
-                if (isOchtend) {
-                    beaconText.innerText = "De dag ontwaakt rustig — dit lichtje brandt altijd voor jou";
-                } else {
-                    beaconText.innerText = "Terwijl de schemering valt, brandt dit lichtje hier voor jou";
-                }
             } else if (sfeer === "night") {
                 document.body.classList.add("night-mode");
-                beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
+            }
+
+            if (isSpecialeDag) {
+                beaconLight.classList.add("birthday-glow");
+                beaconText.innerText = "Vandaag brandt dit lichtje nog een klein beetje feller voor jou";
             } else {
-                beaconText.innerText = "Dit lichtje brandt altijd voor jou";
+                beaconLight.classList.remove("birthday-glow");
+                if (sfeer === "twilight") {
+                    if (isOchtend) {
+                        beaconText.innerText = "De dag ontwaakt rustig — dit lichtje brandt altijd voor jou";
+                    } else {
+                        beaconText.innerText = "Terwijl de schemering valt, brandt dit lichtje hier voor jou";
+                    }
+                } else if (sfeer === "night") {
+                    beaconText.innerText = "Ook in het donker brandt er hier een lichtje voor je";
+                } else {
+                    beaconText.innerText = "Dit lichtje brandt altijd voor jou";
+                }
             }
         }
 
@@ -956,10 +918,6 @@
             controleerSfeerDordrecht();
         }
 
-        /* =========================================================================
-           Rustgevende Achtergrondmuziek Engine (Web Audio API)
-           Getokkelde akoestische gitaar, warme cello/strijkers & zachte vilt-piano
-           ========================================================================= */
         var muziekActief = false;
         var audioCtx = null;
         var masterGain = null;
@@ -968,25 +926,25 @@
 
         var akkoorden = [
             {
-                bass: 130.81, // C3 (Cmaj7)
+                bass: 130.81,
                 pad: [261.63, 329.63, 392.00, 493.88],
                 pluck: [261.63, 329.63, 392.00, 493.88, 523.25, 392.00, 329.63, 392.00],
                 melody: [659.25, null, null, 587.33, 523.25, null, 392.00, null]
             },
             {
-                bass: 123.47, // B2 (G6/B)
+                bass: 123.47,
                 pad: [246.94, 293.66, 392.00, 440.00],
                 pluck: [246.94, 293.66, 392.00, 493.88, 587.33, 392.00, 293.66, 392.00],
                 melody: [587.33, null, null, 523.25, 493.88, null, 392.00, null]
             },
             {
-                bass: 110.00, // A2 (Am7)
+                bass: 110.00,
                 pad: [220.00, 261.63, 329.63, 392.00],
                 pluck: [220.00, 261.63, 329.63, 440.00, 523.25, 392.00, 329.63, 261.63],
                 melody: [523.25, null, 587.33, null, 659.25, null, 440.00, null]
             },
             {
-                bass: 87.31,  // F2 (Fmaj7)
+                bass: 87.31,
                 pad: [174.61, 261.63, 329.63, 440.00],
                 pluck: [174.61, 261.63, 329.63, 440.00, 523.25, 440.00, 329.63, 261.63],
                 melody: [440.00, null, 523.25, null, 392.00, null, null, null]
@@ -1001,7 +959,6 @@
             masterGain = audioCtx.createGain();
             masterGain.gain.value = 0.0001;
 
-            // Warme akoestische ruimte-galm (reverb)
             var convolver = audioCtx.createConvolver();
             var rate = audioCtx.sampleRate;
             var length = Math.floor(rate * 3.2);
@@ -1125,25 +1082,22 @@
         }
 
         function planVolgendeMuziekStap() {
-            if (!muziekActief || !audioCtx) return;
+            if (!muziekActief || !audioCtx || document.hidden) return;
             var nu = audioCtx.currentTime + 0.05;
             var akkoordIndex = Math.floor(muziekStap / 8) % akkoorden.length;
             var stapInMaat = muziekStap % 8;
             var akkoord = akkoorden[akkoordIndex];
 
-            // 1. Akoestische gitaar-tokkel
             var pluckFreq = akkoord.pluck[stapInMaat];
             if (stapInMaat === 0) {
                 speelGitaarTokkel(akkoord.bass, nu, 2.5, 0.13);
             }
             speelGitaarTokkel(pluckFreq, nu, 1.6, stapInMaat === 0 ? 0.10 : 0.075);
 
-            // 2. Warme cello & strijkers op de eerste tel van elke maat
             if (stapInMaat === 0) {
                 speelStrijkersAkkoord(akkoord.pad, akkoord.bass, nu, 2.9, 0.042);
             }
 
-            // 3. Zachte vilt-piano melodienoten
             var melFreq = akkoord.melody[stapInMaat];
             if (melFreq) {
                 speelPianoNoot(melFreq, nu, 2.3, 0.10);
@@ -1188,9 +1142,6 @@
             }
         }
 
-        /* =========================================================================
-           Geoptimaliseerd Sfeer-Canvas (Crossfade tussen Dag, Schemering en Nacht)
-           ========================================================================= */
         var sfeerCanvas = document.getElementById("sfeerCanvas");
         var ctx = sfeerCanvas.getContext("2d");
         var schermBreedte = 0;
@@ -1201,29 +1152,34 @@
         var nachtSterren = [];
         var vallendeSter = null;
 
-        // Vloeiende overgangswaarden (0 tot 1) voor elk dagdeel
         var mixDag = 0;
         var mixSchemer = 0;
         var mixNacht = 0;
 
-        function schaalSfeerCanvas() {
+        function schaalSfeerCanvas(forceerInit) {
+            var nieuweBreedte = window.innerWidth;
+            var nieuweHoogte = window.innerHeight;
+            var breedteVeranderd = Math.abs(nieuweBreedte - schermBreedte) > 10;
+
             var dpr = Math.min(window.devicePixelRatio || 1, 1.25);
-            schermBreedte = window.innerWidth;
-            schermHoogte = window.innerHeight;
+            schermBreedte = nieuweBreedte;
+            schermHoogte = nieuweHoogte;
             sfeerCanvas.width = schermBreedte * dpr;
             sfeerCanvas.height = schermHoogte * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-            initieerAlleDeeltjes();
+
+            if (forceerInit === true || breedteVeranderd) {
+                initieerAlleDeeltjes();
+            }
         }
 
         function initieerAlleDeeltjes() {
-            // 1. DAG: Zachte, warme zonlicht-stofjes en bokeh-kringen die rustig zweven
             dagDeeltjes = [];
             var aantalDag = Math.max(40, Math.min(Math.floor((schermBreedte * schermHoogte) / 24000), 85));
             var dagKleuren = [
-                "255, 252, 240", // Warm zonwit
-                "255, 238, 195", // Zacht goudgeel
-                "242, 193, 78"   // Zonnebloemgeel
+                "255, 252, 240",
+                "255, 238, 195",
+                "242, 193, 78"
             ];
             for (var i = 0; i < aantalDag; i++) {
                 var isBokeh = Math.random() < 0.22;
@@ -1241,7 +1197,6 @@
                 });
             }
 
-            // 2. SCHEMERING: Eerste avondsterren hoog in de lucht + warme amber gloeddeeltjes onderin
             schemerDeeltjes = [];
             var aantalSchemer = Math.max(60, Math.min(Math.floor((schermBreedte * schermHoogte) / 16000), 120));
             for (var j = 0; j < aantalSchemer; j++) {
@@ -1260,14 +1215,13 @@
                 });
             }
 
-            // 3. NACHT: Drie parallax-dieptelagen met heldere sterren
             nachtSterren = [];
             var aantalNacht = Math.max(110, Math.min(Math.floor((schermBreedte * schermHoogte) / 9000), 220));
             var nachtKleuren = [
-                "255, 255, 255", // Helder wit
-                "255, 246, 224", // Zacht ivoorwit
-                "216, 232, 255", // Koel sterrenblauw
-                "242, 193, 78"   // Warm goudgeel
+                "255, 255, 255",
+                "255, 246, 224",
+                "216, 232, 255",
+                "242, 193, 78"
             ];
             for (var k = 0; k < aantalNacht; k++) {
                 var laag = Math.random();
@@ -1303,7 +1257,11 @@
         }
 
         function tekenSfeerCanvas() {
-            // Vloeiende crossfade berekenen richting de actieve sfeer
+            if (document.hidden) {
+                requestAnimationFrame(tekenSfeerCanvas);
+                return;
+            }
+
             var doelDag = actieveSfeer === "day" ? 1 : 0;
             var doelSchemer = actieveSfeer === "twilight" ? 1 : 0;
             var doelNacht = actieveSfeer === "night" ? 1 : 0;
@@ -1314,7 +1272,6 @@
 
             ctx.clearRect(0, 0, schermBreedte, schermHoogte);
 
-            // 1. Teken Dag-deeltjes (zonlicht & bokeh)
             if (mixDag > 0.01) {
                 for (var i = 0; i < dagDeeltjes.length; i++) {
                     var d = dagDeeltjes[i];
@@ -1334,7 +1291,6 @@
                 }
             }
 
-            // 2. Teken Schemer-deeltjes (eerste avondsterren & warme gouden-uur gloed)
             if (mixSchemer > 0.01) {
                 for (var j = 0; j < schemerDeeltjes.length; j++) {
                     var sc = schemerDeeltjes[j];
@@ -1361,7 +1317,6 @@
                 }
             }
 
-            // 3. Teken Nacht-sterren & vallende ster
             if (mixNacht > 0.01) {
                 for (var k = 0; k < nachtSterren.length; k++) {
                     var s = nachtSterren[k];
@@ -1428,10 +1383,9 @@
             requestAnimationFrame(tekenSfeerCanvas);
         }
 
-        window.addEventListener("resize", schaalSfeerCanvas);
-        schaalSfeerCanvas();
+        window.addEventListener("resize", function() { schaalSfeerCanvas(false); });
+        schaalSfeerCanvas(true);
 
-        // Subtiel het actuele weer in Dordrecht ophalen (via Open-Meteo, geen API-sleutel nodig)
         function haalWeerDordrechtOp() {
             var url = "https://api.open-meteo.com/v1/forecast?latitude=51.8133&longitude=4.6901&current=temperature_2m,weather_code,is_day&timezone=Europe%2FAmsterdam";
             fetch(url)
@@ -1475,17 +1429,13 @@
                     weerElement.innerHTML = "<span>" + icoon + "</span> <span>Nu in Dordrecht · " + temp + "°C en " + omschrijving + "</span>";
                     weerElement.classList.add("visible");
                 })
-                .catch(function() {
-                    // Als het weer niet opgehaald kan worden, blijft het regeltje onzichtbaar
-                });
+                .catch(function() {});
         }
 
-        // Direct starten, sfeer-canvas aanzetten en elke minuut de tijd in Dordrecht controleren
         controleerSfeerDordrecht();
         requestAnimationFrame(tekenSfeerCanvas);
         setInterval(controleerSfeerDordrecht, 60000);
 
-        // Weer bij het openen ophalen en elk halfuur verversen
         haalWeerDordrechtOp();
         setInterval(haalWeerDordrechtOp, 1800000);
     </script>
